@@ -18,10 +18,12 @@ int	init_display(t_window *win)
 	win->win = XCreateSimpleWindow(win->display, win->root, 500, 500, 500, 500, 15,
 			BlackPixel(win->display, win->screen),
 			WhitePixel(win->display, win->screen));
-	XSelectInput(win->display, win->win, ExposureMask | KeyPressMask);
+	win->gc = XDefaultGC(win->display, win->screen);
+	XSelectInput(win->display, win->win, KeyPressMask);
+	XSetBackground(win->display, win->gc, 100);
 	XStoreName(win->display, win->win, "Life Simulation");
 	XMapWindow(win->display, win->win);
-	XFlush(win->display);
+	//XFlush(win->display);
 	return (0);
 }
 
