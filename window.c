@@ -1,5 +1,10 @@
 #include "life_sim.h"
 
+void	expose(t_window *win)
+{
+	XDrawString(win->display, win->root, win->gc, 10, 30, "Bonjour !", 14);
+}
+
 int	init_display(t_window *win)
 {
 	win->display = XOpenDisplay(NULL);
@@ -11,13 +16,18 @@ int	init_display(t_window *win)
 	win->screen = DefaultScreen(win->display);
 	win->root = RootWindow(win->display, win->screen);
 	win->win = XCreateSimpleWindow(win->display, win->root, 500, 500, 500, 500, 15,
-			BlackPixel(win->display, win->screen), WhitePixel(win->display, win->screen));
+			BlackPixel(win->display, win->screen),
+			WhitePixel(win->display, win->screen));
+	XSelectInput(win->display, win->win, ExposureMask | KeyPressMask);
+	XStoreName(win->display, win->win, "Life Simulation");
 	XMapWindow(win->display, win->win);
+	XFlush(win->display);
 	return (0);
 }
 
 int	destroy_display(t_window *win)
 {
+	XFreeGC(win->display, win->gc);
 	XDestroyWindow(win->display, win->root);
 	XDestroyWindow(win->display, win->win);
 	XCloseDisplay(win->display);
