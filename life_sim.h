@@ -7,6 +7,7 @@
 # include <X11/X.h>
 # include <unistd.h>
 # include <stdbool.h>
+# include <stdint.h>
 
 typedef struct	s_window
 {
@@ -15,7 +16,7 @@ typedef struct	s_window
 	Window		win;
 	Window		root;
 	XEvent		ev;
-	XFontStruct	*font;
+	XColor		color;
 	GC			gc;
 }				t_window;
 
