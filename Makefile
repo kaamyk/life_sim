@@ -1,6 +1,6 @@
 NAME = sim
 
-SIMSRCS =	main.c	window.c\
+SIMSRCS =	main.c	window.c	move.c\
 
 SIMOBJS =	$(SIMSRCS:.c=.o)
 

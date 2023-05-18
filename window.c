@@ -10,7 +10,7 @@ int	init_display(t_window *win)
 	}
 	win->screen = DefaultScreen(win->display);
 	win->root = RootWindow(win->display, win->screen);
-	win->win = XCreateSimpleWindow(win->display, win->root, 500, 500, 500, 500, 15,
+	win->win = XCreateSimpleWindow(win->display, win->root, 500, 500, WIN_LENGTH, WIN_HEIGHT, 15,
 			WhitePixel(win->display, win->screen),
 			BlackPixel(win->display, win->screen));
 	win->gc = XDefaultGC(win->display, win->screen);

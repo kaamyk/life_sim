@@ -2,9 +2,9 @@
 
 void	generate_color(t_window *win)
 {
-	win->color.red = random() % 65536;
-	win->color.green = random() % 65536;
-	win->color.blue = random() % 65536;
+	win->color.red = 225;
+	win->color.green = 8281;
+	win->color.blue = 42436;
 	win->color.flags = DoRed | DoGreen | DoBlue;
 	XAllocColor(win->display,
 		DefaultColormap(win->display, DefaultScreen(win->display)),
@@ -16,8 +16,8 @@ int	main(void)
 {
 	t_window	win;
 	int			i;
-	uint16_t	x;
-	uint16_t	y;
+	size_t		x;
+	size_t		y;
 
 	init_display(&win);
 	i = 0;
@@ -25,21 +25,16 @@ int	main(void)
 	y = 0;
 	while (1)
 	{
-		printf("i == %d\n", ++i);
+		//printf("i == %d\n", ++i);
 		while (XPending(win.display) != 0)
 			XNextEvent(win.display, &win.ev);
 		generate_color(&win);
 		XFillRectangle(win.display, win.win, win.gc,
-			x, y, 30, 30);
+			x, y, 20, 20);
 		XFlush(win.display);
-		usleep(16666);
-		XClearArea(win.display, win.win, x, y, 30, 30, true);
-		y += 5;
-		if (y >= 500)
-		{
-			x += 30;
-			y = 0;
-		}
+		usleep(33333);
+		XClearArea(win.display, win.win, x, y, 20, 20, true);
+		move_down(&y);
 	}
 	destroy_display(&win);
 	return (0);
