@@ -3,6 +3,7 @@
 
 # define WIN_HEIGHT 1000
 # define WIN_LENGTH 1000
+# define BASICS
 
 # include <stdlib.h>
 # include <stdio.h>
@@ -23,30 +24,40 @@ typedef struct	s_window
 	GC			gc;
 }				t_window;
 
+typedef struct	s_creature
+{
+	int8_t	size;
+	int8_t	speed;
+	XColor	color;
+	int		x;
+	int		y;
+	time_t	last_meal;
+}				t_creature;
+
 typedef struct 	s_sim
 {
 	t_creature	*population;
 	size_t		nb_creat;	
 }				t_sim;
 
-typedef struct	s_creature
-{
-	int8_t	size;
-	int8_t	speed;
-	XColor	color;
-	time_t	last_meal;
-}				t_creature;
-
 //	MAIN.C
 
 //	WINDOW.C
-int		init_display(t_window *win);
-int		destroy_display(t_window *win);
+int			init_display(t_window *win);
+int			destroy_display(t_window *win);
 
 //	MOVE.C
-void	move_up(size_t *y, t_creature c);
-void	move_down(size_t *y, t_creature c);
-void	move_right(size_t *x, t_creature c);
-void	move_left(size_t *x, t_creature c);
+void		move_up(t_creature *c);
+void		move_down(t_creature *c);
+void		move_right(t_creature *c);
+void		move_left(t_creature *c);
+void		select_move(t_creature *c, int8_t m);
+
+//	CREATURE.C
+void		free_population(t_creature *creature);
+void		check_position(t_creature *creature, t_sim *sim);
+t_creature	*init_creature(t_sim *sim);
+void		join_creature(t_creature *creature, t_sim *sim);
+void		create_new_creature(t_window *win, t_sim *sim);
 
 #endif

@@ -1,40 +1,46 @@
 # include "life_sim.h"
 
-void	generate_color(t_window *win)
+void	generate_color(t_window *win, t_creature *creature)
 {
-	win->color.red = 225;
-	win->color.green = 8281;
-	win->color.blue = 42436;
-	win->color.flags = DoRed | DoGreen | DoBlue;
+	creature->color.red = 65535;
+	creature->color.green = 65535;
+	creature->color.blue = 65535;
+	creature->color.flags = DoRed | DoGreen | DoBlue;
 	XAllocColor(win->display,
 		DefaultColormap(win->display, DefaultScreen(win->display)),
-		&win->color);
-	XSetForeground(win->display, win->gc, win->color.pixel);
+		&creature->color);
+	XSetForeground(win->display, win->gc, creature->color.pixel);
 }
 
 int	main(void)
 {
 	t_window	win;
-	int			i;
-	size_t		x;
-	size_t		y;
+	t_sim		sim;
+	size_t		i;
+	size_t		counter;
 
+	counter = 0;
 	init_display(&win);
-	i = 0;
-	x = 20;
-	y = 0;
+	create_new_creature(&win, &sim);
 	while (1)
 	{
-		//printf("i == %d\n", ++i);
+		printf("counter == %ld\n", ++counter);
+		i = 0;
 		while (XPending(win.display) != 0)
 			XNextEvent(win.display, &win.ev);
-		generate_color(&win);
 		XFillRectangle(win.display, win.win, win.gc,
-			x, y, 20, 20);
+			creature.x, creature.y, 10 * creature.size, 10 * creature.size);
 		XFlush(win.display);
 		usleep(33333);
-		XClearArea(win.display, win.win, x, y, 20, 20, true);
-		move_down(&y);
+		XClearArea(win.display, win.win, creature.x, creature.y,
+			10 * creature.size, 10 * creature.size, true);
+		while (sim.population[i])
+		{
+			select_move(&sim.population[i], random() % 5);
+			++i;
+		}
+		if (counter != 0 && counter % 100 == 0)
+			create_new_creature(&sim);
 	}
 	destroy_display(&win);
 	return (0);
