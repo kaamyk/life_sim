@@ -12,35 +12,66 @@ void	generate_color(t_window *win, t_creature *creature)
 	XSetForeground(win->display, win->gc, creature->color.pixel);
 }
 
+void	init_sim(t_window *win, t_sim *sim)
+{
+	sim->population = malloc(sizeof(t_creature *) * 2);
+	sim->population[0] = malloc (sizeof (t_creature));
+	sim->population[0]->size = 1;
+	sim->population[0]->speed = 1;
+	sim->population[0]->last_meal = 0;
+	sim->population[0]->x = random() % WIN_LENGTH;
+	sim->population[0]->y = random() % WIN_HEIGHT;
+	generate_color(win, sim->population[0]);
+	sim->population[1] = NULL;
+	sim->nb_creat = 1;
+}
+
 int	main(void)
 {
 	t_window	win;
 	t_sim		sim;
+	//t_creature	**tmp;
 	size_t		i;
 	size_t		counter;
 
 	counter = 0;
+	ft_signal();
 	init_display(&win);
-	create_new_creature(&win, &sim);
+	init_sim(&win, &sim);
 	while (1)
 	{
 		printf("counter == %ld\n", ++counter);
-		i = 0;
 		while (XPending(win.display) != 0)
 			XNextEvent(win.display, &win.ev);
-		XFillRectangle(win.display, win.win, win.gc,
-			creature.x, creature.y, 10 * creature.size, 10 * creature.size);
-		XFlush(win.display);
-		usleep(33333);
-		XClearArea(win.display, win.win, creature.x, creature.y,
-			10 * creature.size, 10 * creature.size, true);
-		while (sim.population[i])
+		i = 0;
+		while (i < sim.nb_creat)
 		{
-			select_move(&sim.population[i], random() % 5);
+			XFillRectangle(win.display, win.win, win.gc,
+				sim.population[i]->x, sim.population[i]->y,
+				10 * sim.population[0]->size,
+				10 * sim.population[0]->size);
 			++i;
 		}
-		if (counter != 0 && counter % 100 == 0)
-			create_new_creature(&sim);
+		XFlush(win.display);
+		usleep(33333);
+		i = 0;
+		while (sim.population[i])
+		{
+			XClearArea(win.display, win.win,
+				sim.population[i]->x, sim.population[i]->y,
+				10 * sim.population[i]->size, 10 * sim.population[i]->size, true);
+			select_move(sim.population[i], random() % 5);
+			++i;
+		}
+		if (counter > 0 && counter % 10 == 0)
+		{
+			//tmp = sim.population;
+			sim.population = create_new_creature(&win, &sim);
+			//free_population(sim.nb_creat, tmp);
+			printf("population size == %d\n", sim.population[0]->size);
+			//printf("tmp == %p\n", tmp);
+			printf("population == %p\n", sim.population);
+		}
 	}
 	destroy_display(&win);
 	return (0);

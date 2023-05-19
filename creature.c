@@ -1,25 +1,18 @@
 #include "life_sim.h"
 
-void	free_population(t_creature *creature)
+void	free_population(size_t nb_creat, t_creature **population)
 {
 	size_t	i;
 
-	if (creature == NULL)
+	if (population == NULL)
 		return ;
-	while (creature[i])
+	i = 0;
+	while (i < nb_creat)
 	{
-		free(creature[i]);
+		free(population[i]);
 		++i;
 	}
-}
-
-void	free_sim(t_sim *sim)
-{
-	if (sim == NULL)
-		return ;
-	free_population(sim->population);
-	free(sim);
-	sim = NULL;
+	population = NULL;
 }
 
 void	check_position(t_creature *creature, t_sim *sim)
@@ -36,7 +29,7 @@ void	check_position(t_creature *creature, t_sim *sim)
 		}
 		if (creature->y == sim->population[i]->y)
 		{
-			creature->y == random() % WIN_HEIGHT;
+			creature->y = random() % WIN_HEIGHT;
 			i = 0;
 		}
 		else
@@ -44,41 +37,37 @@ void	check_position(t_creature *creature, t_sim *sim)
 	}
 }
 
-t_creature	*init_creature(t_sim *sim)
+t_creature	*init_creature(t_window *win, t_sim *sim)
 {
 	t_creature	*creature;
 
+	creature = malloc (sizeof (t_creature) * 1);
 	if (sim->nb_creat == 499)
 		return (NULL);
-	creature->size = 1;
+	creature->size = sim->nb_creat;
 	creature->speed = 1;
 	creature->last_meal = 0;
 	creature->x = random() % WIN_LENGTH;
 	creature->y = random() % WIN_HEIGHT;
 	check_position(creature, sim);
+	generate_color(win, creature);
 	return (creature);
 }
 
-void	join_creature(t_creature *creature, t_sim *sim)
+t_creature	**create_new_creature(t_window *win, t_sim *sim)
 {
-	t_creature	*t;
+	t_creature	**t;
 	size_t		i;
 
-	t = malloc(sizeof(t_creature) * sim->nb_creat + 1);
-	sim->creature[nb_creat - 1] = NULL;
+	sim->nb_creat += 1;
+	t = malloc(sizeof(t_creature *) * (sim->nb_creat + 1));
+	t[sim->nb_creat] = NULL;
 	i = 0;
 	while (i < sim->nb_creat - 1)
+	{
 		t[i] = sim->population[i];
-	t[i] = init_creature(sim);
-}
-
-void	create_new_creature(t_window *win, t_sim *sim)
-{
-	t_creature	*t;
-
-	t = join_creature(creature, sim);
-	free_sim(sim);
-	sim = t;
-	generate_color(&win, &creature);
-	free_population(t);
+		++i;
+	}
+	t[i] = init_creature(win, sim);
+	return (t);
 }

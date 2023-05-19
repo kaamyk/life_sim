@@ -1,6 +1,6 @@
 NAME = sim
 
-SIMSRCS =	main.c	window.c	move.c	creature.c\
+SIMSRCS =	main.c	window.c	move.c	creature.c	signal.c\
 
 SIMOBJS =	$(SIMSRCS:.c=.o)
 
@@ -9,6 +9,9 @@ CC		=	cc
 FLAGS	=	-Wall -Wextra -Werror -g3
 
 LIB		=	-lX11
+
+%.o:					%.c
+		$(CC) $(FLAGS) -c $< -o $@
 
 all:		$(NAME)
 

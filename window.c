@@ -22,7 +22,7 @@ int	init_display(t_window *win)
 	return (0);
 }
 
-int	destroy_display(t_window *win)
+void	destroy_display(t_window *win)
 {
 	XFreeGC(win->display, win->gc);
 	XDestroyWindow(win->display, win->win);
