@@ -61,6 +61,8 @@ t_creature	**create_new_creature(t_window *win, t_sim *sim)
 
 	sim->nb_creat += 1;
 	t = malloc(sizeof(t_creature *) * (sim->nb_creat + 1));
+	if (t == NULL)
+		return (NULL);
 	t[sim->nb_creat] = NULL;
 	i = 0;
 	while (i < sim->nb_creat - 1)

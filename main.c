@@ -30,7 +30,6 @@ int	main(void)
 {
 	t_window	win;
 	t_sim		sim;
-	//t_creature	**tmp;
 	size_t		i;
 	size_t		counter;
 
@@ -40,7 +39,7 @@ int	main(void)
 	init_sim(&win, &sim);
 	while (1)
 	{
-		printf("counter == %ld\n", ++counter);
+		//printf("counter == %ld\n", ++counter);
 		while (XPending(win.display) != 0)
 			XNextEvent(win.display, &win.ev);
 		i = 0;
@@ -65,13 +64,12 @@ int	main(void)
 		}
 		if (counter > 0 && counter % 10 == 0)
 		{
-			//tmp = sim.population;
+			printf("Creating a new creature ...\n");
 			sim.population = create_new_creature(&win, &sim);
-			//free_population(sim.nb_creat, tmp);
-			printf("population size == %d\n", sim.population[0]->size);
-			//printf("tmp == %p\n", tmp);
-			printf("population == %p\n", sim.population);
+			if (sim.population == NULL)
+				break ;
 		}
+		++counter;
 	}
 	destroy_display(&win);
 	return (0);
