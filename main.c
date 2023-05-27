@@ -16,7 +16,7 @@ void	init_sim(t_window *win, t_sim *sim)
 {
 	sim->population = malloc(sizeof(t_creature *) * 2);
 	sim->population[0] = malloc (sizeof (t_creature));
-	sim->population[0]->size = 1;
+	sim->population[0]->size = random() % 10;
 	sim->population[0]->speed = 1;
 	sim->population[0]->last_meal = 0;
 	sim->population[0]->x = random() % WIN_LENGTH;
@@ -37,40 +37,7 @@ int	main(void)
 	ft_signal();
 	init_display(&win);
 	init_sim(&win, &sim);
-	while (1)
-	{
-		//printf("counter == %ld\n", ++counter);
-		while (XPending(win.display) != 0)
-			XNextEvent(win.display, &win.ev);
-		i = 0;
-		while (i < sim.nb_creat)
-		{
-			XFillRectangle(win.display, win.win, win.gc,
-				sim.population[i]->x, sim.population[i]->y,
-				10 * sim.population[0]->size,
-				10 * sim.population[0]->size);
-			++i;
-		}
-		XFlush(win.display);
-		usleep(33333);
-		i = 0;
-		while (sim.population[i])
-		{
-			XClearArea(win.display, win.win,
-				sim.population[i]->x, sim.population[i]->y,
-				10 * sim.population[i]->size, 10 * sim.population[i]->size, true);
-			select_move(sim.population[i], random() % 5);
-			++i;
-		}
-		if (counter > 0 && counter % 10 == 0)
-		{
-			printf("Creating a new creature ...\n");
-			sim.population = create_new_creature(&win, &sim);
-			if (sim.population == NULL)
-				break ;
-		}
-		++counter;
-	}
+	ft_sim(&win, &sim);
 	destroy_display(&win);
 	return (0);
 }

@@ -32,14 +32,22 @@ typedef struct	s_creature
 	int8_t	size;
 	int8_t	speed;
 	XColor	color;
-	int		x;
-	int		y;
+	size_t		x;
+	size_t		y;
 	time_t	last_meal;
 }				t_creature;
+
+typedef struct	s_food
+{
+	size_t	x;
+	size_t	y;
+}				t_food;
 
 typedef struct 	s_sim
 {
 	t_creature	**population;
+	t_food		*food;
+	size_t		nb_food;
 	size_t		nb_creat;	
 }				t_sim;
 

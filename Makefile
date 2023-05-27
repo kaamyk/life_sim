@@ -1,6 +1,7 @@
 NAME = sim
 
-SIMSRCS =	main.c	window.c	move.c	creature.c	signal.c\
+SIMSRCS =	main.c	window.c	move.c	creature.c	signal.c	sim.c\
+			sim_utils.c
 
 SIMOBJS =	$(SIMSRCS:.c=.o)
 
