@@ -15,25 +15,30 @@ void	free_population(size_t nb_creat, t_creature **population)
 	population = NULL;
 }
 
-void	check_position(t_creature *creature, t_sim *sim)
+void	check_creature_position(int *x, int *y, t_sim *sim)
 {
 	size_t	i;
+	size_t	j;
 
 	i = 0;
-	while (sim->population[i])
+	j = sim->nb_creat;
+	while (i <= j)
 	{
-		if (creature->x == sim->population[i]->x)
+		if (*x == sim->population[i]->x || *x == sim->population[j]->x)
 		{
-			creature->x = random() % WIN_LENGTH;
+			*x = random() % WIN_LENGTH;
 			i = 0;
+			j = sim->nb_creat;
 		}
-		if (creature->y == sim->population[i]->y)
+		if (*y == sim->population[i]->y || *y == sim->population[j]->y)
 		{
-			creature->y = random() % WIN_HEIGHT;
+			*y = random() % WIN_HEIGHT;
 			i = 0;
+			j = sim->nb_creat;
 		}
-		else
-			++i;
+		++i;
+		if (j > 0)
+			--j;
 	}
 }
 
@@ -49,7 +54,7 @@ t_creature	*init_creature(t_window *win, t_sim *sim)
 	creature->last_meal = 0;
 	creature->x = random() % WIN_LENGTH;
 	creature->y = random() % WIN_HEIGHT;
-	check_position(creature, sim);
+	check_creature_position(&creature->x, &creature->y, sim);
 	generate_color(win, creature);
 	return (creature);
 }

@@ -32,8 +32,8 @@ typedef struct	s_creature
 	int8_t	size;
 	int8_t	speed;
 	XColor	color;
-	size_t		x;
-	size_t		y;
+	int		x;
+	int		y;
 	time_t	last_meal;
 }				t_creature;
 
@@ -58,6 +58,13 @@ void	generate_color(t_window *win, t_creature *creature);
 int			init_display(t_window *win);
 void		destroy_display(t_window *win);
 
+//	SIM.C
+void	ft_sim(t_window *win, t_sim *sim);
+
+//	SIM_UTILS.C
+void	draw_creature(t_window *win, t_sim *sim);
+void	clear_creature(t_window *win, t_sim *sim);
+
 //	MOVE.C
 void		move_up(t_creature *c);
 void		move_down(t_creature *c);
@@ -66,11 +73,16 @@ void		move_left(t_creature *c);
 void		select_move(t_creature *c, int8_t m);
 
 //	CREATURE.C
-void	free_population(size_t nb_creat, t_creature **population);
-void		check_position(t_creature *creature, t_sim *sim);
+void		free_population(size_t nb_creat, t_creature **population);
+void		check_creature_position(int *x, int *y, t_sim *sim);
 t_creature	*init_creature(t_window *win, t_sim *sim);
-t_creature	**join_creature(t_window *win, t_sim *sim);
 t_creature	**create_new_creature(t_window *win, t_sim *sim);
+
+//	FOOD.C
+void	draw_food(t_window *win, t_sim *sim, t_food *t);
+void	clear_food(t_window *win, t_sim *sim);
+void	check_food_position(size_t *x, size_t *y, t_window *win, t_sim *sim);
+t_food	*init_food(t_window *win, t_sim *sim);
 
 //	SIGNAL.C
 void	int_signal(int sig, siginfo_t *a, void *sim);

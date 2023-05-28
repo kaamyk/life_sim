@@ -30,10 +30,7 @@ int	main(void)
 {
 	t_window	win;
 	t_sim		sim;
-	size_t		i;
-	size_t		counter;
 
-	counter = 0;
 	ft_signal();
 	init_display(&win);
 	init_sim(&win, &sim);
