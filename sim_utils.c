@@ -3,44 +3,56 @@
 void	draw_creature(t_window *win, t_sim *sim)
 {
 	size_t	i;
-	size_t	j;
 
 	i = 0;
-	j = sim->nb_creat;
-	while (i <= j)
+	while (i < sim->nb_creat)
 	{
 		XFillRectangle(win->display, win->win, win->gc,
 			sim->population[i]->x, sim->population[i]->y,
-			10 * sim->population[0]->size,
-			10 * sim->population[0]->size);
-		XFillRectangle(win->display, win->win, win->gc,
-			sim->population[j]->x, sim->population[j]->y,
-			10 * sim->population[0]->size,
-			10 * sim->population[0]->size);
+			10 * sim->population[i]->size,
+			10 * sim->population[i]->size);
 		++i;
-		if (j > 0)
-			--j;
 	}
 }
 
 void	clear_creature(t_window *win, t_sim *sim)
 {
 	size_t	i;
-	size_t	j;
 
 	i = 0;
-	j = sim->nb_creat;
-	while (i <= j)
+	while (i < sim->nb_creat)
 	{
 		XClearArea(win->display, win->win,
 			sim->population[i]->x, sim->population[i]->y,
 			10 * sim->population[i]->size, 10 * sim->population[i]->size, true);
+		++i;
+	}
+}
+
+void	draw_food(t_window *win, t_sim *sim)
+{
+	uint8_t	i;
+
+	i = 0;
+	while (i < sim->nb_food)
+	{
+		XFillRectangle(win->display, win->win, win->gc,
+			sim->food[i]->x, sim->food[i]->y, 3, 3);
+		++i;
+	}
+}
+
+void	clear_food(t_window *win, t_sim *sim)
+{
+	size_t	i;
+
+	i = 0;
+	while (sim->food[i])
+	{
 		XClearArea(win->display, win->win,
-			sim->population[j]->x, sim->population[j]->y,
-			10 * sim->population[j]->size, 10 * sim->population[j]->size, true);
+			sim->population[i]->x, sim->population[i]->y,
+			10 * sim->population[i]->size, 10 * sim->population[i]->size, true);
 		select_move(sim->population[i], random() % 5);
 		++i;
-		if (j > 0)
-			--j;
 	}
 }

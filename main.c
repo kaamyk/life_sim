@@ -16,7 +16,7 @@ void	init_sim(t_window *win, t_sim *sim)
 {
 	sim->population = malloc(sizeof(t_creature *) * 2);
 	sim->population[0] = malloc (sizeof (t_creature));
-	sim->population[0]->size = random() % 10;
+	sim->population[0]->size = 1;
 	sim->population[0]->speed = 1;
 	sim->population[0]->last_meal = 0;
 	sim->population[0]->x = random() % WIN_LENGTH;

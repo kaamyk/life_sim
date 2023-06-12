@@ -2,9 +2,10 @@
 
 void	move_up(t_creature *c)
 {
-	c->y -= 2 * c->speed;
-	if (c->y < 0)
-		c->y = WIN_HEIGHT;
+	if (c->y <= 1)
+		c->y = WIN_HEIGHT - (c->y - 2);
+	else
+		c->y -= 2 * c->speed;
 }
 
 void	move_down(t_creature *c)
@@ -23,9 +24,10 @@ void	move_right(t_creature *c)
 
 void	move_left(t_creature *c)
 {
-	c->x -= 2 * c->speed;
-	if (c->x < 0)
-		c->x = WIN_LENGTH;
+	if (c->x <= 1)
+		c->x = WIN_LENGTH - (c->x - 2);
+	else
+		c->x -= 2 * c->speed;
 }
 
 void	select_move(t_creature *c, int8_t m)
