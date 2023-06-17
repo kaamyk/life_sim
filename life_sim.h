@@ -3,7 +3,7 @@
 
 # define WIN_HEIGHT 1000
 # define WIN_LENGTH 1000
-# define BASICS
+# define NB_MAX_FOOD 250
 
 # include <stdlib.h>
 # include <stdio.h>
@@ -14,6 +14,7 @@
 # include <stdint.h>
 # include <time.h>
 # include <signal.h>
+# include <string.h>
 
 typedef struct sigaction t_sigaction;
 
@@ -78,7 +79,7 @@ void		select_move(t_creature *c, int8_t m);
 void		free_population(size_t nb_creat, t_creature **population);
 void		check_creature_position(uint8_t r, size_t *x, size_t *y, t_sim *sim);
 t_creature	*init_creature(t_window *win, t_sim *sim, uint8_t r);
-t_creature	**create_new_creature(t_window *win, t_sim *sim);
+t_creature	**create_new_creature(t_window *win, t_sim *sim, uint8_t *c_eat, uint8_t len);
 
 //	FOOD.C
 void		check_food_position(uint8_t r, size_t *x, size_t *y, t_sim *sim);

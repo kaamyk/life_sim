@@ -2,11 +2,13 @@
 
 void	draw_creature(t_window *win, t_sim *sim)
 {
+	//printf("\t>>>DRAW_CREATURE<<<\n");
 	size_t	i;
 
 	i = 0;
 	while (i < sim->nb_creat)
 	{
+		//printf("i == %ld\n", i);
 		XFillRectangle(win->display, win->win, win->gc,
 			sim->population[i]->x, sim->population[i]->y,
 			10 * sim->population[i]->size,

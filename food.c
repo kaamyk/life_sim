@@ -23,12 +23,12 @@ t_food	**init_food(t_window *win, t_sim *sim)
 	t_food	**t;
 	uint8_t	i;
 
-	t = malloc(sizeof(t_food *) * 151);
-	t[150] = NULL;
+	t = malloc(sizeof(t_food *) * (NB_MAX_FOOD + 1));
+	t[NB_MAX_FOOD] = NULL;
 	sim->food = t;
 	sim->nb_food = 0;
 	i = 0;
-	while (sim->nb_food < 150)
+	while (sim->nb_food < NB_MAX_FOOD)
 	{
 		t[i] = malloc(sizeof(t_food));
 		t[i]->x = random() % WIN_LENGTH;
