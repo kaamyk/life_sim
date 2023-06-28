@@ -1,31 +1,48 @@
 import tkinter as tk
-from tkinter import *
+import random
+from time import time
 
 class Creatures:
-	def __init__(self):
-		self.size = 10
+	def __init__(self, canvas):
 		self.speed = 1
-		self.x = 50
-		self.y = 50
-		self.last_meal = 0
+		self.size = 1
+		self.x0 = random.randint(0, 1920 - (10 * self.size))
+		self.y0 = random.randint(0, 1080 - (10 * self.size))
+		self.canvas = canvas
+		self.rect = canvas.create_rectangle(self.x0, self.y0, self.x0 + (10 * self.size), self.y0 - (10 * self.size), fill="black")
 
-	def move(self):
-		self.x += 5
+	def move(self, n):
+		if n == 0:
+			self.canvas.move(self.rect, 0, self.speed * self.speed)
+		elif n == 1:
+			self.canvas.move(self.rect, 0, -(self.speed) * self.speed)
+		elif n == 2:
+			self.canvas.move(self.rect, self.speed * self.speed, 0)
+		elif n == 3:
+			self.canvas.move(self.rect, -(self.speed) * self.speed, 0)
 
-def set_window_size(window, width, height):
-	window.geometry(f"{width}x{height}")
+class Food:
+	def __init__(self, canvas):
+		self.x0 = random.randint(0, 1920 - (10 * self.size))
+		self.y0 = random.randint(0, 1080 - (10 * self.size))
+
+	def init_food(self):
+
 
 def update_canvas():
-	print("Dans update_canvas")
-	canvas.delete("creature")
-	tommy.move()
-	canvas.create_rectangle(tommy.x, tommy.y, tommy.x+tommy.size, tommy.y+tommy.size, fill="white", tags="creature")
-	window.after(100, update_canvas)
+    rectangle.move(random.randint(0, 5))
+    window.after(10, update_canvas)  # Delay in milliseconds before the next update
 
 window = tk.Tk()
-set_window_size(window, 1920, 1080)
-canvas = tk.Canvas(window, bg="black", bd=2, width=10, height=10)
-canvas.grid(row=0, column=0)
-tommy = Creatures()
+window.geometry(f"1920x1080")
+
+canvas = tk.Canvas(window, bg="white", bd=2, width=1900, height=1060)
+canvas.pack()
+
+food = []
+
+rectangle = Creatures(canvas)
+
 update_canvas()
+
 window.mainloop()
