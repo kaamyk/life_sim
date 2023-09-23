@@ -6,6 +6,7 @@
 class	Creature
 {
 	private :
+		size_t					index;
 		std::chrono::seconds	_lifeTime;
 		size_t					_fitness;
 		Fixed					_gradientDescent;
@@ -15,6 +16,7 @@ class	Creature
 	public :
 		Creature( void );
 		~Creature( void );
+		checkTime( stdLLchrono::seconds const _timeToDie );
 
 		
 }

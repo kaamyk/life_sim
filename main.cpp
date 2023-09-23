@@ -12,6 +12,12 @@
 
 int	main( void )	
 {
-	Creature
+	Simulation	sim;
+
+	sim.createNewCreature();
+	while (sim.checkNbCreature() == 1)
+	{
+		sim.checkLifeTimes();
+	}
 	return ( 0 );
 }
