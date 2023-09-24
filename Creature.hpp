@@ -9,12 +9,12 @@
 class	Creature
 {
 	private :
-		unsigned int			_index;
-		std::chrono::seconds	_lifeTime;
-		unsigned int			_fitness;
-		Fixed					_gradientDescent;
-		Fixed					_speed;
-		Fixed					_size;
+		unsigned int	_index;
+		std::chrono::high_resolution_clock::time_point	_birthTime;
+		unsigned int	_fitness;
+		Fixed			_gradientDescent;
+		Fixed			_speed;
+		Fixed			_size;
 
 	public :
 		Creature( void );

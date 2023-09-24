@@ -15,6 +15,7 @@ int	main( void )
 {
 	Simulation	sim;
 
+	// sim.printTimeToDie();
 	sim.createNewCreature();
 	while (sim.checkNbCreature() == 1)
 		sim.checkLifeTimes();

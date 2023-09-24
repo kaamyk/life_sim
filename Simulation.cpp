@@ -9,7 +9,7 @@
 
 #include "Simulation.hpp"
 
-Simulation::Simulation( void ): _nbMaxCreature(10), _timeToDie(10),
+Simulation::Simulation( void ): _nbMaxCreature(5), _timeToDie(10),
 								_nbCreature(0)
 {
 	return ;
@@ -25,6 +25,12 @@ unsigned int	Simulation::giveIndex( void )
 	return ( this->_nbCreature );
 }
 
+
+// void	Simulation::printTimeToDie( void )
+// {
+// 	std::cout << "Time to die == " << this->_timeToDie << std::endl;
+// 	return ;
+// }
 
 void	Simulation::createNewCreature( void )
 {
@@ -49,19 +55,16 @@ void	Simulation::updateNbCreature( bool a )
 	return ;
 }
 
-void	Simulation::eraseCreature( std::vector<Creature>::iterator i)
-{
-	this->_population.erase(i);
-	return ;
-}
-
 void	Simulation::checkLifeTimes( void )
 {
-	for(std::vector<Creature>::iterator i = _population.begin(); i != _population.end(); ++i)
+	for(std::vector<Creature>::iterator i = _population.begin(); i != _population.end() && _population.size() != 0; ++i)
+	{
 		if (i->checkTime(this->_timeToDie))
 		{
+			std::cout << "In if erase()" << std::endl;
 			this->updateNbCreature(0);
-			this->eraseCreature(i);
+			this->_population.erase(i);
 		}
+	}
 
 }
