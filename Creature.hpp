@@ -1,3 +1,6 @@
+#ifndef CREATURE_HPP
+#define CREATURE_HPP
+
 #include <iostream>
 #include <chrono>
 
@@ -6,9 +9,9 @@
 class	Creature
 {
 	private :
-		size_t					index;
+		unsigned int			_index;
 		std::chrono::seconds	_lifeTime;
-		size_t					_fitness;
+		unsigned int			_fitness;
 		Fixed					_gradientDescent;
 		Fixed					_speed;
 		Fixed					_size;
@@ -16,7 +19,8 @@ class	Creature
 	public :
 		Creature( void );
 		~Creature( void );
-		checkTime( stdLLchrono::seconds const _timeToDie );
 
-		
-}
+		bool	checkTime( std::chrono::seconds const _timeToDie );		
+};
+
+#endif

@@ -1,24 +1,31 @@
+#ifndef	SIM_HPP
+#define SIM_HPP
+
 #include <iostream>
 #include <vector>
 
 #include "Fixed.hpp"
+#include "Creature.hpp"
 
 class	Simulation
 {
 	private :
-		size_t const				_nbMaxCreature;
+		unsigned int const			_nbMaxCreature;
 		std::chrono::seconds const	_timeToDie;
-		vector<Creature>			_population;
-		size_t						_nbCreature;
+		std::vector<Creature>		_population;
+		unsigned int				_nbCreature;
 
 
 	public :
 		Simulation( void );
 		~Simulation( void );
 
-		size_t	giveIndex( void );
-		void	updateNbCreature( bool a );
-		void	createNewCreature( void );
-		bool	checkNbCreature( void );
-		void	checkLifeTimes( void );
-}
+		unsigned int	giveIndex( void );
+		void			updateNbCreature( bool a );
+		void			createNewCreature( void );
+		bool			checkNbCreature( void );
+		void			checkLifeTimes( void );
+		void			eraseCreature( std::vector<Creature>::iterator i);
+};
+
+#endif

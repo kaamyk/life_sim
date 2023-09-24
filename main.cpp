@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include "Creature.hpp"
+#include "Simulation.hpp"
 
 int	main( void )	
 {
@@ -16,8 +17,6 @@ int	main( void )
 
 	sim.createNewCreature();
 	while (sim.checkNbCreature() == 1)
-	{
 		sim.checkLifeTimes();
-	}
 	return ( 0 );
 }
