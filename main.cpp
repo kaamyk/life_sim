@@ -8,16 +8,26 @@
 /************************************************************************/
 
 #include <iostream>
+#include <SFML/Graphics.hpp>
 #include "Creature.hpp"
 #include "Simulation.hpp"
 
 int	main( void )	
 {
 	Simulation	sim;
+	sf::RenderWindow	win(sf::VideoMode(640, 480), "Life Simulation");
 
-	// sim.printTimeToDie();
 	sim.createNewCreature();
-	while (sim.checkNbCreature() == 1)
+	while (win.isOpen() && sim.checkNbCreature())
+	{
+		sf::Event	event;
+		while(win.pollEvent(event))
+			if (event.type == sf::Event::Closed)
+				win.close();
 		sim.checkLifeTimes();
+		win.clear();
+		sim.drawPopulation(win);
+		win.display();
+	}
 	return ( 0 );
 }

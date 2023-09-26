@@ -25,13 +25,6 @@ unsigned int	Simulation::giveIndex( void )
 	return ( this->_nbCreature );
 }
 
-
-// void	Simulation::printTimeToDie( void )
-// {
-// 	std::cout << "Time to die == " << this->_timeToDie << std::endl;
-// 	return ;
-// }
-
 void	Simulation::createNewCreature( void )
 {
 	Creature	newCreature;
@@ -66,5 +59,12 @@ void	Simulation::checkLifeTimes( void )
 			this->_population.erase(i);
 		}
 	}
+	return ;
+}
 
+void	Simulation::drawPopulation( sf::RenderWindow& win )
+{
+	for (std::vector<Creature>::iterator i = _population.begin(); i != _population.end() && _population.size() != 0; ++i)
+		i->drawCreature(win);
+	return ;
 }

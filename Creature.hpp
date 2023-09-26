@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <chrono>
+#include <SFML/Graphics.hpp>
 
 #include "Fixed.hpp"
 
@@ -15,12 +16,15 @@ class	Creature
 		Fixed			_gradientDescent;
 		Fixed			_speed;
 		Fixed			_size;
+		sf::Texture		_creatureTexture;
+		sf::Sprite		_creatureSprite;
 
 	public :
 		Creature( void );
 		~Creature( void );
 
-		bool	checkTime( std::chrono::seconds const _timeToDie );		
+		bool	checkTime( std::chrono::seconds const _timeToDie );
+		void	drawCreature( sf::RenderWindow& win );
 };
 
 #endif
