@@ -6,7 +6,7 @@
 #    By: antoine <antoine@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/07 17:59:08 by anvincen          #+#    #+#              #
-#    Updated: 2023/09/27 00:03:38 by antoine          ###   ########.fr        #
+#    Updated: 2023/09/27 22:45:56 by antoine          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,8 @@ $(NAME)	:	$(OBJS)
 	@echo -e '\033[0;34mCompiling executable ...\x1b[37m'
 	@$(CCPP) $(CFLAGS) $(CPPFLAGS) $(OBJS) $(SFMLFLAGS) -o $(NAME)
 	@echo -e '\033[0;34mExecutable compilation : \x1b[32m>>> OK <<<\x1b[37m'
+	@sleep 0.5
+	@clear
 
 clean	:
 	@echo -e '\033[0;34mremoving object files ...\x1b[37m'

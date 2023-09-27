@@ -16,7 +16,7 @@ class	Creature
 		Fixed			_gradientDescent;
 		Fixed			_speed;
 		Fixed			_size;
-		sf::Texture		_creatureTexture;
+		// sf::Texture		_creatureTexture;
 		sf::Sprite		_creatureSprite;
 
 	public :
