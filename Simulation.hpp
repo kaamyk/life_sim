@@ -6,15 +6,16 @@
 #include <SFML/Graphics.hpp>
 
 #include "Fixed.hpp"
+#include "assetManager.hpp"
 #include "Creature.hpp"
 
 class	Simulation
 {
 	private :
-		unsigned int const			_nbMaxCreature;
-		std::chrono::seconds const	_timeToDie;
-		std::vector<Creature>		_population;
-		unsigned int				_nbCreature;
+		unsigned int const					_nbMaxCreature;
+		std::chrono::seconds const			_timeToDie;
+		std::vector<Creature>				_population;
+		unsigned int						_nbCreature;
 
 
 	public :
@@ -29,6 +30,7 @@ class	Simulation
 		bool			checkNbCreature( void );
 		void			checkLifeTimes( void );
 		void			drawPopulation( sf::RenderWindow& win );
+		void			createNewTexture( const std::string path );
 };
 
 #endif

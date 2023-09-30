@@ -6,7 +6,7 @@
 #    By: antoine <antoine@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/07 17:59:08 by anvincen          #+#    #+#              #
-#    Updated: 2023/09/27 22:45:56 by antoine          ###   ########.fr        #
+#    Updated: 2023/09/30 14:50:01 by antoine          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,10 +26,31 @@ VGFLAGS		=	-g
 
 all		:	$(OBJS) $(NAME)
 
-%.o		:	%.c
+%.o		:	%.cpp
+	@clear
+	@echo "Compiling " $<
+	@sleep 0.1
+	@clear
+	@echo "Compiling " $< " ."
+	@sleep 0.1
+	@clear
+	@echo "Compiling " $< " .."
+	@sleep 0.1
+	@clear
+	@echo "Compiling " $< " ..."
 	@$(CCPP) $(CFLAGS) $(CPPFLAGS) $(SFMLFLAGS) -c $< -o $@ 
 
 $(NAME)	:	$(OBJS)
+	@clear
+	@echo -e '\033[0;34mObjects compilation : \x1b[32m>>> OK <<<\x1b[37m'
+	@echo -e '\033[0;34mCompiling executable ...\x1b[37m'
+	@$(CCPP) $(VGFLAGS) $(CFLAGS) $(CPPFLAGS) $(OBJS) $(SFMLFLAGS) -o $(NAME)
+	@echo -e '\033[0;34mExecutable compilation : \x1b[32m>>> OK <<<\x1b[37m'
+	@sleep 0.5
+	@clear
+
+vg		:	$(OBJS)
+	@clear
 	@echo -e '\033[0;34mObjects compilation : \x1b[32m>>> OK <<<\x1b[37m'
 	@echo -e '\033[0;34mCompiling executable ...\x1b[37m'
 	@$(CCPP) $(CFLAGS) $(CPPFLAGS) $(OBJS) $(SFMLFLAGS) -o $(NAME)

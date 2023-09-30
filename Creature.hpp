@@ -11,12 +11,12 @@ class	Creature
 {
 	private :
 		unsigned int	_index;
-		std::chrono::high_resolution_clock::time_point	_birthTime;
 		unsigned int	_fitness;
 		Fixed			_gradientDescent;
 		Fixed			_speed;
 		Fixed			_size;
-		// sf::Texture		_creatureTexture;
+		std::chrono::high_resolution_clock::time_point	_birthTime;
+		sf::Texture		_creatureTexture;
 		sf::Sprite		_creatureSprite;
 
 	public :
@@ -24,7 +24,7 @@ class	Creature
 		~Creature( void );
 
 		bool	checkTime( std::chrono::seconds const _timeToDie );
-		void	drawCreature( sf::RenderWindow& win );
+		void	drawCreature( sf::RenderWindow& win, sf::Texture& texture );
 };
 
 #endif

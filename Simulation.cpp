@@ -25,11 +25,29 @@ unsigned int	Simulation::giveIndex( void )
 	return ( this->_nbCreature );
 }
 
+void	Simulation::createNewTexture( const std::string path )
+{
+	sf::Texture	texture;
+	std::map<std::string, sf::Texture&>::iterator	it;
+
+	it = this->_textures.find(path);
+	if (it != this->_textures.end())
+		return ;
+	if (texture.loadFromFile(path) == 0)
+		std::cerr << "Texture load failed" << std::endl;
+	this->_textures.insert(std::pair<std::string, sf::Texture&>(path, texture));
+	return ;
+}
+
+
+
 void	Simulation::createNewCreature( void )
 {
 	Creature	newCreature;
+	std::string	path("./images/creature.png");
 
-	_population.push_back(newCreature);
+	this->_population.push_back(newCreature);
+	createNewTexture(path);
 	updateNbCreature( 1 );
 	return ;
 }
@@ -41,10 +59,7 @@ bool	Simulation::checkNbCreature( void )
 
 void	Simulation::updateNbCreature( bool a )
 {
-	if (a)
-		++(this->_nbCreature);
-	else
-		--(this->_nbCreature);
+	a ? ++(this->_nbCreature) : --(this->_nbCreature);
 	return ;
 }
 
@@ -64,7 +79,9 @@ void	Simulation::checkLifeTimes( void )
 
 void	Simulation::drawPopulation( sf::RenderWindow& win )
 {
+	const std::string&	path("./images/creature.png");
+
 	for (std::vector<Creature>::iterator i = _population.begin(); i != _population.end() && _population.size() != 0; ++i)
-		i->drawCreature(win);
+		i->drawCreature(win, getTexture(path));
 	return ;
 }
