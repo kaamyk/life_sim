@@ -20,9 +20,11 @@ bool	Creature::checkTime( std::chrono::seconds const _timeToDie )
 	return (t - this->_birthTime >= _timeToDie);
 }
 
-void	Creature::drawCreature( sf::RenderWindow& win, sf::Texture& texture )
+void	Creature::drawCreature( sf::RenderWindow& win, assetManager& _assets )
 {
-	this->_creatureSprite.setTexture(texture);
+	const std::string&	path("./images/creature.png");
+
+	this->_creatureSprite.setTexture(_assets.getTexture(path));
 	this->_creatureSprite.setTextureRect(sf::IntRect(0, 0, 50, 50));
 	this->_creatureSprite.setPosition(100, 25);
 	win.draw( this->_creatureSprite);

@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Fixed.hpp"
+#include "assetManager.hpp"
 
 class	Creature
 {
@@ -24,7 +25,7 @@ class	Creature
 		~Creature( void );
 
 		bool	checkTime( std::chrono::seconds const _timeToDie );
-		void	drawCreature( sf::RenderWindow& win, sf::Texture& texture );
+		void	drawCreature( sf::RenderWindow& win, assetManager& _assets );
 };
 
 #endif

@@ -6,13 +6,14 @@
 #    By: antoine <antoine@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/07 17:59:08 by anvincen          #+#    #+#              #
-#    Updated: 2023/09/30 14:50:01 by antoine          ###   ########.fr        #
+#    Updated: 2023/10/01 19:32:52 by antoine          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	lifesim
 
-SRCS		=	main.cpp	Fixed.cpp	Simulation.cpp	Creature.cpp
+SRCS		=	main.cpp	Fixed.cpp	Simulation.cpp	Creature.cpp	\
+				assetManager.cpp
 
 OBJS		=	$(SRCS:.cpp=.o)
 
