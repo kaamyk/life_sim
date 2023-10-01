@@ -1,0 +1,2 @@
+https://www.codesansar.com/numerical-methods/linear-interpolation-method-algorithm.htm
+https://www.codesansar.com/numerical-methods/linear-interpolation-method-using-cpp-output.htm

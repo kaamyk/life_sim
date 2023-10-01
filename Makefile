@@ -6,7 +6,7 @@
 #    By: antoine <antoine@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/07 17:59:08 by anvincen          #+#    #+#              #
-#    Updated: 2023/10/01 19:32:52 by antoine          ###   ########.fr        #
+#    Updated: 2023/10/01 21:32:46 by antoine          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,12 +30,6 @@ all		:	$(OBJS) $(NAME)
 %.o		:	%.cpp
 	@clear
 	@echo "Compiling " $<
-	@sleep 0.1
-	@clear
-	@echo "Compiling " $< " ."
-	@sleep 0.1
-	@clear
-	@echo "Compiling " $< " .."
 	@sleep 0.1
 	@clear
 	@echo "Compiling " $< " ..."

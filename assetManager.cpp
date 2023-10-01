@@ -32,6 +32,5 @@ void	assetManager::createNewTexture( const std::string path )
 
 sf::Texture&	assetManager::getTexture( const std::string& path )
 {
-	// std::cout << this->_textures.at(path).getSize() << std::endl;
 	return (_textures.at(path));
 }

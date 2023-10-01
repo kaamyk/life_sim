@@ -9,6 +9,9 @@
 #include "assetManager.hpp"
 #include "Creature.hpp"
 
+#define	WIN_H 640
+#define WIN_L 480
+
 class	Simulation
 {
 	private :
