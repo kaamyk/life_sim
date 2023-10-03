@@ -7,7 +7,7 @@
 /*																		*/
 /************************************************************************/
 
-#include "Simulation.hpp"
+#include "../includes/Simulation.hpp"
 
 Simulation::Simulation( void ): _nbMaxCreature(5), _timeToDie(10),
 								_nbCreature(0)

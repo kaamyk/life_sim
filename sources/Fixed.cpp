@@ -6,12 +6,12 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 12:39:16 by anvincen          #+#    #+#             */
-/*   Updated: 2023/09/19 23:15:59 by antoine          ###   ########.fr       */
+/*   Updated: 2023/10/03 23:19:39 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cmath>
-#include "Fixed.hpp"
+#include "../includes/Fixed.hpp"
 
 //		CONSTRUCTOR
 

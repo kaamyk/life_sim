@@ -1,4 +1,4 @@
-#include "Creature.hpp"
+#include "../includes/Creature.hpp"
 
 Creature::Creature( void ): _fitness(0),
 							_gradientDescent(0),

@@ -1,4 +1,4 @@
-#include "assetManager.hpp"
+#include "../includes/assetManager.hpp"
 
 assetManager::assetManager( void )
 {
