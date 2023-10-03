@@ -14,9 +14,10 @@ class	Creature
 		unsigned int	_index;
 		unsigned int	_fitness;
 		Fixed			_gradientDescent;
-		size_t			_position[2];
+		Fixed			_position[2];
+		unsigned int	_target[2];
 		Fixed			_rotation;
-		size_t			_speed;
+		Fixed			_speed;
 		Fixed			_size;
 		std::chrono::high_resolution_clock::time_point	_birthTime;
 		sf::Texture		_creatureTexture;
@@ -29,7 +30,10 @@ class	Creature
 
 		bool	checkTime( std::chrono::seconds const _timeToDie );
 		void	drawCreature( sf::RenderWindow& win, assetManager& _assets );
-		void	move( size_t win_l, size_t win_h );
+		void	setTarget( unsigned int x, unsigned int y );
+		bool	checkTarget( void );
+		void	moveToTarget( void );
+		void	moveRandom( unsigned int win_l, unsigned int win_h );
 };
 
 #endif

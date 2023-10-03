@@ -65,7 +65,10 @@ void	Simulation::drawPopulation( sf::RenderWindow& win )
 {
 	for (std::vector<Creature>::iterator i = _population.begin(); i != _population.end() && _population.size() != 0; ++i)
 	{
-		i->move( WIN_L, WIN_H );
+		if (i->checkTarget())
+			i->moveToTarget();
+		else
+			i->moveRandom( WIN_L, WIN_H );
 		i->drawCreature(win, _assets);
 	}
 	return ;

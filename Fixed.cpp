@@ -147,7 +147,6 @@ Fixed	Fixed::operator--( int )
 	return ( tmp );
 }
 
-
 //		PUBLIC FUNCTIONS
 
 Fixed const&	Fixed::max(Fixed const& a, Fixed const& b)
