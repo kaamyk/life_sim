@@ -12,15 +12,18 @@ Creature::Creature( void ): _fitness(0),
 	return ;
 }
 
+							// _position {(int)(rand() % win_l), (int)(rand() % win_h)},
 Creature::Creature( size_t const win_h, size_t const win_l ): _fitness(0),
 							_gradientDescent(0),
-							_position {(int)(rand() % win_l), (int)(rand() % win_h)},
+							_position {640, 480},
 							_target {0, 0},
 							_rotation(0),
 							_speed(rand() % 100),
 							_size(rand() % 100),
 							_birthTime(std::chrono::high_resolution_clock::now())
 {
+	(void)win_h;
+	(void)win_l;
 	return ;
 }
 
@@ -47,10 +50,12 @@ void	Creature::drawCreature( sf::RenderWindow& win, assetManager& _assets )
 	return ;
 }
 
-void	Creature::setTarget( unsigned int x, unsigned int y )
+void	Creature::setTarget( Food food[10] )
 {
-	this->_target[0] = x;
-	this->_target[1] = y;
+	unsigned int	*targetPosition = food[0].getCoordinates();
+
+	this->_target[0] = targetPosition[0];
+	this->_target[1] = targetPosition[1];
 	return ;
 }
 
@@ -64,6 +69,7 @@ void	Creature::moveToTarget( void )
 	std::cout << ">>> moveTarget()" << std::endl;
 	_position[0] = _position[0] + ((_target[0] - _position[0].toFloat()) * (_speed.toFloat() / 100));
 	_position[1] = _position[1] + ((_target[1] - _position[1].toFloat()) * (_speed.toFloat() / 100));
+	std::cout << _position[0] << " | " << _position[1] << std::endl;
 }
 
 void	Creature::moveRandom( unsigned int win_l, unsigned int win_h )
@@ -86,6 +92,6 @@ void	Creature::moveRandom( unsigned int win_l, unsigned int win_h )
 		this->_position[1].setRawBits(0);
 	else
 		this->_position[1] = this->_position[1] + (-1 * n) * (this->_speed.toFloat() / 100);
-	std::cout << _position[0] << " | " << _position[1] << std::endl;
+	// std::cout << _position[0] << " | " << _position[1] << std::endl;
 	return ;
 }

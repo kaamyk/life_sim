@@ -19,6 +19,7 @@ int	main( void )
 	sf::RenderWindow	win(sf::VideoMode(640, 480), "Life Simulation");
 
 	win.setFramerateLimit(30);
+	sim.loadTextures();
 	sim.createNewCreature();
 	while (win.isOpen() && sim.checkNbCreature())
 	{
@@ -29,6 +30,7 @@ int	main( void )
 		sim.checkLifeTimes();
 		win.clear();
 		sim.drawPopulation(win);
+		sim.drawAllFood(win);
 		win.display();
 	}
 	return ( 0 );

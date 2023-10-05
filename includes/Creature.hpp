@@ -7,6 +7,7 @@
 
 #include "Fixed.hpp"
 #include "assetManager.hpp"
+#include "Food.hpp"
 
 class	Creature
 {
@@ -30,7 +31,7 @@ class	Creature
 
 		bool	checkTime( std::chrono::seconds const _timeToDie );
 		void	drawCreature( sf::RenderWindow& win, assetManager& _assets );
-		void	setTarget( unsigned int x, unsigned int y );
+		void	setTarget( Food food[10] );
 		bool	checkTarget( void );
 		void	moveToTarget( void );
 		void	moveRandom( unsigned int win_l, unsigned int win_h );
