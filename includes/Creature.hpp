@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <chrono>
+#include <cmath>
 #include <SFML/Graphics.hpp>
 
 #include "Fixed.hpp"
@@ -16,7 +17,7 @@ class	Creature
 		unsigned int	_fitness;
 		Fixed			_gradientDescent;
 		Fixed			_position[2];
-		unsigned int	_target[2];
+		unsigned int	_targets[3][2];
 		Fixed			_rotation;
 		Fixed			_speed;
 		Fixed			_size;
@@ -31,9 +32,10 @@ class	Creature
 
 		bool	checkTime( std::chrono::seconds const _timeToDie );
 		void	drawCreature( sf::RenderWindow& win, assetManager& _assets );
-		void	setTarget( Food food[10] );
-		bool	checkTarget( void );
-		void	moveToTarget( void );
+		void	printTargets( void );
+		void	setTargets( Food food[10] );
+		bool	targetsEmpty( void );
+		void	moveToTargets( void );
 		void	moveRandom( unsigned int win_l, unsigned int win_h );
 };
 

@@ -3,7 +3,7 @@
 Creature::Creature( void ): _fitness(0),
 							_gradientDescent(0),
 							_position {0, 0},
-							_target {0, 0},
+							_targets {{0, 0}, {0, 0}, {0, 0}},
 							_rotation(0),
 							_speed(rand() % 100),
 							_size(rand() % 100),
@@ -16,7 +16,7 @@ Creature::Creature( void ): _fitness(0),
 Creature::Creature( size_t const win_h, size_t const win_l ): _fitness(0),
 							_gradientDescent(0),
 							_position {640, 480},
-							_target {0, 0},
+							_targets {{0, 0}, {0, 0}, {0, 0}},
 							_rotation(0),
 							_speed(rand() % 100),
 							_size(rand() % 100),
@@ -50,26 +50,67 @@ void	Creature::drawCreature( sf::RenderWindow& win, assetManager& _assets )
 	return ;
 }
 
-void	Creature::setTarget( Food food[10] )
+void	Creature::printTargets( void )
 {
-	unsigned int	*targetPosition = food[0].getCoordinates();
-
-	this->_target[0] = targetPosition[0];
-	this->_target[1] = targetPosition[1];
+	for(unsigned int i = 0; i < 3; ++i)
+		std::cout << "targets[" << i << "][0] == " << _targets[i][0] << " | targets[" << i << "][1] == " << _targets[i][1] << std::endl;
 	return ;
 }
 
-bool	Creature::checkTarget( void )
+void	Creature::setTargets( Food food[10] )
 {
-	return (_target[0] || _target[1]);
+	for (unsigned int i = 0; i < 10; ++i) // Runs trough food
+	{
+		for (unsigned int j = 0; j < 3; ++j) // Runs trough _targets
+		{
+			if (pow(food[i].getCoordinates()[0] - _position[0].toInt(), 2) + pow(food[i].getCoordinates()[1] - _position[1].toInt(), 2)
+				< pow( _targets[j][0] + _position[0].toInt(), 2) + pow(_targets[j][1] + _position[1].toInt(), 2)
+				|| (!_targets[j][0] && !_targets[j][1]))
+			{
+				std::cout << "In if => j == " << j << std::endl;
+				for (unsigned int k = 2; k > 0 && k != j; --k)
+				{
+					_targets[k][0] = _targets[k - 1][0];
+					_targets[k][1] = _targets[k - 1][1];
+				}
+				_targets[j][0] = food[i].getCoordinates()[0];
+				_targets[j][1] = food[i].getCoordinates()[1];
+				++j;
+			}
+		}
+	}
+	this->printTargets();
+	return ;
 }
 
-void	Creature::moveToTarget( void )
+bool	Creature::targetsEmpty( void )
 {
-	std::cout << ">>> moveTarget()" << std::endl;
-	_position[0] = _position[0] + ((_target[0] - _position[0].toFloat()) * (_speed.toFloat() / 100));
-	_position[1] = _position[1] + ((_target[1] - _position[1].toFloat()) * (_speed.toFloat() / 100));
+	return (_targets[0][0] || _targets[0][1]);
+}
+
+bool	Creature::onFstTarget( void )
+{
+	return (_position[0] == _targets[0][0] && _position[1] == _targets[0][1]);
+}
+
+bool	Creature::onSecTarget( void )
+{
+	return (_position[0] == _targets[1][0] && _position[1] == _targets[1][1]);
+}
+
+bool	Creature::onThrTarget( void )
+{
+	return (_position[0] == _targets[2][0] && _position[1] == _targets[2][1]);
+}
+
+void	Creature::moveToTargets( void )
+{
+	std::cout << ">>> moveToTarget()" << std::endl;
+	_position[0] = _position[0] + ((_targets[0][0] - _position[0].toFloat()) * (_speed.toFloat() / 100));
+	_position[1] = _position[1] + ((_targets[0][1] - _position[1].toFloat()) * (_speed.toFloat() / 100));
 	std::cout << _position[0] << " | " << _position[1] << std::endl;
+	// if (_position[0] == _targets[0] && _position[1] == _targets[1])
+	// 	eat();
 }
 
 void	Creature::moveRandom( unsigned int win_l, unsigned int win_h )
