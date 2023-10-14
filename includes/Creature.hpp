@@ -19,6 +19,7 @@ class	Creature
 		Fixed			_position[2];
 		unsigned int	_targets[3][2];
 		Fixed			_rotation;
+		Fixed			_direction[2];
 		Fixed			_speed;
 		Fixed			_size;
 		std::chrono::high_resolution_clock::time_point	_birthTime;
@@ -32,11 +33,10 @@ class	Creature
 
 		bool	checkTime( std::chrono::seconds const _timeToDie );
 		void	drawCreature( sf::RenderWindow& win, assetManager& _assets );
-		void	printTargets( void );
-		void	setTargets( Food food[10] );
-		bool	targetsEmpty( void );
-		void	moveToTargets( void );
-		void	moveRandom( unsigned int win_l, unsigned int win_h );
+		void	move_up( void );
+		void	move_down( void );
+		void	move_left( void );
+		void	move_right( void );
 };
 
 #endif

@@ -1,29 +1,16 @@
 #include "../includes/Creature.hpp"
 
-Creature::Creature( void ): _fitness(0),
-							_gradientDescent(0),
-							_position {0, 0},
-							_targets {{0, 0}, {0, 0}, {0, 0}},
-							_rotation(0),
-							_speed(rand() % 100),
-							_size(rand() % 100),
-							_birthTime(std::chrono::high_resolution_clock::now())
-{
-	return ;
-}
-
 							// _position {(int)(rand() % win_l), (int)(rand() % win_h)},
 Creature::Creature( size_t const win_h, size_t const win_l ): _fitness(0),
 							_gradientDescent(0),
-							_position {640, 480},
+							_position {rand() % win_l, rand() % win_h},
 							_targets {{0, 0}, {0, 0}, {0, 0}},
 							_rotation(0),
+							_direction {0, 0},
 							_speed(rand() % 100),
 							_size(rand() % 100),
 							_birthTime(std::chrono::high_resolution_clock::now())
 {
-	(void)win_h;
-	(void)win_l;
 	return ;
 }
 
@@ -50,89 +37,77 @@ void	Creature::drawCreature( sf::RenderWindow& win, assetManager& _assets )
 	return ;
 }
 
-void	Creature::printTargets( void )
+void	Creature::move_up( void )
 {
-	for(unsigned int i = 0; i < 3; ++i)
-		std::cout << "targets[" << i << "][0] == " << _targets[i][0] << " | targets[" << i << "][1] == " << _targets[i][1] << std::endl;
+	if (_positon[1] >= _speed)
+		_position[1] -= _speed;
+	else
+		_position[1] -= _position[1] - _speed;
+
+	if (_rotation >= 20 && _rotation <= 180)
+		_rotation -= 20;
+	else if (_rotation > 180 && _rotation <= 340)
+		_rotation += 20;
+	else if ((_rotation > 0 && _rotation < 20) || (_rotation > 340 && _rotation < 360))
+		_rotation = 0;
 	return ;
 }
 
-void	Creature::setTargets( Food food[10] )
+void	Creature::move_down( void )
 {
-	for (unsigned int i = 0; i < 10; ++i) // Runs trough food
+	if (_position[1] + _speed <= WIN_H)
+		_position[1] += _speed;
+	else
+		_position[1] += WIN_H;
+
+	if (_rotation >= 110 && _rotation < 360)
+		_rotation -= 20;
+	else if (_rotation > 0 && _rotation <= 70)
+		_rotation += 20;
+	else if ((_rotation > 90 && _rotation < 110) || (_rotation > 70 && _rotation < 90))
+		_rotation = 0;
+	return ;
+}
+
+void	Creature::move_left( void )
+{
+	if (_position[0] >= _speed)
+		_position[0] -= _speed;
+	else
+		_position[0] -= _position[0] - _speed;
+	if (_rotation != 270 && _rotation >= 180 && _rotation < 270)
+		_rotation += 20;
+
+	if ((_rotation >= 0 && _rotation <= 90) || (_rotation <= 360 && _rotation > 270))
 	{
-		for (unsigned int j = 0; j < 3; ++j) // Runs trough _targets
-		{
-			if (pow(food[i].getCoordinates()[0] - _position[0].toInt(), 2) + pow(food[i].getCoordinates()[1] - _position[1].toInt(), 2)
-				< pow( _targets[j][0] + _position[0].toInt(), 2) + pow(_targets[j][1] + _position[1].toInt(), 2)
-				|| (!_targets[j][0] && !_targets[j][1]))
-			{
-				std::cout << "In if => j == " << j << std::endl;
-				for (unsigned int k = 2; k > 0 && k != j; --k)
-				{
-					_targets[k][0] = _targets[k - 1][0];
-					_targets[k][1] = _targets[k - 1][1];
-				}
-				_targets[j][0] = food[i].getCoordinates()[0];
-				_targets[j][1] = food[i].getCoordinates()[1];
-				++j;
-			}
-		}
+		if (_rotation - 20 < 0)
+			_rotation += 360;
+		_rotation -= 20;
 	}
-	this->printTargets();
+	else if (_rotation > 90 && _rotation <= 250)
+		_rotation += 20;
+	else if ((_rotation > 270 && _rotation < 290) || (_rotation < 270 && _rotation > 250))
+		_rotation = 270;
 	return ;
 }
 
-bool	Creature::targetsEmpty( void )
+void	Creature::move_right( void )
 {
-	return (_targets[0][0] || _targets[0][1]);
-}
-
-bool	Creature::onFstTarget( void )
-{
-	return (_position[0] == _targets[0][0] && _position[1] == _targets[0][1]);
-}
-
-bool	Creature::onSecTarget( void )
-{
-	return (_position[0] == _targets[1][0] && _position[1] == _targets[1][1]);
-}
-
-bool	Creature::onThrTarget( void )
-{
-	return (_position[0] == _targets[2][0] && _position[1] == _targets[2][1]);
-}
-
-void	Creature::moveToTargets( void )
-{
-	std::cout << ">>> moveToTarget()" << std::endl;
-	_position[0] = _position[0] + ((_targets[0][0] - _position[0].toFloat()) * (_speed.toFloat() / 100));
-	_position[1] = _position[1] + ((_targets[0][1] - _position[1].toFloat()) * (_speed.toFloat() / 100));
-	std::cout << _position[0] << " | " << _position[1] << std::endl;
-	// if (_position[0] == _targets[0] && _position[1] == _targets[1])
-	// 	eat();
-}
-
-void	Creature::moveRandom( unsigned int win_l, unsigned int win_h )
-{
-	bool	n;
-
-	std::cout << ">>> moveRandom()" << std::endl;
-	n = rand() % 2;
- 	if ((this->_position[0].toFloat() + ((-1 * n) * (this->_speed.toFloat() / 100))) < 0)
-		this->_position[0].setRawBits(win_l);
-	else if (this->_position[0].toFloat() + ((-1 * n) * (this->_speed.toFloat() / 100)) >= win_l)
-		this->_position[0].setRawBits(0);
+	if (_position[0] + _speed <= WIN_L)
+		_position[0] += _speed;
 	else
-		this->_position[0] = this->_position[0] + (-1 * n) * (this->_speed.toFloat() / 100);
+		_position[0] += WIN_L;
 
-	n = rand() % 2;
-	if ((int)(this->_position[1].toFloat() + ((-1 * n) * (this->_speed.toFloat() / 100))) < 0)
-		this->_position[1].setRawBits(win_h);
-	else if (this->_position[1].toFloat() + ((-1 * n) * (this->_speed.toFloat() / 100)) >= win_h)
-		this->_position[1].setRawBits(0);
-	else
-		this->_position[1] = this->_position[1] + (-1 * n) * (this->_speed.toFloat() / 100);
-	// std::cout << _position[0] << " | " << _position[1] << std::endl;
+	if ((_rotation >= 0 && _rotation < 90) || (_rotation <= 360 && _rotation >= 270))
+	{
+		if (_rotation + 20 > 360)
+			_rotation = (_rotation + 20) - 360;
+		else
+			_rotation -= 20;
+	}
+	else if (_rotation > 110 && _rotation <= 270)
+		_rotation += 20;
+	else if ((_rotation > 90 && _rotation < 110) || (_rotation < 90 && _rotation > 70))
+		_rotation = 90;
 	return ;
 }
