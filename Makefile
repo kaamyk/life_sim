@@ -16,7 +16,7 @@ SRCDIR		=	sources
 
 SRCS		=	$(wildcard $(SRCDIR)/*.cpp)
 
-OBJDIR		=	obj
+OBJDIR		=	.obj
 
 OBJS		=	$(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRCS))
 

@@ -26,6 +26,11 @@ void			Simulation::loadTextures( void )
 	_assets.createNewTexture("./images/foodParticule.png");
 }
 
+int				Simulation::lerp(unsigned int A, unsigned int B, unsigned int t)
+{
+	return (A + ((B - A) * y))
+}
+
 unsigned int	Simulation::giveIndex( void )
 {
 	return ( this->_nbCreature );
@@ -71,12 +76,7 @@ void	Simulation::drawPopulation( sf::RenderWindow& win )
 
 	for (std::vector<Creature>::iterator i = _population.begin(); i != _population.end() && _population.size() != 0; ++i)
 	{
-		if (!i->checkTarget() || i->)
-			i->setTargets(_food);
-		if (i->checkTarget())
-			i->moveToTargets();
-		else
-			i->moveRandom( WIN_L, WIN_H );
+		i->moveUp();
 		i->drawCreature(win, _assets);
 	}
 	return ;

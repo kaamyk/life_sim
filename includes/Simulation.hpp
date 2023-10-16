@@ -14,6 +14,8 @@
 #define WIN_L 480
 #define	NBFOOD 10
 
+class	Creature;
+
 class	Simulation
 {
 	private :

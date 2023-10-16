@@ -6,8 +6,10 @@
 #include <cmath>
 #include <SFML/Graphics.hpp>
 
-#include "Fixed.hpp"
+#include "Simulation.hpp"
 #include "assetManager.hpp"
+#include "Fixed.hpp"
+#include "Sensor.hpp"
 #include "Food.hpp"
 
 class	Creature
@@ -17,26 +19,27 @@ class	Creature
 		unsigned int	_fitness;
 		Fixed			_gradientDescent;
 		Fixed			_position[2];
-		unsigned int	_targets[3][2];
 		Fixed			_rotation;
 		Fixed			_direction[2];
 		Fixed			_speed;
 		Fixed			_size;
+		Sensor			_sensor;
 		std::chrono::high_resolution_clock::time_point	_birthTime;
 		sf::Texture		_creatureTexture;
 		sf::Sprite		_creatureSprite;
 
 	public :
 		Creature( void );
-		Creature( size_t const win_h, size_t const win_l );
+		Creature( int const win_h, int const win_l );
 		~Creature( void );
 
-		bool	checkTime( std::chrono::seconds const _timeToDie );
-		void	drawCreature( sf::RenderWindow& win, assetManager& _assets );
-		void	move_up( void );
-		void	move_down( void );
-		void	move_left( void );
-		void	move_right( void );
+		bool		checkTime( std::chrono::seconds const _timeToDie );
+		Fixed[2]	getPosition( void ) const;
+		void		drawCreature( sf::RenderWindow& win, assetManager& _assets );
+		void		moveUp( void );
+		void		moveDown( void );
+		void		moveLeft( void );
+		void		moveRight( void );
 };
 
 #endif
