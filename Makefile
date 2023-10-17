@@ -6,7 +6,7 @@
 #    By: antoine <antoine@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/07 17:59:08 by anvincen          #+#    #+#              #
-#    Updated: 2023/10/05 21:51:44 by antoine          ###   ########.fr        #
+#    Updated: 2023/10/17 22:11:25 by antoine          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ $(OBJDIR)/%.o	:	$(SRCDIR)/%.cpp
 	@$(CCPP) $(CFLAGS) $(CPPFLAGS) $(SFMLFLAGS) -c $< -o $@ 
 	@clear
 	@echo -e 'Compiling ' $< ' \x1b[32m>>> OK <<<\x1b[37m'
-	@sleep 0.5
+	@sleep 0.1
 
 $(NAME)			:	$(OBJS)
 	@clear
@@ -59,7 +59,7 @@ fclean			:	clean
 	@rm -f $(NAME)
 	clear
 	@echo -e '\033[0;34mRemoving executable files \x1b[32m>>> OK <<<\x1b[37m'
-	@sleep 1
+	@sleep 0.3
 	@clear
 
 re		: fclean	all

@@ -7,6 +7,7 @@
 
 #include "Fixed.hpp"
 #include "assetManager.hpp"
+#include "Sensor.hpp"
 #include "Creature.hpp"
 #include "Food.hpp"
 

@@ -3,16 +3,23 @@
 
 # include "Simulation.hpp"
 
-class	Sensor:
+class Creature;
+
+class	Sensor
 {
 	private:
 		unsigned int	_rayCount;
 		unsigned int	_rayLenght;
-		unsigned int	_raySpread;
-		unsigned int	***_rays;
+		Fixed			_raySpread;
+		unsigned int***	_rays;
+		sf::Vertex		_raySprite[2];
+
 	public:
 		Sensor( void );
+		~Sensor( void );
 
+		void	update( Creature c );
+		void	drawRay( sf::RenderWindow& win );
 };
 
 #endif

@@ -10,11 +10,13 @@ Creature::Creature( int const win_h, int const win_l ): _fitness(0),
 							_size(rand() % 100),
 							_birthTime(std::chrono::high_resolution_clock::now())
 {
+	_sensor = new Sensor();
 	return ;
 }
 
 Creature::~Creature( void )
 {
+	delete _sensor;
 	return ;
 }
 
@@ -24,9 +26,9 @@ bool	Creature::checkTime( std::chrono::seconds const _timeToDie )
 	return (t - this->_birthTime >= _timeToDie);
 }
 
-Fixed[2]	Creature::getPosition( void ) const
+Fixed	Creature::getCoordinates( bool xy ) const
 {
-	return ({_position[0], _position[1]});
+	return (_position[xy]);
 }
 
 void	Creature::drawCreature( sf::RenderWindow& win, assetManager& _assets )

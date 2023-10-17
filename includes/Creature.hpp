@@ -7,10 +7,8 @@
 #include <SFML/Graphics.hpp>
 
 #include "Simulation.hpp"
-#include "assetManager.hpp"
-#include "Fixed.hpp"
-#include "Sensor.hpp"
-#include "Food.hpp"
+
+// class Sensor;
 
 class	Creature
 {
@@ -23,7 +21,7 @@ class	Creature
 		Fixed			_direction[2];
 		Fixed			_speed;
 		Fixed			_size;
-		Sensor			_sensor;
+		Sensor*			_sensor;
 		std::chrono::high_resolution_clock::time_point	_birthTime;
 		sf::Texture		_creatureTexture;
 		sf::Sprite		_creatureSprite;
@@ -34,7 +32,7 @@ class	Creature
 		~Creature( void );
 
 		bool		checkTime( std::chrono::seconds const _timeToDie );
-		Fixed[2]	getPosition( void ) const;
+		Fixed		getCoordinates( bool xy ) const;
 		void		drawCreature( sf::RenderWindow& win, assetManager& _assets );
 		void		moveUp( void );
 		void		moveDown( void );
