@@ -12,14 +12,15 @@ class	Sensor
 		unsigned int	_rayLenght;
 		Fixed			_raySpread;
 		unsigned int***	_rays;
-		sf::Vertex		_raySprite[2];
+		sf::Texture		_rayTexutre;
+		sf::Sprite		_raySprite[3];
 
 	public:
 		Sensor( void );
 		~Sensor( void );
 
-		void	update( Creature c );
-		void	drawRay( sf::RenderWindow& win );
+		int		lerp(unsigned int A, unsigned int B, unsigned int t);
+		void	drawRay( sf::RenderWindow& win, assetManager& _assets, Creature& c );
 };
 
 #endif

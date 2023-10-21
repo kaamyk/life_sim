@@ -8,7 +8,7 @@
 
 #include "Simulation.hpp"
 
-// class Sensor;
+class Sensor;
 
 class	Creature
 {
@@ -18,7 +18,6 @@ class	Creature
 		Fixed			_gradientDescent;
 		Fixed			_position[2];
 		Fixed			_rotation;
-		Fixed			_direction[2];
 		Fixed			_speed;
 		Fixed			_size;
 		Sensor*			_sensor;
@@ -33,6 +32,7 @@ class	Creature
 
 		bool		checkTime( std::chrono::seconds const _timeToDie );
 		Fixed		getCoordinates( bool xy ) const;
+		Fixed		getRotation( void ) const;
 		void		drawCreature( sf::RenderWindow& win, assetManager& _assets );
 		void		moveUp( void );
 		void		moveDown( void );

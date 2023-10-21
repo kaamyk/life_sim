@@ -24,11 +24,8 @@ void			Simulation::loadTextures( void )
 {
 	_assets.createNewTexture("./images/creature.png");
 	_assets.createNewTexture("./images/foodParticule.png");
-}
-
-int				Simulation::lerp(unsigned int A, unsigned int B, unsigned int t)
-{
-	return (A + ((B - A) * y))
+	_assets.createNewTexture("./images/sensorRayOFF.png");
+	// _assets.createNewTexture("./images/sensorRayON.png");
 }
 
 unsigned int	Simulation::giveIndex( void )
@@ -73,10 +70,16 @@ void	Simulation::checkLifeTimes( void )
 
 void	Simulation::drawPopulation( sf::RenderWindow& win )
 {
-
 	for (std::vector<Creature>::iterator i = _population.begin(); i != _population.end() && _population.size() != 0; ++i)
 	{
-		i->moveUp();
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+			i->moveUp();
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+			i->moveDown();
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			i->moveRight();
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+			i->moveLeft();
 		i->drawCreature(win, _assets);
 	}
 	return ;

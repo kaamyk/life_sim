@@ -1,19 +1,19 @@
 #ifndef	SIM_HPP
-#define SIM_HPP
+# define SIM_HPP
 
-#include <iostream>
-#include <vector>
-#include <SFML/Graphics.hpp>
+# include <iostream>
+# include <vector>
+# include <SFML/Graphics.hpp>
 
-#include "Fixed.hpp"
-#include "assetManager.hpp"
-#include "Sensor.hpp"
-#include "Creature.hpp"
-#include "Food.hpp"
+# include "Fixed.hpp"
+# include "assetManager.hpp"
+# include "Sensor.hpp"
+# include "Creature.hpp"
+# include "Food.hpp"
 
-#define	WIN_H 640
-#define WIN_L 480
-#define	NBFOOD 10
+# define WIN_H 640
+# define WIN_L 480
+# define NBFOOD 10
 
 class	Creature;
 
@@ -34,6 +34,7 @@ class	Simulation
 		~Simulation( void );
 
 		void			printTimeToDie();
+		int				lerp(unsigned int A, unsigned int B, unsigned int t);
 
 		unsigned int	giveIndex( void );
 		void			loadTextures( void );
