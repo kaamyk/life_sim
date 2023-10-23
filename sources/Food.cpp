@@ -12,7 +12,12 @@ Food::~Food( void )
 	return ;
 }
 
-void	Food::drawFood( sf::RenderWindow& win, assetManager& _assets )
+unsigned int	Food::getPosition( bool xy )
+{
+	return (_position[xy]);
+}
+
+void			Food::drawFood( sf::RenderWindow& win, assetManager& _assets )
 {
 	std::string	path("./images/foodParticule.png");
 

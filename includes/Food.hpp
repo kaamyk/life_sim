@@ -17,8 +17,10 @@ class	Food
 		Food( void );
 		~Food( void );
 
-		bool	checkPosition(unsigned int x, unsigned int y);
-		void	drawFood( sf::RenderWindow& win, assetManager& _assets );
+		unsigned int	getPosition( bool xy );
+
+		bool			checkPosition(unsigned int x, unsigned int y);
+		void			drawFood( sf::RenderWindow& win, assetManager& _assets );
 		unsigned int*	getCoordinates( void );
 };
 

@@ -10,8 +10,8 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
-#include "../includes/Creature.hpp"
 #include "../includes/Simulation.hpp"
+#include "../includes/Creature.hpp"
 
 int	main( void )	
 {

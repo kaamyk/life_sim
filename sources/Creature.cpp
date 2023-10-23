@@ -15,7 +15,6 @@ Creature::Creature( int const win_h, int const win_l ): _fitness(0),
 
 Creature::~Creature( void )
 {
-	// delete _sensor;
 	return ;
 }
 
@@ -25,7 +24,7 @@ bool	Creature::checkTime( std::chrono::seconds const _timeToDie )
 	return (t - this->_birthTime >= _timeToDie);
 }
 
-Fixed	Creature::getCoordinates( bool xy ) const
+Fixed	Creature::getPosition( bool xy ) const
 {
 	return (_position[xy]);
 }
@@ -35,16 +34,15 @@ Fixed	Creature::getRotation( void ) const
 	return (_rotation);
 }
 
-void	Creature::drawCreature( sf::RenderWindow& win, assetManager& _assets )
+void	Creature::drawCreature( sf::RenderWindow& win, assetManager& _assets, Simulation& sim )
 {
 	const std::string&	path("./images/creature.png");
 
-	_sensor->drawRay(win, _assets, *this);
+	_sensor->drawRay(win, _assets, *this, sim);
 	this->_creatureSprite.setOrigin(50 / 2, 50 / 2);
 	this->_creatureSprite.setTexture(_assets.getTexture(path));
 	this->_creatureSprite.setTextureRect(sf::IntRect(0, 0, 50, 50));
 	this->_creatureSprite.setPosition(this->_position[0].toFloat() - (50 / 2), this->_position[1].toFloat() - (50 / 2));
-	std::cout << _rotation.toFloat() << std::endl;
 	this->_creatureSprite.setRotation(_rotation.toFloat());
 	win.draw( this->_creatureSprite );
 	return ;

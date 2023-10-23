@@ -8,14 +8,15 @@
 # include "Fixed.hpp"
 # include "assetManager.hpp"
 # include "Sensor.hpp"
-# include "Creature.hpp"
 # include "Food.hpp"
+# include "Creature.hpp"
 
 # define WIN_H 640
 # define WIN_L 480
 # define NBFOOD 10
 
 class	Creature;
+class	Food;
 
 class	Simulation
 {
@@ -37,6 +38,7 @@ class	Simulation
 		int				lerp(unsigned int A, unsigned int B, unsigned int t);
 
 		unsigned int	giveIndex( void );
+		Food*			getFood( void );
 		void			loadTextures( void );
 		void			updateNbCreature( bool a );
 		void			createNewCreature( void );

@@ -6,9 +6,11 @@
 #include <cmath>
 #include <SFML/Graphics.hpp>
 
+#include "Food.hpp"
 #include "Simulation.hpp"
 
 class Sensor;
+class Food;
 
 class	Creature
 {
@@ -31,9 +33,9 @@ class	Creature
 		~Creature( void );
 
 		bool		checkTime( std::chrono::seconds const _timeToDie );
-		Fixed		getCoordinates( bool xy ) const;
+		Fixed		getPosition( bool xy ) const;
 		Fixed		getRotation( void ) const;
-		void		drawCreature( sf::RenderWindow& win, assetManager& _assets );
+		void		drawCreature( sf::RenderWindow& win, assetManager& _assets, Simulation& sim );
 		void		moveUp( void );
 		void		moveDown( void );
 		void		moveLeft( void );

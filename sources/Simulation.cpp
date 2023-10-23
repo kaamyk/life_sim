@@ -9,7 +9,7 @@
 
 #include "../includes/Simulation.hpp"
 
-Simulation::Simulation( void ): _nbMaxCreature(5), _timeToDie(10),
+Simulation::Simulation( void ): _nbMaxCreature(5), _timeToDie(5),
 								_nbCreature(0), _nbFood(10)
 {
 	return ;
@@ -31,6 +31,11 @@ void			Simulation::loadTextures( void )
 unsigned int	Simulation::giveIndex( void )
 {
 	return ( this->_nbCreature );
+}
+
+Food*		Simulation::getFood( void )
+{
+	return (&_food[0]);
 }
 
 void	Simulation::createNewCreature( void )
@@ -80,7 +85,7 @@ void	Simulation::drawPopulation( sf::RenderWindow& win )
 			i->moveRight();
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 			i->moveLeft();
-		i->drawCreature(win, _assets);
+		i->drawCreature(win, _assets, *this);
 	}
 	return ;
 }

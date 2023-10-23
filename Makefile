@@ -6,7 +6,7 @@
 #    By: antoine <antoine@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/07 17:59:08 by anvincen          #+#    #+#              #
-#    Updated: 2023/10/17 22:11:25 by antoine          ###   ########.fr        #
+#    Updated: 2023/10/23 21:20:43 by antoine          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ CFLAGS		=	-Wall -Wextra -Werror
 
 SFMLFLAGS	=	-lsfml-graphics -lsfml-window -lsfml-system
 
-VGFLAGS		=	-g
+VGFLAGS		=	-g3
 
 all				:	$(OBJDIR) $(OBJS) $(NAME)
 
@@ -36,7 +36,7 @@ $(OBJDIR)		:
 $(OBJDIR)/%.o	:	$(SRCDIR)/%.cpp
 	@clear
 	@echo "Compiling " $< " ..."
-	@$(CCPP) $(CFLAGS) $(CPPFLAGS) $(SFMLFLAGS) -c $< -o $@ 
+	@$(CCPP) $(VGFLAGS) $(CFLAGS) $(CPPFLAGS) $(SFMLFLAGS) -c $< -o $@ 
 	@clear
 	@echo -e 'Compiling ' $< ' \x1b[32m>>> OK <<<\x1b[37m'
 	@sleep 0.1
