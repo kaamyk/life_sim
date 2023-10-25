@@ -33,53 +33,64 @@ int		Sensor::lerp(unsigned int A, unsigned int B, unsigned int t)
 	return (A + ((B - A) * t));
 }
 
-void	Sensor::findIntersection( Creature& c, Food* food )
+bool	Sensor::findIntersection( unsigned int** ray, int rayRotation, Creature& c, Food* food )
 {
+	unsigned int	pt[2];
+
 	for (unsigned int i = 0; i < NBFOOD; ++i)
 	{
-		for (unsigned int j = 0; j < _rayCount; ++j)
+		if (food[i].getPosition(0) < c.getPosition(0).toInt() + _rayLenght && food[i].getPosition(0) > c.getPosition(0).toInt() - _rayLenght
+			&& food[i].getPosition(1) < c.getPosition(1).toInt() + _rayLenght && food[i].getPosition(1) > c.getPosition(1).toInt() - _rayLenght)
 		{
-			if (food[i]->getPosition[0] < c.getPosition[0] + _rayLenght && food[i]->getPosition[0] > c.getPosition[0] + _rayLenght
-				&& food[i]->getPosition[1] < c.getPosition[1] + _rayLenght && food[i]->getPosition[1] > c.getPosition[1] + _rayLenght)
+			pt[0] = ray[0][0];
+			pt[1] = ray[0][1];
+			for(unsigned int j = 0; j < _rayLenght; ++j)
 			{
-				_state[1] = 1;
+				pt[0] = pt[0] - sin(rayRotation);
+				pt[1] = pt[1] - cos(rayRotation);
+				if (food[i].checkPosition(pt[0], pt[1]))
+					return (1);
 			}
 		}
 	}
+	return (0);
 }
 
-void	Sensor::drawRay( sf::RenderWindow& win, assetManager& _assets, Creature& c )
+void	Sensor::drawRay( sf::RenderWindow& win, assetManager& _assets, Creature& c, Simulation& sim  )
 {
-	findIntersection(c, sim.getFooo());
-	if (_state[1])
-		const std::string&	path("./images/sensorRayON.png");
-	else
-		const std::string&	path("./images/sensorRayOFF.png");
+	std::string	path("./images/sensorRayON.png");
+	std::string	path1("./images/sensorRayOFF.png");
 
-	for (unsigned int i = 0; i < 3; ++i){
+	for (unsigned int i = 0; i < _rayCount; ++i){
 		int rayAngle = this->lerp(_raySpread.toInt() / 2, -(_raySpread.toInt() / 2), i / (_rayCount - 1));
-		_rays[i][0][0] = c.getCoordinates(0).toInt();
-		_rays[i][0][1] =  c.getCoordinates(1).toInt();
-		_rays[i][1][0] = c.getCoordinates(0).toInt() - sin(rayAngle) * _rayLenght;
-		_rays[i][1][1] = c.getCoordinates(1).toInt() - cos(rayAngle) * _rayLenght;
+		_rays[i][0][0] = c.getPosition(0).toInt();
+		_rays[i][0][1] = c.getPosition(1).toInt();
+		_rays[i][1][0] = c.getPosition(0).toInt() - sin(rayAngle) * _rayLenght;
+		_rays[i][1][1] = c.getPosition(1).toInt() - cos(rayAngle) * _rayLenght;
 
 		this->_raySprite[i].setOrigin(2.5f, 80);
-		this->_raySprite[i].setTexture(_assets.getTexture(path));
-		this->_raySprite[i].setTextureRect(sf::IntRect(0, 0, 5, 80));
-		this->_raySprite[i].setPosition(this->_rays[i][0][0] - (50 / 2), this->_rays[i][0][1] - (50 / 2));
 		switch(i){
 			case 0:
 				this->_raySprite[i].setRotation(c.getRotation().toInt() - 10);
+				_state[i] = findIntersection(_rays[i], c.getRotation().toInt() - 10, c, sim.getFood());
 				break ;
 			case 1:
 				this->_raySprite[i].setRotation(c.getRotation().toInt());
+				_state[i] = findIntersection(_rays[i], c.getRotation().toInt(), c, sim.getFood());
 				break ;
 			case 2:
 				this->_raySprite[i].setRotation(c.getRotation().toInt() + 10);
+				_state[i] = findIntersection(_rays[i], c.getRotation().toInt() + 10, c, sim.getFood());
 				break ;
 			default:
 				break ;
 		}
+		if (_state[i])
+			this->_raySprite[i].setTexture(_assets.getTexture(path));
+		else
+			this->_raySprite[i].setTexture(_assets.getTexture(path1));
+		this->_raySprite[i].setTextureRect(sf::IntRect(0, 0, 5, 80));
+		this->_raySprite[i].setPosition(this->_rays[i][0][0] - (50 / 2), this->_rays[i][0][1] - (50 / 2));
 		win.draw( this->_raySprite[i]);
 	}
 	return ;

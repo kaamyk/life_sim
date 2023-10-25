@@ -6,9 +6,9 @@
 #include <cmath>
 #include <SFML/Graphics.hpp>
 
-#include "Food.hpp"
 #include "Simulation.hpp"
 
+class Simulation;
 class Sensor;
 class Food;
 

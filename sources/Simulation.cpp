@@ -9,7 +9,7 @@
 
 #include "../includes/Simulation.hpp"
 
-Simulation::Simulation( void ): _nbMaxCreature(5), _timeToDie(5),
+Simulation::Simulation( void ): _nbMaxCreature(5), _timeToDie(30),
 								_nbCreature(0), _nbFood(10)
 {
 	return ;
@@ -25,7 +25,7 @@ void			Simulation::loadTextures( void )
 	_assets.createNewTexture("./images/creature.png");
 	_assets.createNewTexture("./images/foodParticule.png");
 	_assets.createNewTexture("./images/sensorRayOFF.png");
-	// _assets.createNewTexture("./images/sensorRayON.png");
+	_assets.createNewTexture("./images/sensorRayON.png");
 }
 
 unsigned int	Simulation::giveIndex( void )

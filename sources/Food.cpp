@@ -17,10 +17,16 @@ unsigned int	Food::getPosition( bool xy )
 	return (_position[xy]);
 }
 
+bool			Food::checkPosition( unsigned int x, unsigned int y )
+{
+	return (x >= _position[0] - 10 && x <= _position[0] + 10 && y >= _position[1] - 10 && y <= _position[1] + 10 );
+}
+
 void			Food::drawFood( sf::RenderWindow& win, assetManager& _assets )
 {
 	std::string	path("./images/foodParticule.png");
 
+	_foodSprite.setOrigin(10, 10);
 	_foodSprite.setTexture(_assets.getTexture(path));
 	_foodSprite.setTextureRect(sf::IntRect(0, 0, 20, 20));
 	_foodSprite.setPosition(_position[0], _position[1]);

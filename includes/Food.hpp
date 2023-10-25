@@ -4,7 +4,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
-#include "assetManager.hpp"
+#include "Simulation.hpp"
 
 class	Food
 {
