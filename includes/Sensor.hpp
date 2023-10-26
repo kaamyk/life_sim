@@ -23,7 +23,7 @@ class	Sensor
 		~Sensor( void );
 
 		int		lerp(unsigned int A, unsigned int B, unsigned int t);
-		bool	findIntersection( unsigned int** ray, int rayRotation, Creature& c, Food* food );
+		bool	findIntersection( sf::RectangleShape* r, int rayRotation, Creature& c, Food* food );
 		void	drawRay( sf::RenderWindow& win, assetManager& _assets, Creature& c, Simulation& sim );
 };
 

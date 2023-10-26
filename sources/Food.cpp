@@ -17,9 +17,16 @@ unsigned int	Food::getPosition( bool xy )
 	return (_position[xy]);
 }
 
-bool			Food::checkPosition( unsigned int x, unsigned int y )
+bool			Food::checkPosition( double x, double y )
 {
-	return (x >= _position[0] - 10 && x <= _position[0] + 10 && y >= _position[1] - 10 && y <= _position[1] + 10 );
+	// std::cout << "x == " << x << "\t y == " << y << std::endl;
+	if (x >= _position[0] - 10 && x <= _position[0] + 10 && y >= _position[1] - 10 && y <= _position[1] + 10 ){
+		std::cout << ">>> OK <<< " << std::endl;
+		std::cout << "Food == { x == " << _position[0]
+		<< "\t y == " << _position[1] << " }" << std::endl;
+		return (1);
+	}
+	return (0);
 }
 
 void			Food::drawFood( sf::RenderWindow& win, assetManager& _assets )
