@@ -37,10 +37,10 @@ bool	Sensor::findIntersection( sf::RectangleShape* r, int rayRotation, Creature&
 {
 	double	pt[2];
 
-	r->setSize(sf::Vector2f(10, _rayLenght));
+	r->setSize(sf::Vector2f(1, _rayLenght));
 	r->setOrigin(5, 0);
-	r->setRotation( rayRotation );
-	r->setFillColor( sf::Color(255, 255, 255, 0));
+	r->setRotation( rayRotation + 180 );
+	r->setFillColor( sf::Color::White);
 	r->setPosition (c.getPosition(0).toInt(), c.getPosition(1).toInt());
 
 	if (rayRotation < 0)
@@ -103,10 +103,10 @@ void	Sensor::drawRay( sf::RenderWindow& win, assetManager& _assets, Creature& c,
 				break ;
 			default:
 				break ;
-			win.draw(r);
-			win.draw(r1);
-			win.draw(r2);
 		}
+		win.draw(r);
+		win.draw(r1);
+		win.draw(r2);
 		(void)_assets;
 		// if (_state[i])
 		// 	this->_raySprite[i].setTexture(_assets.getTexture(path));

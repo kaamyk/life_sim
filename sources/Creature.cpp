@@ -26,6 +26,7 @@ bool	Creature::checkTime( std::chrono::seconds const _timeToDie )
 
 Fixed	Creature::getPosition( bool xy ) const
 {
+	std::vector<float> p = _creatureSprite.getPosition();
 	return (_position[xy]);
 }
 
