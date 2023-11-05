@@ -2,8 +2,8 @@
 #include "../includes/Simulation.hpp"
 #include <cmath>
 
-Sensor::Sensor( void ): _rayCount(3), _rayLenght(50),
-						_raySpread(Fixed(3.14159265359f) / 4)
+Sensor::Sensor( void ): _rayCount(3), _rayLenght(100),
+						_rayAngle(15)
 {
 	_rays = new unsigned int**[_rayCount];
 	for(unsigned int i = 0; i < _rayCount; ++i)
@@ -38,29 +38,24 @@ bool	Sensor::findIntersection( sf::RectangleShape* r, int rayRotation, Creature&
 	double	pt[2];
 
 	r->setSize(sf::Vector2f(1, _rayLenght));
-	r->setOrigin(5, 0);
 	r->setRotation( rayRotation + 180 );
-	r->setFillColor( sf::Color::White);
 	r->setPosition (c.getPosition(0).toInt(), c.getPosition(1).toInt());
 
 	if (rayRotation < 0)
 		rayRotation += 360;
+	else if (rayRotation >= 360)
+		rayRotation -= 360;
 	for (unsigned int i = 0; i < NBFOOD; ++i)
 	{
 		if (food[i].getPosition(0) < c.getPosition(0).toInt() + _rayLenght && food[i].getPosition(0) > c.getPosition(0).toInt() - _rayLenght
 			&& food[i].getPosition(1) < c.getPosition(1).toInt() + _rayLenght && food[i].getPosition(1) > c.getPosition(1).toInt() - _rayLenght)
 		{
-			// std::cout << "Creature rotation == " << c.getRotation() << std::endl;
-			// std::cout << "rayRotation == " << rayRotation << std::endl;
-			pt[0] = c.getPosition(0).toInt();
-			pt[1] = c.getPosition(1).toInt();
-			// std::cout << "Origin = { x == " << pt[0] << " ; y == " << pt[1] << "}"  << std::endl; 
-			// std::cout << "End    = { x == " << pt[0] + (sin(rayRotation) * _rayLenght)
-			// << " ; y == " << pt[1] + (cos(rayRotation) * _rayLenght) << "}"  << std::endl; 
+			pt[0] = c.getPosition(0).toFloat();
+			pt[1] = c.getPosition(1).toFloat();
 			for(unsigned int j = 0; j < _rayLenght; ++j)
 			{
-				pt[0] = pt[0] + sin(rayRotation);
-				pt[1] = pt[1] + cos(rayRotation);
+				pt[0] = pt[0] + sin(rayRotation * (3.14159265359f / 180));
+				pt[1] = pt[1] - cos(rayRotation * (3.14159265359f / 180));
 				if (food[i].checkPosition(pt[0], pt[1]))
 					return (1);
 			}
@@ -73,33 +68,27 @@ void	Sensor::drawRay( sf::RenderWindow& win, assetManager& _assets, Creature& c,
 {
 	std::string	path("./images/sensorRayON.png");
 	std::string	path1("./images/sensorRayOFF.png");
-	sf::RectangleShape	r;
-	sf::RectangleShape	r1;
-	sf::RectangleShape	r2;
+	sf::RectangleShape	r; // Left ray
+	sf::RectangleShape	r1; // Middle ray
+	sf::RectangleShape	r2; // Right ray
 
 	for (unsigned int i = 0; i < _rayCount; ++i){
-		// std::cout << "ray[" << i << "]: ";
-		int rayAngle = this->lerp(_raySpread.toInt() / 2, -(_raySpread.toInt() / 2), i / (_rayCount - 1));
-		_rays[i][0][0] = c.getPosition(0).toInt();
-		_rays[i][0][1] = c.getPosition(1).toInt();
-		_rays[i][1][0] = c.getPosition(0).toInt() + sin(rayAngle) * _rayLenght;
-		_rays[i][1][1] = c.getPosition(1).toInt() + cos(rayAngle) * _rayLenght;
-		// std::cout << "ray [" << i << "] start = {x == "  << _rays[i][0][0] << "; y == " << _rays[i][0][1] << "}" << std::endl;
-		// std::cout << "ray [" << i << "] end   = {x == "  << _rays[i][1][0] << "; y == " << _rays[i][1][1] << "}" << std::endl;
 
-		this->_raySprite[i].setOrigin(2.5f, 80);
 		switch(i){
 			case 0:
-				this->_raySprite[i].setRotation(c.getRotation().toInt() - 15);
-				_state[i] = findIntersection(&r, c.getRotation().toInt() - 10, c, sim.getFood());
+				this->_raySprite[i].setRotation(c.getRotation().toInt() - _rayAngle);
+				_state[i] = findIntersection(&r, c.getRotation().toInt() + _rayAngle, c, sim.getFood());
+				_state[i] ? r.setFillColor( sf::Color::Red ) : r.setFillColor( sf::Color::White );
 				break ;
 			case 1:
 				this->_raySprite[i].setRotation(c.getRotation().toInt());
 				_state[i] = findIntersection(&r1, c.getRotation().toInt(), c, sim.getFood());
+				_state[i] ? r1.setFillColor( sf::Color::Red ) : r1.setFillColor( sf::Color::White );
 				break ;
 			case 2:
-				this->_raySprite[i].setRotation(c.getRotation().toInt() + 15);
-				_state[i] = findIntersection(&r2, c.getRotation().toInt() + 10, c, sim.getFood());
+				this->_raySprite[i].setRotation(c.getRotation().toInt() + _rayAngle);
+				_state[i] = findIntersection(&r2, c.getRotation().toInt() - _rayAngle, c, sim.getFood());
+				_state[i] ? r2.setFillColor( sf::Color::Red ) : r2.setFillColor( sf::Color::White );
 				break ;
 			default:
 				break ;
@@ -108,14 +97,6 @@ void	Sensor::drawRay( sf::RenderWindow& win, assetManager& _assets, Creature& c,
 		win.draw(r1);
 		win.draw(r2);
 		(void)_assets;
-		// if (_state[i])
-		// 	this->_raySprite[i].setTexture(_assets.getTexture(path));
-		// else
-		// 	this->_raySprite[i].setTexture(_assets.getTexture(path1));
-		// this->_raySprite[i].setTextureRect(sf::IntRect(0, 0, 5, 80));
-		// this->_raySprite[i].setPosition(this->_rays[i][0][0] - (50 / 2), this->_rays[i][0][1] - (50 / 2));
-		win.draw( this->_raySprite[i]);
-		// std::cout << std::endl;
 	}
 	return ;
 }

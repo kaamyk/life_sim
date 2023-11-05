@@ -10,7 +10,7 @@
 #include "../includes/Simulation.hpp"
 
 Simulation::Simulation( void ): _nbMaxCreature(5), _timeToDie(30),
-								_nbCreature(0), _nbFood(10)
+								_nbCreature(0), _nbFood(NBFOOD)
 {
 	return ;
 }

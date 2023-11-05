@@ -25,7 +25,7 @@ class	Simulation
 		std::chrono::seconds const	_timeToDie;
 		std::vector<Creature>		_population;
 		unsigned int				_nbCreature;
-		Food						_food[10];
+		Food						_food[NBFOOD];
 		unsigned int				_nbFood;
 		assetManager				_assets;
 

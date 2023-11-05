@@ -13,7 +13,7 @@ class	Sensor
 		unsigned int***	_rays;
 		unsigned int	_rayCount;
 		unsigned int	_rayLenght;
-		Fixed			_raySpread;
+		const unsigned int	_rayAngle;
 		sf::Texture		_rayTexutre;
 		sf::Sprite		_raySprite[3];
 		bool			_state[3];

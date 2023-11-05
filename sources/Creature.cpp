@@ -26,7 +26,6 @@ bool	Creature::checkTime( std::chrono::seconds const _timeToDie )
 
 Fixed	Creature::getPosition( bool xy ) const
 {
-	std::vector<float> p = _creatureSprite.getPosition();
 	return (_position[xy]);
 }
 
@@ -43,7 +42,7 @@ void	Creature::drawCreature( sf::RenderWindow& win, assetManager& _assets, Simul
 	this->_creatureSprite.setOrigin(50 / 2, 50 / 2);
 	this->_creatureSprite.setTexture(_assets.getTexture(path));
 	this->_creatureSprite.setTextureRect(sf::IntRect(0, 0, 50, 50));
-	this->_creatureSprite.setPosition(this->_position[0].toFloat() - (50 / 2), this->_position[1].toFloat() - (50 / 2));
+	this->_creatureSprite.setPosition(this->_position[0].toFloat(), this->_position[1].toFloat());
 	this->_creatureSprite.setRotation(_rotation.toFloat());
 	win.draw( this->_creatureSprite );
 	return ;
