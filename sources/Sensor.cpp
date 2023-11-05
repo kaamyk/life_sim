@@ -3,7 +3,7 @@
 #include <cmath>
 
 Sensor::Sensor( void ): _rayCount(3), _rayLenght(100),
-						_rayAngle(15)
+						_rayAngle(30)
 {
 	_rays = new unsigned int**[_rayCount];
 	for(unsigned int i = 0; i < _rayCount; ++i)

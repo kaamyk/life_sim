@@ -11,8 +11,8 @@
 # include "Food.hpp"
 # include "Creature.hpp"
 
+# define WIN_L 640
 # define WIN_H 640
-# define WIN_L 480
 # define NBFOOD 10
 
 class	Creature;

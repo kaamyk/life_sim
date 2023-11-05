@@ -53,7 +53,7 @@ void	Creature::moveUp( void )
 	if (_position[1] >= Fixed(_speed))
 		_position[1] = _position[1] - Fixed(_speed);
 	else
-		_position[1] = _position[1] - (_position[1] - Fixed(Fixed(_speed)));
+		_position[1] = _position[1] + WIN_H;
 
 	if (_rotation.toInt() >= 10 && _rotation.toInt() <= 180){
 		_rotation = _rotation - Fixed(10) ;
@@ -72,7 +72,7 @@ void	Creature::moveDown( void )
 	if (_position[1] + Fixed(_speed) <= Fixed(WIN_H))
 		_position[1] = _position[1] + Fixed(_speed);
 	else
-		_position[1] = _position[1] + WIN_H;
+		_position[1] = _position[1] - WIN_H;
 
 	if (_rotation.toInt() == 360)
 		_rotation = 0;
@@ -93,7 +93,7 @@ void	Creature::moveLeft( void )
 	if (_position[0] >= Fixed(_speed))
 		_position[0] =_position[0] - Fixed(_speed);
 	else
-		_position[0] = _position[0] - (_position[0] - Fixed(_speed));
+		_position[0] = _position[0] + Fixed(WIN_L);
 
 	if ((_rotation.toInt() >= 0 && _rotation.toInt() <= 90) || (_rotation.toInt() <= 360 && _rotation.toInt() > 280)){
 		if (_rotation.toInt() - 10 < 0){
@@ -115,7 +115,7 @@ void	Creature::moveRight( void )
 	if (_position[0] + Fixed(_speed) <= Fixed(WIN_L))
 		_position[0] = _position[0] + Fixed(_speed);
 	else
-		_position[0] = _position[0] + Fixed(WIN_L);
+		_position[0] = _position[0] - Fixed(WIN_L);
 
 	if ((_rotation.toInt() >= 0 && _rotation.toInt() < 80)
 		|| (_rotation.toInt() >= 280 && _rotation.toInt() <= 360))
