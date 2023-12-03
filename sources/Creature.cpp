@@ -135,3 +135,4 @@ void	Creature::moveRight( void )
 	}
 	return ;
 }
+

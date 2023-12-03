@@ -7,6 +7,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Simulation.hpp"
+#include "NeuralNetwork.hpp"
 
 class Simulation;
 class Sensor;
@@ -26,6 +27,7 @@ class	Creature
 		std::chrono::high_resolution_clock::time_point	_birthTime;
 		sf::Texture		_creatureTexture;
 		sf::Sprite		_creatureSprite;
+		NeuralNetwork	_brain;
 
 	public :
 		Creature( void );
