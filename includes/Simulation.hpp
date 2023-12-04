@@ -10,6 +10,7 @@
 # include "Sensor.hpp"
 # include "Food.hpp"
 # include "Creature.hpp"
+# include "NeuralNetwork.hpp"
 
 # define WIN_L 640
 # define WIN_H 640

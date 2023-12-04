@@ -1,6 +1,5 @@
-#include "../includes/Creature.hpp"
+#include "../includes/Simulation.hpp"
 
-							// _position {Fixed(rand() % win_l), Fixed(rand() % win_h)},
 Creature::Creature( int const win_h, int const win_l ): _fitness(0),
 							_gradientDescent(0),
 							_position {Fixed(win_l / 2), Fixed(win_h / 2)},
@@ -10,11 +9,17 @@ Creature::Creature( int const win_h, int const win_l ): _fitness(0),
 							_birthTime(std::chrono::high_resolution_clock::now())
 {
 	_sensor = new Sensor();
+	std::vector<unsigned int>	neuronCount;
+	neuronCount.push_back(_sensor->getRayCount());
+	neuronCount.push_back(6);
+	neuronCount.push_back(4);
+	_brain = new NeuralNetwork(neuronCount);
 	return ;
 }
 
 Creature::~Creature( void )
 {
+	delete _brain;
 	return ;
 }
 

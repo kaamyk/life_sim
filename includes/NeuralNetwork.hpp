@@ -6,42 +6,36 @@
 # include <ctime>
 # include <cstdlib>
 
-#include "Level.hpp"
+#include "Simulation.hpp"
 
-# define NBLEVEL    2
-# define NBINPUTS   3
-# define NBOUTPUTS  4
-
-class Level
-{
-private:
-    const uint8_t   _nbInputs;
-    const uint8_t   _nbOutputs;
-    std::vector<float>  _inputs;
-    // std::vector<float>  _outputs;
-    std::vector<float>  _biases;
-    std::vector< std::vector<float> >  _weights;
-
-public:
-    Level( void );
-    ~Level( void );
-
-    std::vector<float>&  getOutputs( void );
-    std::vector<float>   feedForward( std::vector<float> );
-};
+class   Level;
 
 class NeuralNetwork
 {
 private:
     std::vector<float> _sensorInputs;
-    std::vector<Level> levels;
+    std::vector<Level> _levels;
 
 public:
-    NeuralNetwork( void );
-    ~NeuralNetwork();
+    NeuralNetwork( std::vector<unsigned int> neuronsVal ){
+        for (uint8_t i = 0; i < neuronsVal.size() - 1; ++i)
+            _levels.emplace_back(new Level(neuronsVal[i], neuronsVal[i + 1]));
+    }
+    ~NeuralNetwork( void ){}
 
-    void    copyOutput( void );
-    void    feedForward( void );
+    NeuralNetwork&  operator=( NeuralNetwork const& source){
+        _levels = source._levels;
+        return (*this);
+    }
+
+
+    std::vector<float>&    NeuralNetwork::feedForward( std::vector<float> _sensorInputs ){
+        std::vector<float>    outputs = Level::feedForward(_sensorInputs);
+        
+        for(unsigned int i = 0; i < NBLEVEL; ++i)
+            outputs = _levels[i].feedForward(outputs);
+        return (outputs);
+    }
 };
 
 #endif
