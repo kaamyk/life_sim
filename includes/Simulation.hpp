@@ -11,11 +11,13 @@
 # include "Food.hpp"
 # include "Creature.hpp"
 # include "NeuralNetwork.hpp"
+# include "Level.hpp"
 
 # define WIN_L 640
 # define WIN_H 640
 # define NBFOOD 10
 
+class	Level;
 class	Creature;
 class	Food;
 

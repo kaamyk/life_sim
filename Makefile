@@ -11,21 +11,15 @@
 # **************************************************************************** #
 
 NAME		=	lifesim
-
 SRCDIR		=	sources
-
 SRCS		=	$(wildcard $(SRCDIR)/*.cpp)
-
 OBJDIR		=	.obj
-
 OBJS		=	$(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRCS))
-
+DEPDIR		=	.dep
+DEPS		=	$(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.d, $(SRCS))
 CCPP		=	c++
-
 CFLAGS		=	-Wall -Wextra -Werror
-
 SFMLFLAGS	=	-lsfml-graphics -lsfml-window -lsfml-system
-
 VGFLAGS		=	-g3
 
 all				:	$(OBJDIR) $(OBJS) $(NAME)
@@ -61,5 +55,7 @@ fclean			:	clean
 	@echo -e '\033[0;34mRemoving executable files \x1b[32m>>> OK <<<\x1b[37m'
 	@sleep 0.3
 	@clear
+
+-include $(DEPS)
 
 re		: fclean	all

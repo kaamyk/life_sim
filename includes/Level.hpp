@@ -5,8 +5,9 @@
 # include <array>
 # include <ctime>
 # include <cstdlib>
+# include <math.h>
 
-# include "Simulation.hpp"
+#include "Simulation.hpp"
 
 class Level
 {
@@ -14,12 +15,12 @@ private:
     unsigned int _nbInputs;
     unsigned int _nbOutputs;
     std::vector<float>     _inputs;
-    std::vector<float>    _outputs;
+    std::vector<float>     _outputs;
     std::vector<float>    _biases;
     std::vector< std::vector<float> >  _weights;
 
 public:
-    Level::Level( unsigned int nbInputs, unsigned int nbOutputs ):
+    Level( unsigned int nbInputs, unsigned int nbOutputs ):
                                 _nbInputs(nbInputs), _nbOutputs(nbOutputs)
     {
         for (unsigned int i = 0; i < _nbInputs; ++i){
@@ -30,24 +31,34 @@ public:
             tmp.clear();
         }
         for (unsigned int i = 0; i < _nbOutputs; ++i)
-            _biases.push_back((static_cast<float>(rand()) / static_cast<float>(rand()) % 2.0f) - 1.0f);
+            _biases.push_back(remainder((float)(rand()) / (float)(rand()), (2.0f)) - 1.0f);
         return ;
     }
+    Level( Level const& source){*this = source;};
     ~Level( void ){}
 
-    const std::vector<float>&  getInputs( void ){return (_inputs);}
-    const std::vector<float>&  getOutputs( void ){return (_outputs);}
+    Level&  operator=( Level const& source){
+        _nbInputs = source._nbInputs;
+        _nbOutputs = source._nbOutputs;
+        _inputs = source._inputs;
+        _outputs = source._outputs;
+        _biases = source._biases;
+        _weights = source._weights;
+        return (*this);
+    }
 
-    void    Level::feedForward( std::vector<float> inputs ){
+    std::vector<float>&  getInputs( void ){return (_inputs);}
+    std::vector<float>&  getOutputs( void ){return (_outputs);}
+
+    void   feedForward( std::vector<float> inputs ){
         int sum;
 
         for (unsigned int i = 0; i < _nbOutputs; ++i){
             sum = 0;
             for (unsigned int j = 0; j < _nbInputs; ++j)
-                sum += _inputs[j] * _weights[i][j];
-            _outputs[i].push_back(static_cast<float>(sum > _biases[i]));
+                sum += inputs[j] * _weights[i][j];
+            _outputs.push_back(static_cast<float>(sum > _biases[i]));
         }
-        return ;
     }
 };
 
