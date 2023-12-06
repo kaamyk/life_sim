@@ -23,18 +23,20 @@ public:
     Level( unsigned int nbInputs, unsigned int nbOutputs ):
                                 _nbInputs(nbInputs), _nbOutputs(nbOutputs)
     {
+        std::cout << "Level Constructor:" << std::endl;
         for (unsigned int i = 0; i < _nbInputs; ++i){
+            std::cout << "\ti == " << i << std::endl;
             std::vector<float> tmp;
             for (unsigned int j = 0; j < _nbOutputs; ++j)
                 tmp.push_back((rand() % 2) - 1);
-            _weights.push_back(tmp);
+            _weights.emplace_back(std::vector<float>(tmp));
             tmp.clear();
         }
         for (unsigned int i = 0; i < _nbOutputs; ++i)
             _biases.push_back(remainder((float)(rand()) / (float)(rand()), (2.0f)) - 1.0f);
         return ;
     }
-    Level( Level const& source){*this = source;};
+    Level( Level const& source){*this = source;}
     ~Level( void ){}
 
     Level&  operator=( Level const& source){
@@ -53,6 +55,8 @@ public:
     void   feedForward( std::vector<float> inputs ){
         int sum;
 
+        std::cout << "\t_nbOutputs == " << _nbOutputs << std::endl;
+        std::cout << "\t_nbInputs == " << _nbInputs << std::endl;
         for (unsigned int i = 0; i < _nbOutputs; ++i){
             sum = 0;
             for (unsigned int j = 0; j < _nbInputs; ++j)

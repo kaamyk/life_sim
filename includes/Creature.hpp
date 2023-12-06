@@ -42,6 +42,7 @@ class	Creature
 		void		moveDown( void );
 		void		moveLeft( void );
 		void		moveRight( void );
+		std::vector<float> const&	feedForward( std::vector<float> sensorInputs ) const;
 };
 
 #endif

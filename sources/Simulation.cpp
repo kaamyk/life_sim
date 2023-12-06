@@ -77,13 +77,25 @@ void	Simulation::drawPopulation( sf::RenderWindow& win )
 {
 	for (std::vector<Creature>::iterator i = _population.begin(); i != _population.end() && _population.size() != 0; ++i)
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		std::vector<float> sensorInputs;
+		sensorInputs.push_back(1.0f); //  >>> A remplacer par les vrais inputs  <<<
+		sensorInputs.push_back(0.0f); //  >>> A remplacer par les vrais inputs  <<<
+		sensorInputs.push_back(0.0f); //  >>> A remplacer par les vrais inputs  <<<
+		sensorInputs.push_back(0.0f); //  >>> A remplacer par les vrais inputs  <<<
+		std::vector<float>	outputs = i->feedForward(sensorInputs);
+
+		for (size_t i = 0; i < outputs.size(); ++i){
+			std::cout << "Creature.outputs[" << i << "] = " << outputs[i] << std::endl;
+			std::cout << "(bool)Creature.outputs[" << i << "] = " << static_cast<bool>(outputs[i]) << std::endl;
+		}
+		
+		if (outputs[0])
 			i->moveUp();
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		if (outputs[1])
 			i->moveDown();
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		if (outputs[2])
 			i->moveRight();
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		if (outputs[3])
 			i->moveLeft();
 		i->drawCreature(win, _assets, *this);
 	}

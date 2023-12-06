@@ -14,11 +14,11 @@ class NeuralNetwork
 {
 private:
     std::vector<float> _sensorInputs;
-    std::vector<Level> _levels;
+    std::vector<Level*> _levels;
 
 public:
-    NeuralNetwork( std::vector<unsigned int> neuronsVal );
-    ~NeuralNetwork( void ){}
+    NeuralNetwork( std::vector<unsigned int> neuronCount );
+    ~NeuralNetwork( void );
 
     NeuralNetwork&  operator=( NeuralNetwork const& source);
 

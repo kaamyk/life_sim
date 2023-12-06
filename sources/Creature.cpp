@@ -19,6 +19,7 @@ Creature::Creature( int const win_h, int const win_l ): _fitness(0),
 
 Creature::~Creature( void )
 {
+	delete _sensor;
 	delete _brain;
 	return ;
 }
@@ -140,4 +141,20 @@ void	Creature::moveRight( void )
 	}
 	return ;
 }
+
+std::vector<float> const&	Creature::feedForward( std::vector<float> sensorInputs ) const
+{
+	return (_brain->feedForward(sensorInputs));
+	
+	// if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		// 	i->moveUp();
+		// else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		// 	i->moveDown();
+		// else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		// 	i->moveRight();
+		// else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		// 	i->moveLeft();
+
+}
+
 
