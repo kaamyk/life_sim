@@ -11,7 +11,7 @@ Sensor::Sensor( void ): _rayCount(3), _rayLenght(100),
 		_rays[i] = new unsigned int*[2];
 		_rays[i][0] = new unsigned int[2];
 		_rays[i][1] = new unsigned int[2];
-		_state[i] = 0;
+		_state.push_back(0);
 	}
 	return ;
 }

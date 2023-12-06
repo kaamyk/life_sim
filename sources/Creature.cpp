@@ -40,6 +40,11 @@ Fixed	Creature::getRotation( void ) const
 	return (_rotation);
 }
 
+Sensor*	Creature::getSensor( void ) const
+{
+	return (_sensor);
+}
+
 void	Creature::drawCreature( sf::RenderWindow& win, assetManager& _assets, Simulation& sim )
 {
 	const std::string&	path("./images/creature.png");

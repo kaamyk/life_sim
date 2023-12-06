@@ -16,13 +16,14 @@ class	Sensor
 		const unsigned int	_rayAngle;
 		sf::Texture		_rayTexutre;
 		sf::Sprite		_raySprite[3];
-		bool			_state[3];
+		std::vector<float>	_state;
 
 	public:
 		Sensor( void );
 		~Sensor( void );
 
-		unsigned int getRayCount( void ){return (_rayCount);}
+		unsigned int& getRayCount( void ){return (_rayCount);}
+		std::vector<float>&	getState( void ){return (_state);}
 
 		int		lerp(unsigned int A, unsigned int B, unsigned int t);
 		bool	findIntersection( sf::RectangleShape* r, int rayRotation, Creature& c, Food* food );

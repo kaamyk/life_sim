@@ -61,7 +61,9 @@ void	Simulation::updateNbCreature( bool a )
 
 void	Simulation::checkLifeTimes( void )
 {
-	for(std::vector<Creature>::iterator i = _population.begin(); i != _population.end() && _population.size() != 0; ++i)
+	if (_population.size() == 0)
+		return;
+	for(std::vector<Creature>::iterator i = _population.begin(); i != _population.end(); ++i)
 	{
 		if (i->checkTime(this->_timeToDie))
 		{
@@ -75,14 +77,16 @@ void	Simulation::checkLifeTimes( void )
 
 void	Simulation::drawPopulation( sf::RenderWindow& win )
 {
-	for (std::vector<Creature>::iterator i = _population.begin(); i != _population.end() && _population.size() != 0; ++i)
+	if (_population.size() == 0)
+		return;
+	for (std::vector<Creature>::iterator i = _population.begin(); i != _population.end(); ++i)
 	{
 		std::vector<float> sensorInputs;
 		sensorInputs.push_back(1.0f); //  >>> A remplacer par les vrais inputs  <<<
 		sensorInputs.push_back(0.0f); //  >>> A remplacer par les vrais inputs  <<<
 		sensorInputs.push_back(0.0f); //  >>> A remplacer par les vrais inputs  <<<
 		sensorInputs.push_back(0.0f); //  >>> A remplacer par les vrais inputs  <<<
-		std::vector<float>	outputs = i->feedForward(sensorInputs);
+		std::vector<float>	outputs = i->feedForward(i->getSensor()->getState());
 
 		for (size_t i = 0; i < outputs.size(); ++i){
 			std::cout << "Creature.outputs[" << i << "] = " << outputs[i] << std::endl;

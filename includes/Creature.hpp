@@ -37,6 +37,7 @@ class	Creature
 		bool		checkTime( std::chrono::seconds const _timeToDie );
 		Fixed		getPosition( bool xy ) const;
 		Fixed		getRotation( void ) const;
+		Sensor*		getSensor( void ) const;
 		void		drawCreature( sf::RenderWindow& win, assetManager& _assets, Simulation& sim );
 		void		moveUp( void );
 		void		moveDown( void );
