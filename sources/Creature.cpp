@@ -30,20 +30,9 @@ bool	Creature::checkTime( std::chrono::seconds const _timeToDie )
 	return (t - this->_birthTime >= _timeToDie);
 }
 
-Fixed	Creature::getPosition( bool xy ) const
-{
-	return (_position[xy]);
-}
-
-Fixed	Creature::getRotation( void ) const
-{
-	return (_rotation);
-}
-
-Sensor*	Creature::getSensor( void ) const
-{
-	return (_sensor);
-}
+std::vector<float> const&	Creature::getSensorState( void ) const{ 
+	std::cout << ">>> getSensorState()" << std::endl;
+	return (_sensor->getState()); }
 
 void	Creature::drawCreature( sf::RenderWindow& win, assetManager& _assets, Simulation& sim )
 {

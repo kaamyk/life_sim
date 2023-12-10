@@ -43,7 +43,7 @@ void	Simulation::createNewCreature( void )
 	Creature	newCreature(WIN_H, WIN_L);
 	std::string	path("./images/creature.png");
 
-	this->_population.push_back(newCreature);
+	this->_population.emplace_back(newCreature);
 	updateNbCreature( 1 );
 	return ;
 }
@@ -79,29 +79,30 @@ void	Simulation::drawPopulation( sf::RenderWindow& win )
 {
 	if (_population.size() == 0)
 		return;
-	for (std::vector<Creature>::iterator i = _population.begin(); i != _population.end(); ++i)
+	for (size_t i = 0; i <= _population.size(); ++i)
 	{
-		std::vector<float> sensorInputs;
-		sensorInputs.push_back(1.0f); //  >>> A remplacer par les vrais inputs  <<<
-		sensorInputs.push_back(0.0f); //  >>> A remplacer par les vrais inputs  <<<
-		sensorInputs.push_back(0.0f); //  >>> A remplacer par les vrais inputs  <<<
-		sensorInputs.push_back(0.0f); //  >>> A remplacer par les vrais inputs  <<<
-		std::vector<float>	outputs = i->feedForward(i->getSensor()->getState());
+		std::cout << "population i == " << i << std::endl;
+		std::vector<float> sensorInputs = _population[i].getSensorState();
+		// sensorInputs.push_back(1.0f); //  >>> A remplacer par les vrais inputs  <<<
+		// sensorInputs.push_back(0.0f); //  >>> A remplacer par les vrais inputs  <<<
+		// sensorInputs.push_back(0.0f); //  >>> A remplacer par les vrais inputs  <<<
+		// sensorInputs.push_back(0.0f); //  >>> A remplacer par les vrais inputs  <<<
+		std::vector<float>	outputs = _population[i].feedForward(sensorInputs);
 
 		for (size_t i = 0; i < outputs.size(); ++i){
 			std::cout << "Creature.outputs[" << i << "] = " << outputs[i] << std::endl;
 			std::cout << "(bool)Creature.outputs[" << i << "] = " << static_cast<bool>(outputs[i]) << std::endl;
 		}
-		
+		std::vector<float>	sensorState = _population[i].getSensorState();
 		if (outputs[0])
-			i->moveUp();
+			_population[i].moveUp();
 		if (outputs[1])
-			i->moveDown();
+			_population[i].moveDown();
 		if (outputs[2])
-			i->moveRight();
+			_population[i].moveRight();
 		if (outputs[3])
-			i->moveLeft();
-		i->drawCreature(win, _assets, *this);
+			_population[i].moveLeft();
+		_population[i].drawCreature(win, _assets, *this);
 	}
 	return ;
 }

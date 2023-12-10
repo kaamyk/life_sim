@@ -18,19 +18,14 @@ Sensor::Sensor( void ): _rayCount(3), _rayLenght(100),
 
 Sensor::~Sensor( void )
 {
-	for(unsigned int i = 0; i < _rayCount; ++i)
-	{
-		delete _rays[i][0];
-		delete _rays[i][1];
-		delete _rays[i];
-	}
+	// for(unsigned int i = 0; i < _rayCount; ++i)
+	// {
+	// 	delete _rays[i][0];
+	// 	delete _rays[i][1];
+	// 	delete _rays[i];
+	// }
 	delete [] _rays;
 	return ;
-}
-
-int		Sensor::lerp(unsigned int A, unsigned int B, unsigned int t)
-{
-	return (A + ((B - A) * t));
 }
 
 bool	Sensor::findIntersection( sf::RectangleShape* r, int rayRotation, Creature& c, Food* food )

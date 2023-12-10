@@ -23,9 +23,11 @@ class	Sensor
 		~Sensor( void );
 
 		unsigned int& getRayCount( void ){return (_rayCount);}
-		std::vector<float>&	getState( void ){return (_state);}
+		std::vector<float> const&	getState( void ) const {
+			std::cout << ">>> getState()" << std::endl;
+			return (_state);}
 
-		int		lerp(unsigned int A, unsigned int B, unsigned int t);
+		int		lerp(unsigned int A, unsigned int B, unsigned int t){ return (A + ((B - A) * t)); }
 		bool	findIntersection( sf::RectangleShape* r, int rayRotation, Creature& c, Food* food );
 		void	drawRay( sf::RenderWindow& win, assetManager& _assets, Creature& c, Simulation& sim );
 };

@@ -35,9 +35,11 @@ class	Creature
 		~Creature( void );
 
 		bool		checkTime( std::chrono::seconds const _timeToDie );
-		Fixed		getPosition( bool xy ) const;
-		Fixed		getRotation( void ) const;
-		Sensor*		getSensor( void ) const;
+		Fixed		getPosition( bool xy ) const{ return (_position[xy]); }
+		Fixed		getRotation( void ) const{ return (_rotation); }
+		Sensor*		getSensor( void ) const{ return (_sensor); }
+		std::vector<float> const&	getSensorState( void ) const;
+		
 		void		drawCreature( sf::RenderWindow& win, assetManager& _assets, Simulation& sim );
 		void		moveUp( void );
 		void		moveDown( void );
