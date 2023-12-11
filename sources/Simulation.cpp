@@ -40,10 +40,15 @@ Food*		Simulation::getFood( void )
 
 void	Simulation::createNewCreature( void )
 {
-	Creature	newCreature(WIN_H, WIN_L);
-	std::string	path("./images/creature.png");
+	// Creature	newCreature(WIN_H, WIN_L);
+	// std::string	path("./images/creature.png");
 
-	this->_population.emplace_back(newCreature);
+	try{
+		_population.push_back(new Creature(WIN_H, WIN_L));
+	}
+	catch(std::exception& e){
+		std::cerr << e.what() << std::endl;
+	}
 	updateNbCreature( 1 );
 	return ;
 }
@@ -54,7 +59,7 @@ bool	Simulation::checkNbCreature( void )
 }
 
 void	Simulation::updateNbCreature( bool a )
-{
+{	
 	a ? ++(this->_nbCreature) : --(this->_nbCreature);
 	return ;
 }
@@ -63,9 +68,9 @@ void	Simulation::checkLifeTimes( void )
 {
 	if (_population.size() == 0)
 		return;
-	for(std::vector<Creature>::iterator i = _population.begin(); i != _population.end(); ++i)
+	for(std::vector<Creature *>::iterator i = _population.begin(); i != _population.end(); ++i)
 	{
-		if (i->checkTime(this->_timeToDie))
+		if ((*i)->checkTime(this->_timeToDie))
 		{
 			std::cout << "In if erase()" << std::endl;
 			this->updateNbCreature(0);
@@ -79,30 +84,29 @@ void	Simulation::drawPopulation( sf::RenderWindow& win )
 {
 	if (_population.size() == 0)
 		return;
-	for (size_t i = 0; i <= _population.size(); ++i)
+	for (size_t i = 0; i < _population.size(); ++i)
 	{
-		std::cout << "population i == " << i << std::endl;
-		std::vector<float> sensorInputs = _population[i].getSensorState();
+		const std::vector<float> sensorInputs = _population[i]->getSensor()->getState();
 		// sensorInputs.push_back(1.0f); //  >>> A remplacer par les vrais inputs  <<<
 		// sensorInputs.push_back(0.0f); //  >>> A remplacer par les vrais inputs  <<<
 		// sensorInputs.push_back(0.0f); //  >>> A remplacer par les vrais inputs  <<<
 		// sensorInputs.push_back(0.0f); //  >>> A remplacer par les vrais inputs  <<<
-		std::vector<float>	outputs = _population[i].feedForward(sensorInputs);
+		std::vector<float>	outputs = _population[i]->feedForward(sensorInputs);
 
 		for (size_t i = 0; i < outputs.size(); ++i){
 			std::cout << "Creature.outputs[" << i << "] = " << outputs[i] << std::endl;
 			std::cout << "(bool)Creature.outputs[" << i << "] = " << static_cast<bool>(outputs[i]) << std::endl;
 		}
-		std::vector<float>	sensorState = _population[i].getSensorState();
+		std::vector<float>	sensorState = _population[i]->getSensor()->getState();
 		if (outputs[0])
-			_population[i].moveUp();
+			_population[i]->moveUp();
 		if (outputs[1])
-			_population[i].moveDown();
+			_population[i]->moveDown();
 		if (outputs[2])
-			_population[i].moveRight();
+			_population[i]->moveRight();
 		if (outputs[3])
-			_population[i].moveLeft();
-		_population[i].drawCreature(win, _assets, *this);
+			_population[i]->moveLeft();
+		_population[i]->drawCreature(win, _assets, *this);
 	}
 	return ;
 }

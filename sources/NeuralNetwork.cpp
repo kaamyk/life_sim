@@ -22,5 +22,5 @@ std::vector<float>&    NeuralNetwork::feedForward( std::vector<float> sensorInpu
     this->_levels[0]->feedForward(sensorInputs);
     for(i = 1; i < _levels.size(); ++i)
         this->_levels[i]->feedForward(_levels[i - 1]->getOutputs());
-    return (_levels[i]->getOutputs());
+    return (_levels[i - 1]->getOutputs());
 }

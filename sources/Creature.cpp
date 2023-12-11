@@ -30,10 +30,6 @@ bool	Creature::checkTime( std::chrono::seconds const _timeToDie )
 	return (t - this->_birthTime >= _timeToDie);
 }
 
-std::vector<float> const&	Creature::getSensorState( void ) const{ 
-	std::cout << ">>> getSensorState()" << std::endl;
-	return (_sensor->getState()); }
-
 void	Creature::drawCreature( sf::RenderWindow& win, assetManager& _assets, Simulation& sim )
 {
 	const std::string&	path("./images/creature.png");

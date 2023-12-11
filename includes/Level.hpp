@@ -23,9 +23,11 @@ public:
     Level( unsigned int nbInputs, unsigned int nbOutputs ):
                                 _nbInputs(nbInputs), _nbOutputs(nbOutputs)
     {
-        std::cout << "Level Constructor:" << std::endl;
+        // std::cout << "Level Constructor:" << std::endl
+        // << "\t_nbInputs == " << _nbInputs << std::endl
+        // << "\t_nbOutputs == " << _nbOutputs << std::endl;
         for (unsigned int i = 0; i < _nbInputs; ++i){
-            std::cout << "\ti == " << i << std::endl;
+            // std::cout << "\ti == " << i << std::endl;
             std::vector<float> tmp;
             for (unsigned int j = 0; j < _nbOutputs; ++j)
                 tmp.push_back((rand() % 2) - 1);
@@ -55,12 +57,14 @@ public:
     void   feedForward( std::vector<float> inputs ){
         int sum;
 
-        std::cout << "\t_nbOutputs == " << _nbOutputs << std::endl;
-        std::cout << "\t_nbInputs == " << _nbInputs << std::endl;
+        // std::cout << "\t_nbOutputs == " << _nbOutputs << std::endl;
+        // std::cout << "\t_nbInputs == " << _nbInputs << std::endl;
         for (unsigned int i = 0; i < _nbOutputs; ++i){
             sum = 0;
-            for (unsigned int j = 0; j < _nbInputs; ++j)
-                sum += inputs[j] * _weights[i][j];
+            for (unsigned int j = 0; j < _nbInputs; ++j){
+                // std::cout << "i == " << i << " && j == " << j << std::endl;
+                sum += inputs[j] * _weights[j][i];
+            }
             _outputs.push_back(static_cast<float>(sum > _biases[i]));
         }
     }

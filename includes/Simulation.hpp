@@ -27,7 +27,7 @@ class	Simulation
 	private :
 		unsigned int const			_nbMaxCreature;
 		std::chrono::seconds const	_timeToDie;
-		std::vector<Creature>		_population;
+		std::vector<Creature *>		_population;
 		unsigned int				_nbCreature;
 		Food						_food[NBFOOD];
 		unsigned int				_nbFood;
