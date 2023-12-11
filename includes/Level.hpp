@@ -23,19 +23,18 @@ public:
     Level( unsigned int nbInputs, unsigned int nbOutputs ):
                                 _nbInputs(nbInputs), _nbOutputs(nbOutputs)
     {
-        // std::cout << "Level Constructor:" << std::endl
-        // << "\t_nbInputs == " << _nbInputs << std::endl
-        // << "\t_nbOutputs == " << _nbOutputs << std::endl;
         for (unsigned int i = 0; i < _nbInputs; ++i){
-            // std::cout << "\ti == " << i << std::endl;
             std::vector<float> tmp;
-            for (unsigned int j = 0; j < _nbOutputs; ++j)
+            for (unsigned int j = 0; j < _nbOutputs; ++j){
                 tmp.push_back((rand() % 2) - 1);
+            }
             _weights.emplace_back(std::vector<float>(tmp));
             tmp.clear();
         }
-        for (unsigned int i = 0; i < _nbOutputs; ++i)
+            // srand(time(NULL));
+        for (unsigned int i = 0; i < _nbOutputs; ++i){
             _biases.push_back(remainder((float)(rand()) / (float)(rand()), (2.0f)) - 1.0f);
+        }
         return ;
     }
     Level( Level const& source){*this = source;}
@@ -65,6 +64,7 @@ public:
                 // std::cout << "i == " << i << " && j == " << j << std::endl;
                 sum += inputs[j] * _weights[j][i];
             }
+            // std::cout << "sum == " << sum << " && _biases [" << i << "] == " << _biases[i] << std::endl;
             _outputs.push_back(static_cast<float>(sum > _biases[i]));
         }
     }

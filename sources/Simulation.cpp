@@ -82,22 +82,20 @@ void	Simulation::checkLifeTimes( void )
 
 void	Simulation::drawPopulation( sf::RenderWindow& win )
 {
+	std::cout << "population.size() == " << _population.size() << std::endl;
 	if (_population.size() == 0)
 		return;
 	for (size_t i = 0; i < _population.size(); ++i)
 	{
 		const std::vector<float> sensorInputs = _population[i]->getSensor()->getState();
-		// sensorInputs.push_back(1.0f); //  >>> A remplacer par les vrais inputs  <<<
-		// sensorInputs.push_back(0.0f); //  >>> A remplacer par les vrais inputs  <<<
-		// sensorInputs.push_back(0.0f); //  >>> A remplacer par les vrais inputs  <<<
-		// sensorInputs.push_back(0.0f); //  >>> A remplacer par les vrais inputs  <<<
 		std::vector<float>	outputs = _population[i]->feedForward(sensorInputs);
 
-		for (size_t i = 0; i < outputs.size(); ++i){
-			std::cout << "Creature.outputs[" << i << "] = " << outputs[i] << std::endl;
-			std::cout << "(bool)Creature.outputs[" << i << "] = " << static_cast<bool>(outputs[i]) << std::endl;
-		}
-		std::vector<float>	sensorState = _population[i]->getSensor()->getState();
+		std::cout << "Creature[" << i << "] controls => ["
+		<< outputs[0] << ", "
+		<< outputs[1] << ", "
+		<< outputs[2] << ", "
+		<< outputs[3] << "]" << std::endl;
+
 		if (outputs[0])
 			_population[i]->moveUp();
 		if (outputs[1])

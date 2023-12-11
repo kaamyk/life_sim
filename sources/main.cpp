@@ -17,9 +17,12 @@ int	main( void )
 {
 	Simulation	sim;
 	sf::RenderWindow	win(sf::VideoMode(WIN_L, WIN_H), "Life Simulation");
+    srand(time(NULL));
 
 	win.setFramerateLimit(30);
 	sim.loadTextures();
+	sim.createNewCreature();
+	sim.createNewCreature();
 	sim.createNewCreature();
 	while (win.isOpen() && sim.checkNbCreature())
 	{

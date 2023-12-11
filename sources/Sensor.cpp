@@ -22,12 +22,6 @@ Sensor::Sensor( void ): _rayCount(3), _rayLenght(100),
 
 Sensor::~Sensor( void )
 {
-	// for(unsigned int i = 0; i < _rayCount; ++i)
-	// {
-	// 	delete _rays[i][0];
-	// 	delete _rays[i][1];
-	// 	delete _rays[i];
-	// }
 	delete [] _rays;
 	return ;
 }
