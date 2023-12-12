@@ -18,11 +18,11 @@ class	Creature
 	private :
 		unsigned int	_index;
 		unsigned int	_fitness;
-		Fixed			_gradientDescent;
-		Fixed			_position[2];
-		Fixed			_rotation;
-		Fixed			_speed;
-		Fixed			_size;
+		float			_gradientDescent;
+		float			_position[2];
+		float			_rotation;
+		float			_speed;
+		float			_size;
 		Sensor*			_sensor;
 		std::chrono::high_resolution_clock::time_point	_birthTime;
 		sf::Texture		_creatureTexture;
@@ -36,8 +36,8 @@ class	Creature
 		~Creature( void );
 
 		bool		checkTime( std::chrono::seconds const _timeToDie );
-		Fixed		getPosition( bool xy ) const{ return (_position[xy]); }
-		Fixed		getRotation( void ) const{ return (_rotation); }
+		float		getPosition( bool xy ) const{ return (_position[xy]); }
+		float		getRotation( void ) const{ return (_rotation); }
 		Sensor*		getSensor( void ) const{ return (_sensor); }
 		std::vector<float> const&	getSensorState( void ) const;
 		
@@ -47,7 +47,8 @@ class	Creature
 		void		moveDown( void );
 		void		moveLeft( void );
 		void		moveRight( void );
-		std::vector<float> const&	feedForward( std::vector<float> sensorInputs ) const;
+		std::vector<float> const&				feedForward( std::vector<float> sensorInputs ) const;
+		void	eat( std::vector<Food *> const& _food, std::vector<Food *>::iterator& it );
 };
 
 #endif

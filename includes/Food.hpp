@@ -18,8 +18,12 @@ class	Food
 		~Food( void );
 
 		unsigned int	getPosition( bool xy );
+		void			setPosition( unsigned int x, unsigned int y );
 
-		bool			checkPosition( double x, double y);
+		template<typename T>
+		bool			checkPosition( T x, T y){
+		return (x >= _position[0] - 10 && x <= _position[0] + 10 && y >= _position[1] - 10 && y <= _position[1] + 10 );
+	}
 		void			drawFood( sf::RenderWindow& win, assetManager& _assets );
 		unsigned int*	getCoordinates( void );
 };

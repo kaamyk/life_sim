@@ -12,16 +12,13 @@ Food::~Food( void )
 	return ;
 }
 
-unsigned int	Food::getPosition( bool xy )
-{
+unsigned int	Food::getPosition( bool xy ){
 	return (_position[xy]);
 }
 
-bool			Food::checkPosition( double x, double y )
-{
-	if (x >= _position[0] - 10 && x <= _position[0] + 10 && y >= _position[1] - 10 && y <= _position[1] + 10 )
-		return (1);
-	return (0);
+void			Food::setPosition( unsigned int x, unsigned int y ){
+	_position[0] = x;
+	_position[1] = y;
 }
 
 void			Food::drawFood( sf::RenderWindow& win, assetManager& _assets )
@@ -37,7 +34,6 @@ void			Food::drawFood( sf::RenderWindow& win, assetManager& _assets )
 	return ;
 }
 
-unsigned int*	Food::getCoordinates( void )
-{
+unsigned int*	Food::getCoordinates( void ){
 	return (_position);
 }

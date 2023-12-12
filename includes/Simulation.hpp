@@ -6,17 +6,17 @@
 # include <array>
 # include <SFML/Graphics.hpp>
 
-# include "Fixed.hpp"
-# include "assetManager.hpp"
-# include "Sensor.hpp"
-# include "Food.hpp"
-# include "Creature.hpp"
-# include "NeuralNetwork.hpp"
-# include "Level.hpp"
-
 # define WIN_L 640
 # define WIN_H 640
 # define NBFOOD 10
+
+// # include "float.hpp"
+# include "assetManager.hpp"
+# include "Creature.hpp"
+# include "Sensor.hpp"
+# include "Food.hpp"
+# include "NeuralNetwork.hpp"
+# include "Level.hpp"
 
 class	Level;
 class	Creature;
@@ -29,7 +29,7 @@ class	Simulation
 		std::chrono::seconds const	_timeToDie;
 		std::vector<Creature *>		_population;
 		unsigned int				_nbCreature;
-		Food						_food[NBFOOD];
+		std::vector<Food *>			_food;
 		unsigned int				_nbFood;
 		assetManager				_assets;
 
@@ -42,7 +42,8 @@ class	Simulation
 		int				lerp(unsigned int A, unsigned int B, unsigned int t);
 
 		unsigned int	giveIndex( void );
-		Food*			getFood( void );
+		std::vector<Food *> const&		getFood( void );
+		void			foodGetsEaten( std::vector<Food *>::iterator const& i );
 		void			loadTextures( void );
 		void			drawPopulation( sf::RenderWindow& win );
 		void			drawAllFood( sf::RenderWindow& win );
