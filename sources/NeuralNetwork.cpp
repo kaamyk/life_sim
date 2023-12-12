@@ -24,3 +24,9 @@ std::vector<float>&    NeuralNetwork::feedForward( std::vector<float> sensorInpu
     }
     return (_levels[i - 1]->getOutputs());
 }
+
+void    NeuralNetwork::mutate( unsigned int amount ){
+    for(std::vector<Level *>::iterator i = _levels.begin(); i != _levels.end(); ++i){
+        (*i)->mutate(amount);
+    }
+}

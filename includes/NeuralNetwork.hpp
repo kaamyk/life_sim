@@ -23,6 +23,7 @@ public:
     NeuralNetwork&  operator=( NeuralNetwork const& source);
 
     std::vector<float>&    feedForward( std::vector<float> _sensorInputs );
+    void    mutate( unsigned int amount );
 };
 
 #endif

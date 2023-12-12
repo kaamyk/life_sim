@@ -9,11 +9,14 @@
 
 #include "../includes/Simulation.hpp"
 
-Simulation::Simulation( void ): _nbMaxCreature(5), _timeToDie(10),
+Simulation::Simulation( void ): _nbMaxCreature(NBCREAT), _timeToDie(10),
 								_nbCreature(0), _nbFood(NBFOOD)
 {
 	for(size_t i = 0; i < _nbFood; ++i){
 		_food.push_back(new Food());
+	}
+	for(unsigned int i = 0; i < NBCREAT; ++i){
+		createNewCreature();
 	}
 	return ;
 }

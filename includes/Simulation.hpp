@@ -40,7 +40,7 @@ class	Simulation
 		~Simulation( void );
 
 		void			printTimeToDie();
-		int				lerp(unsigned int A, unsigned int B, unsigned int t);
+		static int		lerp(unsigned int A, unsigned int B, unsigned int t);
 
 		unsigned int	giveIndex( void );
 		std::vector<Food *> const&		getFood( void );

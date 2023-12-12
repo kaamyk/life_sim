@@ -21,9 +21,6 @@ int	main( void )
 
 	win.setFramerateLimit(30);
 	sim.loadTextures();
-	for(unsigned int i = 0; i < NBCREAT; ++i){
-		sim.createNewCreature();
-	}
 	while (win.isOpen() && sim.checkNbCreature())
 	{
 		sf::Event	event;
