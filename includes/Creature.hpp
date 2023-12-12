@@ -27,6 +27,7 @@ class	Creature
 		std::chrono::high_resolution_clock::time_point	_birthTime;
 		sf::Texture		_creatureTexture;
 		sf::Sprite		_creatureSprite;
+		void			(Creature::*_moves[4])( void );
 		NeuralNetwork*	_brain;
 
 	public :
@@ -41,6 +42,7 @@ class	Creature
 		std::vector<float> const&	getSensorState( void ) const;
 		
 		void		drawCreature( sf::RenderWindow& win, assetManager& _assets, Simulation& sim );
+		void		move( uint8_t r );
 		void		moveUp( void );
 		void		moveDown( void );
 		void		moveLeft( void );

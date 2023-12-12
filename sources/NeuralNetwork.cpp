@@ -18,13 +18,8 @@ NeuralNetwork&  NeuralNetwork::operator=( NeuralNetwork const& source){
 std::vector<float>&    NeuralNetwork::feedForward( std::vector<float> sensorInputs ){
     unsigned int i;
     
-    // std::cout << "Level[0] :" << std::endl;
     this->_levels[0]->feedForward(sensorInputs);
-    // srand(time(NULL));
     for(i = 1; i < _levels.size(); ++i){
-        // std::cout << "Level[" << i << "] :" << std::endl;
-        std::cout << "rand NN1 == " << rand() << std::endl;
-        std::cout << "rand NN2== " << rand() << std::endl;
         this->_levels[i]->feedForward(_levels[i - 1]->getOutputs());
     }
     return (_levels[i - 1]->getOutputs());

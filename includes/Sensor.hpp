@@ -24,8 +24,9 @@ class	Sensor
 
 		unsigned int& getRayCount( void ){return (_rayCount);}
 		std::vector<float> const&	getState( void ) const {
-			std::cout << ">>> getState()" << std::endl;
-			return (_state);}
+			// std::cout << ">>> getState()" << std::endl;
+			return (_state);
+		}
 
 		int		lerp(unsigned int A, unsigned int B, unsigned int t){ return (A + ((B - A) * t)); }
 		bool	findIntersection( sf::RectangleShape* r, int rayRotation, Creature& c, Food* food );

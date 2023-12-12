@@ -31,7 +31,6 @@ public:
             _weights.emplace_back(std::vector<float>(tmp));
             tmp.clear();
         }
-            // srand(time(NULL));
         for (unsigned int i = 0; i < _nbOutputs; ++i){
             _biases.push_back(remainder((float)(rand()) / (float)(rand()), (2.0f)) - 1.0f);
         }
@@ -56,15 +55,11 @@ public:
     void   feedForward( std::vector<float> inputs ){
         int sum;
 
-        // std::cout << "\t_nbOutputs == " << _nbOutputs << std::endl;
-        // std::cout << "\t_nbInputs == " << _nbInputs << std::endl;
         for (unsigned int i = 0; i < _nbOutputs; ++i){
             sum = 0;
             for (unsigned int j = 0; j < _nbInputs; ++j){
-                // std::cout << "i == " << i << " && j == " << j << std::endl;
                 sum += inputs[j] * _weights[j][i];
             }
-            // std::cout << "sum == " << sum << " && _biases [" << i << "] == " << _biases[i] << std::endl;
             _outputs.push_back(static_cast<float>(sum > _biases[i]));
         }
     }

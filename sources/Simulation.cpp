@@ -82,12 +82,17 @@ void	Simulation::checkLifeTimes( void )
 
 void	Simulation::drawPopulation( sf::RenderWindow& win )
 {
-	std::cout << "population.size() == " << _population.size() << std::endl;
+	std::cout << std::endl << std::endl;
+	// std::cout << "population.size() == " << _population.size() << std::endl;
 	if (_population.size() == 0)
 		return;
 	for (size_t i = 0; i < _population.size(); ++i)
 	{
 		const std::vector<float> sensorInputs = _population[i]->getSensor()->getState();
+		std::cout << "Creature[" << i << "] Sensors => ["
+		<< sensorInputs[0] << ", "
+		<< sensorInputs[1] << ", "
+		<< sensorInputs[2] << "]" << std::endl;
 		std::vector<float>	outputs = _population[i]->feedForward(sensorInputs);
 
 		std::cout << "Creature[" << i << "] controls => ["
@@ -96,14 +101,10 @@ void	Simulation::drawPopulation( sf::RenderWindow& win )
 		<< outputs[2] << ", "
 		<< outputs[3] << "]" << std::endl;
 
-		if (outputs[0])
-			_population[i]->moveUp();
-		if (outputs[1])
-			_population[i]->moveDown();
-		if (outputs[2])
-			_population[i]->moveRight();
-		if (outputs[3])
-			_population[i]->moveLeft();
+		for (__uint8_t j = 0; j < 4; ++j){
+			if (outputs[j])
+				_population[i]->move(j);
+		}
 		_population[i]->drawCreature(win, _assets, *this);
 	}
 	return ;

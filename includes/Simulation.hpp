@@ -44,12 +44,12 @@ class	Simulation
 		unsigned int	giveIndex( void );
 		Food*			getFood( void );
 		void			loadTextures( void );
+		void			drawPopulation( sf::RenderWindow& win );
+		void			drawAllFood( sf::RenderWindow& win );
 		void			updateNbCreature( bool a );
 		void			createNewCreature( void );
 		bool			checkNbCreature( void );
 		void			checkLifeTimes( void );
-		void			drawPopulation( sf::RenderWindow& win );
-		void			drawAllFood( sf::RenderWindow& win );
 };
 
 #endif

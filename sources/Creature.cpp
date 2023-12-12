@@ -14,6 +14,10 @@ Creature::Creature( int const win_h, int const win_l ): _fitness(0),
 	neuronCount.push_back(6);
 	neuronCount.push_back(4);
 	_brain = new NeuralNetwork(neuronCount);
+	_moves[0] = &Creature::moveUp;
+	_moves[1] = &Creature::moveDown;
+	_moves[2] = &Creature::moveRight;
+	_moves[3] = &Creature::moveLeft;
 	return ;
 }
 
@@ -42,6 +46,10 @@ void	Creature::drawCreature( sf::RenderWindow& win, assetManager& _assets, Simul
 	this->_creatureSprite.setRotation(_rotation.toFloat());
 	win.draw( this->_creatureSprite );
 	return ;
+}
+
+void	Creature::move( __uint8_t r ){
+	(this->*_moves[r])();
 }
 
 void	Creature::moveUp( void )

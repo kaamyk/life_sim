@@ -16,8 +16,8 @@
 int	main( void )	
 {
 	Simulation	sim;
-	sf::RenderWindow	win(sf::VideoMode(WIN_L, WIN_H), "Life Simulation");
     srand(time(NULL));
+	sf::RenderWindow	win(sf::VideoMode(WIN_L, WIN_H), "Life Simulation");
 
 	win.setFramerateLimit(30);
 	sim.loadTextures();
