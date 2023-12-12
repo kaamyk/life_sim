@@ -6,9 +6,10 @@
 # include <array>
 # include <SFML/Graphics.hpp>
 
-# define WIN_L 640
-# define WIN_H 640
+# define WIN_L 900
+# define WIN_H 900
 # define NBFOOD 10
+# define NBCREAT 10
 
 // # include "float.hpp"
 # include "assetManager.hpp"

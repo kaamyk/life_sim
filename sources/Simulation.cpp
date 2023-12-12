@@ -9,7 +9,7 @@
 
 #include "../includes/Simulation.hpp"
 
-Simulation::Simulation( void ): _nbMaxCreature(5), _timeToDie(30),
+Simulation::Simulation( void ): _nbMaxCreature(5), _timeToDie(10),
 								_nbCreature(0), _nbFood(NBFOOD)
 {
 	for(size_t i = 0; i < _nbFood; ++i){
@@ -48,9 +48,6 @@ void	Simulation::foodGetsEaten( std::vector<Food *>::iterator const& i ){
 
 void	Simulation::createNewCreature( void )
 {
-	// Creature	newCreature(WIN_H, WIN_L);
-	// std::string	path("./images/creature.png");
-
 	try{
 		_population.push_back(new Creature(WIN_H, WIN_L));
 		updateNbCreature( 1 );
@@ -60,7 +57,7 @@ void	Simulation::createNewCreature( void )
 	}
 }
 
-bool	Simulation::checkNbCreature( void ){ return (this->_nbCreature != 0); }
+bool	Simulation::checkNbCreature( void ){ return (_population.size() != 0); }
 
 void	Simulation::updateNbCreature( bool a ){ a ? ++(this->_nbCreature) : --(this->_nbCreature); }
 
@@ -68,13 +65,12 @@ void	Simulation::checkLifeTimes( void )
 {
 	if (_population.size() == 0)
 		return;
-	for(std::vector<Creature *>::iterator i = _population.begin(); i != _population.end(); ++i)
+	for(std::vector<Creature *>::iterator i = _population.begin(); i != _population.end() && !_population.empty(); ++i)
 	{
-		if ((*i)->checkTime(this->_timeToDie))
-		{
-			std::cout << "In if erase()" << std::endl;
-			this->updateNbCreature(0);
+		if ((*i)->checkTime(this->_timeToDie)){
 			this->_population.erase(i);
+			this->updateNbCreature(0);
+			i = _population.begin();
 		}
 	}
 	return ;

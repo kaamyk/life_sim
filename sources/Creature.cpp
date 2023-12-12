@@ -157,7 +157,9 @@ std::vector<float> const&	Creature::feedForward( std::vector<float> sensorInputs
 
 void	Creature::eat( std::vector<Food *> const& _food, std::vector<Food *>::iterator& it ){
 	for (; it != _food.end(); ++it){
-		if ((*it)->checkPosition(this->_position[0], this->_position[1]))
+		if ((*it)->checkPosition(this->_position[0], this->_position[1])){
+			_birthTime = std::chrono::high_resolution_clock::now();
 			return ;
+		}
 	}
 }

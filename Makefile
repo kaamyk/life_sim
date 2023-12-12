@@ -16,16 +16,19 @@ SRCS		=	$(wildcard $(SRCDIR)/*.cpp)
 OBJDIR		=	.obj
 OBJS		=	$(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRCS))
 DEPDIR		=	.dep
-DEPS		=	$(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.d, $(SRCS))
+DEPS		=	$(patsubst $(SRCDIR)/%.cpp, $(DEPDIR)/%.d, $(SRCS))
 CCPP		=	c++
 CFLAGS		=	-Wall -Wextra -Werror
 SFMLFLAGS	=	-lsfml-graphics -lsfml-window -lsfml-system
 VGFLAGS		=	-g3
 
-all				:	$(OBJDIR) $(OBJS) $(NAME)
+all				:	$(OBJDIR) $(DEPDIR) $(OBJS) $(NAME)
 
 $(OBJDIR)		:
 	mkdir $(OBJDIR)
+
+$(DEPDIR)		:
+	mkdir $(DEPDIR)
 
 $(OBJDIR)/%.o	:	$(SRCDIR)/%.cpp
 	@clear
@@ -45,6 +48,7 @@ $(NAME)			:	$(OBJS)
 clean			:
 	@echo -e '\033[0;34mRemoving object files ...\x1b[37m'
 	@rm -rf $(OBJDIR)
+	@rm -rf $(DEPDIR)
 	@clear
 	@echo -e '\033[0;34mRemoving object files \x1b[32m>>> OK <<<\x1b[37m'
 
