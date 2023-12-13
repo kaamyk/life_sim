@@ -24,6 +24,7 @@ class	Creature
 		float			_speed;
 		float			_size;
 		Sensor*			_sensor;
+		unsigned int 	_nbFoodEaten;
 		std::chrono::high_resolution_clock::time_point	_birthTime;
 		sf::Texture		_creatureTexture;
 		sf::Sprite		_creatureSprite;
@@ -33,12 +34,14 @@ class	Creature
 	public :
 		Creature( void );
 		Creature( int const win_h, int const win_l );
+		Creature( int const win_h, int const win_l, NeuralNetwork const& brain );
 		~Creature( void );
 
 		bool		checkTime( std::chrono::seconds const _timeToDie );
 		float		getPosition( bool xy ) const{ return (_position[xy]); }
 		float		getRotation( void ) const{ return (_rotation); }
 		Sensor*		getSensor( void ) const{ return (_sensor); }
+		NeuralNetwork const&	getBrain( void ){ return (*_brain); }
 		std::vector<float> const&	getSensorState( void ) const;
 		
 		void		drawCreature( sf::RenderWindow& win, assetManager& _assets, Simulation& sim );
@@ -47,7 +50,7 @@ class	Creature
 		void		moveDown( void );
 		void		moveLeft( void );
 		void		moveRight( void );
-		std::vector<float> const&				feedForward( std::vector<float> sensorInputs ) const;
+		std::vector<float> const&	feedForward( std::vector<float> sensorInputs ) const;
 		void	eat( std::vector<Food *> const& _food, std::vector<Food *>::iterator& it );
 };
 

@@ -18,12 +18,13 @@ private:
 
 public:
     NeuralNetwork( std::vector<unsigned int> neuronCount );
+    NeuralNetwork( NeuralNetwork const& brain );
     ~NeuralNetwork( void );
 
     NeuralNetwork&  operator=( NeuralNetwork const& source);
 
     std::vector<float>&    feedForward( std::vector<float> _sensorInputs );
-    void    mutate( unsigned int amount );
+    void    mutate( float amount );
 };
 
 #endif

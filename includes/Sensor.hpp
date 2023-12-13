@@ -24,7 +24,7 @@ class	Sensor
 
 		unsigned int& getRayCount( void ){return (_rayCount);}
 		std::vector<float> const&	getState( void ) const {
-			// std::cout << ">>> getState()" << std::endl;
+			// // std::cout<< ">>> getState()" << std::endl;
 			return (_state);
 		}
 

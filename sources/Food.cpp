@@ -2,7 +2,7 @@
 #include "../includes/assetManager.hpp"
 #include "../includes/Food.hpp"
 
-Food::Food( void ): _position {(unsigned int)rand() % WIN_H, (unsigned int)rand() % WIN_L}
+Food::Food( void ): _position {(unsigned int)rand() % WIN_L, (unsigned int)rand() % WIN_H}
 {
 	return ;
 }

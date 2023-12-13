@@ -5,7 +5,7 @@
 # include <array>
 # include <ctime>
 # include <cstdlib>
-# include <math.h>
+# include <cmath>
 
 #include "Simulation.hpp"
 
@@ -32,7 +32,7 @@ public:
             tmp.clear();
         }
         for (unsigned int i = 0; i < _nbOutputs; ++i){
-            _biases.push_back(remainder((float)(rand()) / (float)(rand()), (2.0f)) - 1.0f);
+            _biases.push_back(remainder( static_cast<float>(rand()) / static_cast<float>(rand()), 2.0f) - 1.0f);
         }
         return ;
     }
@@ -51,9 +51,10 @@ public:
 
     std::vector<float>&  getInputs( void ){return (_inputs);}
     std::vector<float>&  getOutputs( void ){return (_outputs);}
+    std::vector<float>&  getBiases( void ){return (_outputs);}
 
     void   feedForward( std::vector<float> inputs );
-    void    mutate( unsigned int amount );
+    void    mutate( float amount );
 };
 
 #endif

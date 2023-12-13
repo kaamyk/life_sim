@@ -4,6 +4,10 @@ NeuralNetwork::NeuralNetwork( std::vector<unsigned int> neuronCount ){
     for (unsigned int i = 0; i + 1 < neuronCount.size(); ++i)
         _levels.emplace_back(new Level(neuronCount[i], neuronCount[i + 1]));
 }
+NeuralNetwork::NeuralNetwork( NeuralNetwork const& brain ){
+    *this = brain;
+    
+}
 NeuralNetwork::~NeuralNetwork( void ){
     for (std::vector<Level*>::iterator it = _levels.begin(); it != _levels.end(); ++it){
         _levels.erase(it);
@@ -25,7 +29,7 @@ std::vector<float>&    NeuralNetwork::feedForward( std::vector<float> sensorInpu
     return (_levels[i - 1]->getOutputs());
 }
 
-void    NeuralNetwork::mutate( unsigned int amount ){
+void    NeuralNetwork::mutate( float amount ){
     for(std::vector<Level *>::iterator i = _levels.begin(); i != _levels.end(); ++i){
         (*i)->mutate(amount);
     }

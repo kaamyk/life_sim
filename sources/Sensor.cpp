@@ -13,9 +13,9 @@ Sensor::Sensor( void ): _rayCount(3), _rayLenght(100),
 		_rays[i][1] = new unsigned int[2];
 		_state.push_back(0);
 	}
-	// std::cout << "In constructor:" << std::endl;
+	// // std::cout<< "In constructor:" << std::endl;
 	// for (size_t i = 0; i < _state.size(); ++i){
-	// 	std::cout << "\t_state [" << i << "] == " << _state[i] << std::endl;
+	// 	// std::cout<< "\t_state [" << i << "] == " << _state[i] << std::endl;
 	// }
 	return ;
 }

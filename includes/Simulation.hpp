@@ -5,11 +5,12 @@
 # include <vector>
 # include <array>
 # include <SFML/Graphics.hpp>
+# include <cmath>
 
-# define WIN_L 900
-# define WIN_H 900
-# define NBFOOD 10
-# define NBCREAT 10
+# define WIN_L 600
+# define WIN_H 600
+# define NBFOOD 20
+# define NBCREAT 5
 
 // # include "float.hpp"
 # include "assetManager.hpp"
@@ -29,6 +30,7 @@ class	Simulation
 		unsigned int const			_nbMaxCreature;
 		std::chrono::seconds const	_timeToDie;
 		std::vector<Creature *>		_population;
+		std::vector<NeuralNetwork *> _bestBrains;
 		unsigned int				_nbCreature;
 		std::vector<Food *>			_food;
 		unsigned int				_nbFood;
@@ -40,7 +42,7 @@ class	Simulation
 		~Simulation( void );
 
 		void			printTimeToDie();
-		static int		lerp(unsigned int A, unsigned int B, unsigned int t);
+		static float	lerp( float A, float B, float t){ return (A + ((B - A) * t)); }
 
 		unsigned int	giveIndex( void );
 		std::vector<Food *> const&		getFood( void );
@@ -50,8 +52,10 @@ class	Simulation
 		void			drawAllFood( sf::RenderWindow& win );
 		void			updateNbCreature( bool a );
 		void			createNewCreature( void );
+		void			createMutatedCreature( NeuralNetwork const& brain );
 		bool			checkNbCreature( void );
 		void			checkLifeTimes( void );
+		size_t			getPopulationSize( void );
 };
 
 #endif

@@ -2,10 +2,11 @@
 
 Creature::Creature( int const win_h, int const win_l ): _fitness(0),
 							_gradientDescent(0),
-							_position {float(win_l / 2), float(win_h / 2)},
+							_position {static_cast<float>(rand() % win_l), static_cast<float>(rand() % win_h)},
 							_rotation(0),
 							_speed(5),
 							_size(rand() % 100),
+							_nbFoodEaten(0),
 							_birthTime(std::chrono::high_resolution_clock::now())
 {
 	_sensor = new Sensor();
@@ -14,6 +15,30 @@ Creature::Creature( int const win_h, int const win_l ): _fitness(0),
 	neuronCount.push_back(6);
 	neuronCount.push_back(4);
 	_brain = new NeuralNetwork(neuronCount);
+	_moves[0] = &Creature::moveUp;
+	_moves[1] = &Creature::moveDown;
+	_moves[2] = &Creature::moveRight;
+	_moves[3] = &Creature::moveLeft;
+	return ;
+}
+
+Creature::Creature( int const win_h, int const win_l, NeuralNetwork const& brain ): _fitness(0),
+							_gradientDescent(0),
+							_position {static_cast<float>(rand() % win_l), static_cast<float>(rand() % win_h)},
+							_rotation(0),
+							_speed(5),
+							_size(rand() % 100),
+							_nbFoodEaten(0),
+							_birthTime(std::chrono::high_resolution_clock::now())
+
+{
+	_sensor = new Sensor();
+	std::vector<unsigned int>	neuronCount;
+	neuronCount.push_back(_sensor->getRayCount());
+	neuronCount.push_back(6);
+	neuronCount.push_back(4);
+	_brain = new NeuralNetwork(brain);
+	_brain->mutate(0.5f);
 	_moves[0] = &Creature::moveUp;
 	_moves[1] = &Creature::moveDown;
 	_moves[2] = &Creature::moveRight;
@@ -163,6 +188,7 @@ void	Creature::eat( std::vector<Food *> const& _food, std::vector<Food *>::itera
 			|| (*it)->checkPosition( this->_position[0] - (50/2), this->_position[1] + (50/2) ) )
 		{
 			_birthTime = std::chrono::high_resolution_clock::now();
+			++_nbFoodEaten;
 			return ;
 		}
 	}

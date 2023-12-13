@@ -15,8 +15,8 @@
 
 int	main( void )	
 {
-	Simulation	sim;
     srand(time(NULL));
+	Simulation	sim;
 	sf::RenderWindow	win(sf::VideoMode(WIN_L, WIN_H), "Life Simulation");
 
 	win.setFramerateLimit(30);
@@ -24,6 +24,12 @@ int	main( void )
 	while (win.isOpen() && sim.checkNbCreature())
 	{
 		sf::Event	event;
+
+		if (sim.getPopulationSize() == 0){
+			for (unsigned int i = 0; i < NBCREAT; ++i){
+				sim.createNewCreature();
+			}
+		}
 		while(win.pollEvent(event))
 			if (event.type == sf::Event::Closed)
 				win.close();
