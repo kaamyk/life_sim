@@ -9,7 +9,7 @@
 
 #include "../includes/Simulation.hpp"
 
-Simulation::Simulation( void ): _nbMaxCreature(NBCREAT), _timeToDie(10),
+Simulation::Simulation( void ): _nbMaxCreature(NBCREAT), _timeToDie(5),
 								_nbCreature(0), _nbFood(NBFOOD)
 {
 	for(size_t i = 0; i < _nbFood; ++i){
@@ -44,6 +44,39 @@ void			Simulation::loadTextures( void )
 
 unsigned int	Simulation::giveIndex( void ){ return ( this->_nbCreature ); }
 
+void			Simulation::printData( void ){
+	for (unsigned int i = 0; i < _population.size(); ++i){
+		std::vector<Level *>& tmpBrain(_population[i]->getBrain().getLevels());
+		std::cout << "Creature["<< i << "]:" << std::endl;
+		for (unsigned int j = 0; j < tmpBrain.size(); ++j){
+			std::vector<float>&	inputs = tmpBrain[j]->getInputs();
+			std::vector<float>&	outputs = tmpBrain[j]->getOutputs();
+			std::vector<float>&	biases = tmpBrain[j]->getBiases();
+			(void)inputs;
+			(void)outputs;
+			(void)biases;
+
+			std::cout << "\tInputs: ";
+			std::cout << "\t\tinputs.size() == " << outputs.size() << std::endl;
+			// for (unsigned int k = 0; k < inputs.size(); ++k){
+			// 	std::cout << inputs[k];
+			// }
+			std::cout << std::endl;
+			std::cout << "\tOutputs ";
+			std::cout << "\t\toutputs.size() == " << outputs.size() << std::endl;
+			// for (unsigned int k = 0; k < outputs.size(); ++k){
+			// 	std::cout << outputs[k];
+			// }
+			std::cout << "\tBiases: ";
+			std::cout << "\t\tbiases.size() == " << outputs.size() << std::endl;
+			// for (unsigned int k = 0; k < biases.size(); ++k){
+			// 	std::cout << biases[k];
+			// }
+			std::cout << std::endl;
+		}
+	}
+}
+
 std::vector<Food *> const&		Simulation::getFood( void ){ return (_food); }
 void	Simulation::foodGetsEaten( std::vector<Food *>::iterator const& i ){
 	(*i)->setPosition(rand() % WIN_L, rand() % WIN_H);
@@ -69,6 +102,8 @@ void	Simulation::createMutatedCreature( NeuralNetwork const& brain )
 	catch(std::exception& e){
 		std::cerr << e.what() << std::endl;
 	}
+	std::cout << std::endl << "\t\t>>> New Generation <<<" << std::endl << std::endl;
+	printData();
 }
 
 bool	Simulation::checkNbCreature( void ){ return (_population.size() != 0); }
@@ -110,7 +145,7 @@ void	Simulation::checkLifeTimes( void )
 void	Simulation::drawPopulation( sf::RenderWindow& win )
 {
 	// std::cout<< "*******************************" << std::endl;
-	// // std::cout<< "population.size() == " << _population.size() << std::endl;
+	// std::cout<< "population.size() == " << _population.size() << std::endl;
 	if (_population.size() == 0)
 		return;
 	else if (_population.size() <= 3){

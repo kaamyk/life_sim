@@ -24,6 +24,7 @@ public:
     NeuralNetwork&  operator=( NeuralNetwork const& source);
 
     std::vector<float>&    feedForward( std::vector<float> _sensorInputs );
+    std::vector<Level *>& getLevels( void ){ return (_levels); }
     void    mutate( float amount );
 };
 

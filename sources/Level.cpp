@@ -3,6 +3,7 @@
 void   Level::feedForward( std::vector<float> inputs ){
     int sum;
 
+    _outputs.clear();
     for (unsigned int i = 0; i < _nbOutputs; ++i){
         sum = 0;
         for (unsigned int j = 0; j < _nbInputs; ++j){

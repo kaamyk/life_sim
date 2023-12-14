@@ -41,7 +41,7 @@ class	Creature
 		float		getPosition( bool xy ) const{ return (_position[xy]); }
 		float		getRotation( void ) const{ return (_rotation); }
 		Sensor*		getSensor( void ) const{ return (_sensor); }
-		NeuralNetwork const&	getBrain( void ){ return (*_brain); }
+		NeuralNetwork&	getBrain( void ){ return (*_brain); }
 		std::vector<float> const&	getSensorState( void ) const;
 		
 		void		drawCreature( sf::RenderWindow& win, assetManager& _assets, Simulation& sim );

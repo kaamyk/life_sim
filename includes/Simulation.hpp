@@ -42,20 +42,25 @@ class	Simulation
 		~Simulation( void );
 
 		void			printTimeToDie();
+		void			printData( void );
 		static float	lerp( float A, float B, float t){ return (A + ((B - A) * t)); }
 
 		unsigned int	giveIndex( void );
 		std::vector<Food *> const&		getFood( void );
-		void			foodGetsEaten( std::vector<Food *>::iterator const& i );
+		size_t			getPopulationSize( void );
+
+		bool			checkNbCreature( void );
+		void			checkLifeTimes( void );
+
 		void			loadTextures( void );
 		void			drawPopulation( sf::RenderWindow& win );
 		void			drawAllFood( sf::RenderWindow& win );
+
 		void			updateNbCreature( bool a );
 		void			createNewCreature( void );
 		void			createMutatedCreature( NeuralNetwork const& brain );
-		bool			checkNbCreature( void );
-		void			checkLifeTimes( void );
-		size_t			getPopulationSize( void );
+
+		void			foodGetsEaten( std::vector<Food *>::iterator const& i );
 };
 
 #endif
