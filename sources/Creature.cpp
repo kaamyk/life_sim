@@ -29,7 +29,8 @@ Creature::Creature( int const win_h, int const win_l, NeuralNetwork const& brain
 							_speed(5),
 							_size(rand() % 100),
 							_nbFoodEaten(0),
-							_birthTime(std::chrono::high_resolution_clock::now())
+							_birthTime(std::chrono::high_resolution_clock::now()),
+							_timeLastEat(std::chrono::high_resolution_clock::now())
 
 {
 	_sensor = new Sensor();
@@ -38,7 +39,7 @@ Creature::Creature( int const win_h, int const win_l, NeuralNetwork const& brain
 	neuronCount.push_back(6);
 	neuronCount.push_back(4);
 	_brain = new NeuralNetwork(brain);
-	_brain->mutate(0.5f);
+	_brain->mutate(0.1f);
 	_moves[0] = &Creature::moveUp;
 	_moves[1] = &Creature::moveDown;
 	_moves[2] = &Creature::moveRight;
@@ -56,7 +57,7 @@ Creature::~Creature( void )
 bool	Creature::checkTime( std::chrono::seconds const _timeToDie )
 {
 	std::chrono::high_resolution_clock::time_point	t = std::chrono::high_resolution_clock::now();
-	return (t - this->_birthTime >= _timeToDie);
+	return (t - this->_timeLastEat >= _timeToDie);
 }
 
 void	Creature::drawCreature( sf::RenderWindow& win, assetManager& _assets, Simulation& sim )
@@ -182,12 +183,9 @@ std::vector<float> const&	Creature::feedForward( std::vector<float> sensorInputs
 
 void	Creature::eat( std::vector<Food *> const& _food, std::vector<Food *>::iterator& it ){
 	for (; it != _food.end(); ++it){
-		if ( (*it)->checkPosition( this->_position[0] + (50/2), this->_position[1] + (50/2) )
-			|| (*it)->checkPosition( this->_position[0] - (50/2), this->_position[1] - (50/2) )
-			|| (*it)->checkPosition( this->_position[0] + (50/2), this->_position[1] - (50/2) )
-			|| (*it)->checkPosition( this->_position[0] - (50/2), this->_position[1] + (50/2) ) )
+		if ( (*it)->checkPosition( this->_position[0], this->_position[1]) )
 		{
-			_birthTime = std::chrono::high_resolution_clock::now();
+			_timeLastEat = std::chrono::high_resolution_clock::now();
 			++_nbFoodEaten;
 			return ;
 		}

@@ -26,6 +26,7 @@ class	Creature
 		Sensor*			_sensor;
 		unsigned int 	_nbFoodEaten;
 		std::chrono::high_resolution_clock::time_point	_birthTime;
+		std::chrono::high_resolution_clock::time_point	_timeLastEat;
 		sf::Texture		_creatureTexture;
 		sf::Sprite		_creatureSprite;
 		void			(Creature::*_moves[4])( void );

@@ -7,9 +7,9 @@
 # include <SFML/Graphics.hpp>
 # include <cmath>
 
-# define WIN_L 600
-# define WIN_H 600
-# define NBFOOD 20
+# define WIN_L 1920
+# define WIN_H 1080
+# define NBFOOD 30
 # define NBCREAT 5
 
 // # include "float.hpp"
