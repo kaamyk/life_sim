@@ -38,7 +38,7 @@ bool	Sensor::findIntersection( sf::RectangleShape* r, int rayRotation, Creature&
 		rayRotation += 360;
 	else if (rayRotation >= 360)
 		rayRotation -= 360;
-	for (unsigned int i = 0; i < NBFOOD; ++i)
+	for (unsigned int i = 0; i < data.nbFood; ++i)
 	{
 		if (food[i]->getPosition(0) < c.getPosition(0) + _rayLenght && food[i]->getPosition(0) > c.getPosition(0) - _rayLenght
 			&& food[i]->getPosition(1) < c.getPosition(1) + _rayLenght && food[i]->getPosition(1) > c.getPosition(1) - _rayLenght)

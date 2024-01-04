@@ -7,10 +7,19 @@
 # include <SFML/Graphics.hpp>
 # include <cmath>
 
-# define WIN_L 1920
-# define WIN_H 1080
-# define NBFOOD 30
-# define NBCREAT 5
+// # define WIN_L 1920
+// # define WIN_H 1080
+// # define NBFOOD 30
+// # define NBCREAT 5
+
+struct{
+	const unsigned int	windowLength = 1920;
+	const unsigned int	windowHeight = 1080;
+	const unsigned int	creatureSize = 25;
+	const unsigned int	foodSize = 12;
+	const unsigned int	nbCreature = 5;
+	const unsigned int	nbFood = 30;
+} data;
 
 // # include "float.hpp"
 # include "assetManager.hpp"
@@ -27,11 +36,11 @@ class	Food;
 class	Simulation
 {
 	private :
-		unsigned int const			_nbMaxCreature;
+		// unsigned int const			_nbMaxCreature;
 		std::chrono::seconds const	_timeToDie;
 		std::vector<Creature *>		_population;
 		std::vector<NeuralNetwork *> _bestBrains;
-		unsigned int				_nbCreature;
+		// unsigned int				_nbCreature;
 		std::vector<Food *>			_food;
 		unsigned int				_nbFood;
 		assetManager				_assets;

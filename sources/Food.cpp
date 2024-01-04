@@ -2,7 +2,7 @@
 #include "../includes/assetManager.hpp"
 #include "../includes/Food.hpp"
 
-Food::Food( void ): _position {(unsigned int)rand() % WIN_L, (unsigned int)rand() % WIN_H}
+Food::Food( void ): _position {(unsigned int)rand() % data.windowLength, (unsigned int)rand() % data.windowHeight}
 {
 	return ;
 }
@@ -25,9 +25,9 @@ void			Food::drawFood( sf::RenderWindow& win, assetManager& _assets )
 {
 	std::string	path("./images/foodParticule.png");
 
-	_foodSprite.setOrigin(10, 10);
+	_foodSprite.setOrigin(data.foodSize / 2, data.foodSize / 2);
 	_foodSprite.setTexture(_assets.getTexture(path));
-	_foodSprite.setTextureRect(sf::IntRect(0, 0, 20, 20));
+	_foodSprite.setTextureRect(sf::IntRect(0, 0, data.foodSize, data.foodSize));
 	_foodSprite.setPosition(_position[0], _position[1]);
 	_foodSprite.setRotation(0);
 	win.draw(_foodSprite);

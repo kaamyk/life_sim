@@ -34,8 +34,7 @@ class	Creature
 
 	public :
 		Creature( void );
-		Creature( int const win_h, int const win_l );
-		Creature( int const win_h, int const win_l, NeuralNetwork const& brain );
+		Creature( NeuralNetwork const& brain );
 		~Creature( void );
 
 		bool		checkTime( std::chrono::seconds const _timeToDie );

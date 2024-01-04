@@ -14,7 +14,7 @@ class	assetManager
 		assetManager( void );
 		~assetManager( void );
 
-		void			createNewTexture( const std::string path);
+		void			createNewTexture( const std::string path );
 		sf::Texture&	getTexture( const std::string& path );
 };
 

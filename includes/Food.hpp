@@ -22,10 +22,10 @@ class	Food
 
 		template<typename T>
 		bool			checkPosition( T x, T y ){
-			T	_creaturePosx[] = {x - static_cast<T>(50/2), x + static_cast<T>(50/2)};
-			T	_creaturePosy[] = {y - static_cast<T>(50/2), y + static_cast<T>(50/2)};
-			unsigned int _foodPosx[] = {_position[0] - 10, _position[0] + 10};
-			unsigned int _foodPosy[] = {_position[1] - 10, _position[1] + 10};
+			T	_creaturePosx[] = {x - static_cast<T>(data.creatureSize / 2), x + static_cast<T>(data.creatureSize / 2)};
+			T	_creaturePosy[] = {y - static_cast<T>(data.creatureSize / 2), y + static_cast<T>(data.creatureSize / 2)};
+			unsigned int _foodPosx[] = {_position[0] - (data.foodSize / 2), _position[0] + (data.foodSize / 2)};
+			unsigned int _foodPosy[] = {_position[1] - (data.foodSize / 2), _position[1] + (data.foodSize / 2)};
 
 			if ( (_creaturePosx[0] >= _foodPosx[0] && _creaturePosx[0] <= _foodPosx[1])
 				|| (_creaturePosx[1] >= _foodPosx[0] && _creaturePosx[0] <= _foodPosx[1]) )

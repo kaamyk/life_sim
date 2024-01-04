@@ -1,8 +1,8 @@
 #include "../includes/Simulation.hpp"
 
-Creature::Creature( int const win_h, int const win_l ): _fitness(0),
+Creature::Creature( void ): _fitness(0),
 							_gradientDescent(0),
-							_position {static_cast<float>(rand() % win_l), static_cast<float>(rand() % win_h)},
+							_position {static_cast<float>(rand() % data.windowLength), static_cast<float>(rand() % data.windowHeight)},
 							_rotation(0),
 							_speed(5),
 							_size(rand() % 100),
@@ -22,9 +22,9 @@ Creature::Creature( int const win_h, int const win_l ): _fitness(0),
 	return ;
 }
 
-Creature::Creature( int const win_h, int const win_l, NeuralNetwork const& brain ): _fitness(0),
+Creature::Creature( NeuralNetwork const& brain ): _fitness(0),
 							_gradientDescent(0),
-							_position {static_cast<float>(rand() % win_l), static_cast<float>(rand() % win_h)},
+							_position {static_cast<float>(rand() % data.windowHeight), static_cast<float>(rand() % data.windowHeight)},
 							_rotation(0),
 							_speed(5),
 							_size(rand() % 100),
@@ -62,12 +62,12 @@ bool	Creature::checkTime( std::chrono::seconds const _timeToDie )
 
 void	Creature::drawCreature( sf::RenderWindow& win, assetManager& _assets, Simulation& sim )
 {
-	const std::string&	path("./images/creature.png");
+	const std::string&	path("./images/SquareCreature.png");
 
 	_sensor->drawRay(win, _assets, *this, sim);
-	this->_creatureSprite.setOrigin(50 / 2, 50 / 2);
+	this->_creatureSprite.setOrigin((data.creatureSize) / 2, data.creatureSize / 2);
 	this->_creatureSprite.setTexture(_assets.getTexture(path));
-	this->_creatureSprite.setTextureRect(sf::IntRect(0, 0, 50, 50));
+	this->_creatureSprite.setTextureRect(sf::IntRect(0, 0, data.creatureSize, data.creatureSize));
 	this->_creatureSprite.setPosition(this->_position[0], this->_position[1]);
 	this->_creatureSprite.setRotation(_rotation);
 	win.draw( this->_creatureSprite );
@@ -83,7 +83,7 @@ void	Creature::moveUp( void )
 	if (_position[1] >= float(_speed))
 		_position[1] = _position[1] - float(_speed);
 	else
-		_position[1] = _position[1] + float(WIN_H);
+		_position[1] = _position[1] + float(data.windowHeight);
 
 	if ( _rotation >= float(10) && _rotation <= float(180) ){
 		_rotation = _rotation - float(10) ;
@@ -99,10 +99,10 @@ void	Creature::moveUp( void )
 
 void	Creature::moveDown( void )
 {
-	if (_position[1] + float(_speed) <= float(WIN_H))
+	if (_position[1] + float(_speed) <= float(data.windowHeight))
 		_position[1] = _position[1] + float(_speed);
 	else
-		_position[1] = _position[1] - float(WIN_H);
+		_position[1] = _position[1] - float(data.windowHeight);
 
 	if ( _rotation == float(360) )
 		_rotation = float(0);
@@ -123,7 +123,7 @@ void	Creature::moveLeft( void )
 	if (_position[0] >= float(_speed))
 		_position[0] =_position[0] - float(_speed);
 	else
-		_position[0] = _position[0] + float(WIN_L);
+		_position[0] = _position[0] + float(data.windowLength);
 
 	if ((_rotation >= float(0) && _rotation <= float(90)) || (_rotation <= float(360) && _rotation > float(280))){
 		if (_rotation - float(10) < float(0)){
@@ -142,10 +142,10 @@ void	Creature::moveLeft( void )
 
 void	Creature::moveRight( void )
 {
-	if (_position[0] + float(_speed) <= float(WIN_L))
+	if (_position[0] + float(_speed) <= float(data.windowLength))
 		_position[0] = _position[0] + float(_speed);
 	else
-		_position[0] = _position[0] - float(WIN_L);
+		_position[0] = _position[0] - float(data.windowLength);
 
 	if ((_rotation >= 0.0f && _rotation < 80.0f)
 		|| (_rotation >= 280.0f && _rotation <= 360.0f))

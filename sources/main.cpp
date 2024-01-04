@@ -17,7 +17,7 @@ int	main( void )
 {
     srand(time(NULL));
 	Simulation	sim;
-	sf::RenderWindow	win(sf::VideoMode(WIN_L, WIN_H), "Life Simulation");
+	sf::RenderWindow	win(sf::VideoMode(data.windowLength, data.windowHeight), "Life Simulation");
 
 	win.setFramerateLimit(30);
 	sim.loadTextures();
@@ -26,7 +26,7 @@ int	main( void )
 		sf::Event	event;
 
 		if (sim.getPopulationSize() == 0){
-			for (unsigned int i = 0; i < NBCREAT; ++i){
+			for (unsigned int i = 0; i < data.nbCreature; ++i){
 				sim.createNewCreature();
 			}
 		}
