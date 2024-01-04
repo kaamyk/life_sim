@@ -23,7 +23,7 @@ void			Food::setPosition( unsigned int x, unsigned int y ){
 
 void			Food::drawFood( sf::RenderWindow& win, assetManager& _assets )
 {
-	std::string	path("./images/foodParticule.png");
+	std::string	path("./images/SquareFood.png");
 
 	_foodSprite.setOrigin(data.foodSize / 2, data.foodSize / 2);
 	_foodSprite.setTexture(_assets.getTexture(path));

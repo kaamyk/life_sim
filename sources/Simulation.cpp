@@ -36,7 +36,7 @@ Simulation::~Simulation( void )
 void			Simulation::loadTextures( void )
 {
 	_assets.createNewTexture("./images/SquareCreature.png");
-	_assets.createNewTexture("./images/foodParticule.png");
+	_assets.createNewTexture("./images/SquareFood.png");
 	_assets.createNewTexture("./images/sensorRayOFF.png");
 	_assets.createNewTexture("./images/sensorRayON.png");
 }
