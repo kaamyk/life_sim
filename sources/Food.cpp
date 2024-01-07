@@ -7,9 +7,18 @@ Food::Food( void ): _position {(unsigned int)rand() % data.windowLength, (unsign
 	return ;
 }
 
+Food::Food( bool special ): _position {(unsigned int)rand() % data.windowLength, (unsigned int)rand() % data.windowHeight}, _isSpecial(special)
+{
+	return ;
+}
+
 Food::~Food( void )
 {
 	return ;
+}
+
+bool const &	Food::getIsSpecial( void ){
+	return (_isSpecial);
 }
 
 unsigned int	Food::getPosition( bool xy ){
@@ -23,7 +32,9 @@ void			Food::setPosition( unsigned int x, unsigned int y ){
 
 void			Food::drawFood( sf::RenderWindow& win, assetManager& _assets )
 {
-	std::string	path("./images/SquareFood.png");
+	std::string	path;
+
+	this->_isSpecial ? path = "./images/SquareSpecialFood.png" : path = "./images/SquareFood.png";
 
 	_foodSprite.setOrigin(data.foodSize / 2, data.foodSize / 2);
 	_foodSprite.setTexture(_assets.getTexture(path));

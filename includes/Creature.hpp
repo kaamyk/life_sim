@@ -2,7 +2,6 @@
 #define CREATURE_HPP
 
 #include <iostream>
-#include <chrono>
 #include <cmath>
 #include <SFML/Graphics.hpp>
 
@@ -45,13 +44,15 @@ class	Creature
 		std::vector<float> const&	getSensorState( void ) const;
 		
 		void		drawCreature( sf::RenderWindow& win, assetManager& _assets, Simulation& sim );
+
 		void		move( uint8_t r );
 		void		moveUp( void );
 		void		moveDown( void );
 		void		moveLeft( void );
 		void		moveRight( void );
+
 		std::vector<float> const&	feedForward( std::vector<float> sensorInputs ) const;
-		void	eat( std::vector<Food *> const& _food, std::vector<Food *>::iterator& it );
+		void			eat( std::vector<Food *> const& _food, std::vector<Food *>::iterator& it );
 };
 
 #endif

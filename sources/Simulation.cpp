@@ -9,10 +9,10 @@
 
 #include "../includes/Simulation.hpp"
 
-Simulation::Simulation( void ): _timeToDie(5)
+Simulation::Simulation( void )
 {
 	for(size_t i = 0; i < data.nbFood; ++i){
-		_food.push_back(new Food());
+		_food.push_back(new Food(i % 5 == 0));
 	}
 	for(unsigned int i = 0; i < data.nbCreature; ++i){
 		createNewCreature();
@@ -37,6 +37,7 @@ void			Simulation::loadTextures( void )
 {
 	_assets.createNewTexture("./images/SquareCreature.png");
 	_assets.createNewTexture("./images/SquareFood.png");
+	_assets.createNewTexture("./images/SquareSpecialFood.png");
 	_assets.createNewTexture("./images/sensorRayOFF.png");
 	_assets.createNewTexture("./images/sensorRayON.png");
 }
@@ -75,6 +76,7 @@ void			Simulation::printData( void ){
 }
 
 std::vector<Food *> const&		Simulation::getFood( void ){ return (_food); }
+
 void	Simulation::foodGetsEaten( std::vector<Food *>::iterator const& i ){
 	(*i)->setPosition(rand() % data.windowLength, rand() % data.windowHeight);
 }
@@ -114,7 +116,7 @@ void	Simulation::checkLifeTimes( void )
 		return;
 	for(std::vector<Creature *>::iterator i = _population.begin();  !_population.empty() && i != _population.end(); ++i)
 	{
-		if ((*i)->checkTime(this->_timeToDie)){
+		if ((*i)->checkTime(data.timeToDie)){
 			this->_population.erase(i);
 			// this->updateNbCreature(0);
 			i = _population.begin();
@@ -144,27 +146,28 @@ void	Simulation::drawPopulation( sf::RenderWindow& win )
 	// std::cout<< "population.size() == " << _population.size() << std::endl;
 	if (_population.size() == 0)
 		return;
-	else if (_population.size() <= 3){
-		// std::cout<< ">>> Population <= 3 <<<" << std::endl;
-		for (std::vector<Creature *>::iterator i = _population.begin(); i != _population.end(); ++i){
-			if(_bestBrains.size()){
-				_bestBrains.clear();
-			}
-			// std::cout<< "\tPush new brain" << std::endl;
-			_bestBrains.push_back( new NeuralNetwork((*i)->getBrain()) );
-		}
-		_population.clear();
-		while (_population.size() < data.nbCreature){
-			// std::cout<< "\tCreation of Mutated Creatures" << std::endl;
-			createMutatedCreature(*_bestBrains[_population.size() % _bestBrains.size()]);
-		}
-	}
+	// else if (_population.size() <= 3){
+	// 	// std::cout<< ">>> Population <= 3 <<<" << std::endl;
+	// 	for (std::vector<Creature *>::iterator i = _population.begin(); i != _population.end(); ++i){
+	// 		if(_bestBrains.size()){
+	// 			_bestBrains.clear();
+	// 		}
+	// 		// std::cout<< "\tPush new brain" << std::endl;
+	// 		_bestBrains.push_back( new NeuralNetwork((*i)->getBrain()) );
+	// 	}
+	// 	_population.clear();
+	// 	while (_population.size() < data.nbCreature){
+	// 		// std::cout<< "\tCreation of Mutated Creatures" << std::endl;
+	// 		createMutatedCreature(*_bestBrains[_population.size() % _bestBrains.size()]);
+	// 	}
+	// }
+
 
 	for (size_t i = 0; i < _population.size(); ++i)
 	{
-		const std::vector<float> sensorInputs = _population[i]->getSensor()->getState();
+		// const std::vector<float> sensorInputs = ;
 		// printSensors(sensorInputs, i);
-		std::vector<float>	outputs = _population[i]->feedForward(sensorInputs);
+		std::vector<float>	outputs = _population[i]->feedForward(_population[i]->getSensor()->getState());
 		// printContro	ls(outputs, i);
 		for (__uint8_t j = 0; j < 4; ++j){
 			if (outputs[j])
@@ -174,11 +177,15 @@ void	Simulation::drawPopulation( sf::RenderWindow& win )
 		_population[i]->eat(_food, it); 
 		if(it != _food.end()){
 			// std::cout<< "food.it == " << it - _food.begin() << std::endl;
+			if ( (*it)->getIsSpecial() ){
+				createMutatedCreature(_population[i]->getBrain());
+			}
 			foodGetsEaten(it);
 		}
 		_population[i]->drawCreature(win, _assets, *this);
-		// // std::cout<< std::endl;
+		// std::cout<< std::endl;
 	}
+	checkLifeTimes();
 	return ;
 }
 

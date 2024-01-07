@@ -6,6 +6,7 @@
 # include <array>
 # include <SFML/Graphics.hpp>
 # include <cmath>
+#include <chrono>
 
 // # define WIN_L 1920
 // # define WIN_H 1080
@@ -15,10 +16,11 @@
 struct{
 	const unsigned int	windowLength = 1920;
 	const unsigned int	windowHeight = 1080;
-	const unsigned int	creatureSize = 25;
+	const unsigned int	creatureSize = 15;
 	const unsigned int	foodSize = 12;
-	const unsigned int	nbCreature = 5;
+	const unsigned int	nbCreature = 20;
 	const unsigned int	nbFood = 30;
+	const std::chrono::seconds	timeToDie = std::chrono::seconds(10);
 } data;
 
 // # include "float.hpp"
@@ -37,7 +39,6 @@ class	Simulation
 {
 	private :
 		// unsigned int const			_nbMaxCreature;
-		std::chrono::seconds const	_timeToDie;
 		std::vector<Creature *>		_population;
 		std::vector<NeuralNetwork *> _bestBrains;
 		// unsigned int				_nbCreature;
