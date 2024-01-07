@@ -40,29 +40,29 @@ class	Simulation
 		assetManager				_assets;
 
 
+		void			printTimeToDie();
+		void			printData( void );
+
+		std::vector<Creature *>&	getPopulation( void );
+		size_t			getPopulationSize( void );
+
+
+		void			creatureMove( Creature* Cr );
+		void			createNewCreature( void );
+
 	public :
 		Simulation( void );
 		~Simulation( void );
 
-		void			printTimeToDie();
-		void			printData( void );
+		std::vector<Food *> const&	getFood( void );
+		
 		static float	lerp( float A, float B, float t){ return (A + ((B - A) * t)); }
-
-		unsigned int	giveIndex( void );
-		std::vector<Food *> const&		getFood( void );
-		std::vector<Creature *>&		getPopulation( void );
-		size_t			getPopulationSize( void );
 
 		bool			checkNbCreature( void );
 		void			checkLifeTimes( void );
-
-		void			creatureMove( Creature* Cr );
 		void			updatePopulation( sf::RenderWindow& win );
-
 		void			loadTextures( void );
 		void			drawAllFood( sf::RenderWindow& win );
-
-		void			createNewCreature( void );
 };
 
 #endif

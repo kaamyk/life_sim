@@ -21,11 +21,6 @@ int	main( void )
 
 	win.setFramerateLimit(30);
 	sim.loadTextures();
-	if (sim.getPopulationSize() == 0){
-		for (unsigned int i = 0; i < data.nbCreature; ++i){
-			sim.createNewCreature();
-		}
-	}
 	while (win.isOpen() && sim.checkNbCreature())
 	{
 		sf::Event	event;
