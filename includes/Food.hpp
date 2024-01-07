@@ -20,12 +20,13 @@ class	Food
 		~Food( void );
 
 		bool const &	getIsSpecial( void );
+		unsigned int*	getCoordinates( void );
 		unsigned int	getPosition( bool xy );
 		void			setPosition( unsigned int x, unsigned int y );
 
 		bool			checkPosition( float x, float y );
 		void			drawFood( sf::RenderWindow& win, assetManager& _assets );
-		unsigned int*	getCoordinates( void );
+		void			getsEaten( void );
 };
 
 #endif

@@ -182,12 +182,19 @@ std::vector<float> const&	Creature::feedForward( std::vector<float> sensorInputs
 
 }
 
-void	Creature::eat( std::vector<Food *> const& _food, std::vector<Food *>::iterator& it ){
-	for (; it != _food.end(); ++it){
-		if ( (*it)->checkPosition( this->_position[0], this->_position[1]) )
-		{
+void	Creature::giveBirth( NeuralNetwork const& brain, std::vector<Creature *>& _population ){
+	_population.push_back(new Creature(brain));
+}
+
+void	Creature::eat( std::vector<Food *>& _food, std::vector<Creature *>& _population ){
+	for (std::vector<Food *>::iterator it = _food.begin(); it != _food.end(); ++it){
+		if ( (*it)->checkPosition( this->_position[0], this->_position[1]) ){
 			_timeLastEat = std::chrono::high_resolution_clock::now();
 			++_nbFoodEaten;
+			if((*it)->getIsSpecial()){
+				giveBirth(getBrain(), _population);
+			}
+			(*it)->getsEaten();
 			return ;
 		}
 	}

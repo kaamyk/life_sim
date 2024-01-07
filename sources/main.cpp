@@ -21,32 +21,23 @@ int	main( void )
 
 	win.setFramerateLimit(30);
 	sim.loadTextures();
+	if (sim.getPopulationSize() == 0){
+		for (unsigned int i = 0; i < data.nbCreature; ++i){
+			sim.createNewCreature();
+		}
+	}
 	while (win.isOpen() && sim.checkNbCreature())
 	{
 		sf::Event	event;
 
-		if (sim.getPopulationSize() == 0){
-			for (unsigned int i = 0; i < data.nbCreature; ++i){
-				sim.createNewCreature();
-			}
-		}
 		while(win.pollEvent(event))
 			if (event.type == sf::Event::Closed)
 				win.close();
 		sim.checkLifeTimes();
 		win.clear();
-		sim.drawPopulation(win);
+		sim.updatePopulation(win);
 		sim.drawAllFood(win);
 		win.display();
 	}
-	// sf::Event	event;
-	// while(win.pollEvent(event))
-	// 	if (event.type == sf::Event::Closed)
-	// 		win.close();
-	// sim.checkLifeTimes();
-	// win.clear();
-	// sim.drawPopulation(win);
-	// sim.drawAllFood(win);
-	// win.display();
-	return ( 0 );
+	return (0);
 }

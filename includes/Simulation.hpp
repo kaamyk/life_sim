@@ -8,11 +8,6 @@
 # include <cmath>
 #include <chrono>
 
-// # define WIN_L 1920
-// # define WIN_H 1080
-// # define NBFOOD 30
-// # define NBCREAT 5
-
 struct{
 	const unsigned int	windowLength = 1920;
 	const unsigned int	windowHeight = 1080;
@@ -38,10 +33,8 @@ class	Food;
 class	Simulation
 {
 	private :
-		// unsigned int const			_nbMaxCreature;
 		std::vector<Creature *>		_population;
 		std::vector<NeuralNetwork *> _bestBrains;
-		// unsigned int				_nbCreature;
 		std::vector<Food *>			_food;
 		unsigned int				_nbFood;
 		assetManager				_assets;
@@ -57,20 +50,19 @@ class	Simulation
 
 		unsigned int	giveIndex( void );
 		std::vector<Food *> const&		getFood( void );
+		std::vector<Creature *>&		getPopulation( void );
 		size_t			getPopulationSize( void );
 
 		bool			checkNbCreature( void );
 		void			checkLifeTimes( void );
 
+		void			creatureMove( Creature* Cr );
+		void			updatePopulation( sf::RenderWindow& win );
+
 		void			loadTextures( void );
-		void			drawPopulation( sf::RenderWindow& win );
 		void			drawAllFood( sf::RenderWindow& win );
 
-		void			updateNbCreature( bool a );
 		void			createNewCreature( void );
-		void			createMutatedCreature( NeuralNetwork const& brain );
-
-		void			foodGetsEaten( std::vector<Food *>::iterator const& i );
 };
 
 #endif

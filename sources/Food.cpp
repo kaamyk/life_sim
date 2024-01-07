@@ -25,6 +25,10 @@ unsigned int	Food::getPosition( bool xy ){
 	return (_position[xy]);
 }
 
+unsigned int*	Food::getCoordinates( void ){
+	return (_position);
+}
+
 void			Food::setPosition( unsigned int x, unsigned int y ){
 	_position[0] = x;
 	_position[1] = y;
@@ -45,6 +49,6 @@ void			Food::drawFood( sf::RenderWindow& win, assetManager& _assets )
 	return ;
 }
 
-unsigned int*	Food::getCoordinates( void ){
-	return (_position);
+void			Food::getsEaten( void ){
+	setPosition(rand() % data.windowLength, rand() % data.windowHeight);
 }

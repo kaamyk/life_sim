@@ -52,7 +52,8 @@ class	Creature
 		void		moveRight( void );
 
 		std::vector<float> const&	feedForward( std::vector<float> sensorInputs ) const;
-		void			eat( std::vector<Food *> const& _food, std::vector<Food *>::iterator& it );
+		void			giveBirth( NeuralNetwork const& brain, std::vector<Creature *>& _population );
+		void			eat( std::vector<Food *>& _food, std::vector<Creature *>& _population );
 };
 
 #endif
