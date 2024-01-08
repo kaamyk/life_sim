@@ -11,11 +11,11 @@
 struct{
 	const unsigned int	windowLength = 1920;
 	const unsigned int	windowHeight = 1080;
-	const unsigned int	creatureSize = 15;
-	const unsigned int	foodSize = 12;
-	const unsigned int	nbCreature = 20;
+	const unsigned int	creatureSize = 50;
+	const unsigned int	foodSize = 30;
+	const unsigned int	nbCreature = 5;
 	const unsigned int	nbFood = 30;
-	const std::chrono::seconds	timeToDie = std::chrono::seconds(10);
+	const std::chrono::seconds	timeToDie = std::chrono::seconds(40);
 } data;
 
 // # include "float.hpp"

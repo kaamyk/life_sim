@@ -143,6 +143,8 @@ void	Simulation::updatePopulation( sf::RenderWindow& win ){
 }
 
 void	Simulation::drawAllFood( sf::RenderWindow& win ){
-	for (unsigned int i = 0; i < data.nbFood; ++i)
+	for (unsigned int i = 0; i < data.nbFood; ++i){
 		_food[i]->drawFood(win, _assets);
+		_food[i]->drawCheckPoints(win);
+	}
 }

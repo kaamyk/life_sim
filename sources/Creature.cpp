@@ -4,7 +4,7 @@ Creature::Creature( void ): _fitness(0),
 							_gradientDescent(0),
 							_position {static_cast<float>(rand() % data.windowLength), static_cast<float>(rand() % data.windowHeight)},
 							_rotation(0),
-							_speed(5),
+							_speed(3),
 							_size(rand() % 100),
 							_nbFoodEaten(0),
 							_birthTime(std::chrono::high_resolution_clock::now()),
@@ -198,22 +198,4 @@ void	Creature::eat( std::vector<Food *>& _food, std::vector<Creature *>& _popula
 			return ;
 		}
 	}
-}
-
-bool			Food::checkPosition( float x, float y ){
-	float	_creaturePosx[] = {x - static_cast<float>(data.creatureSize / 2), x + static_cast<float>(data.creatureSize / 2)};
-	float	_creaturePosy[] = {y - static_cast<float>(data.creatureSize / 2), y + static_cast<float>(data.creatureSize / 2)};
-	unsigned int _foodPosx[] = {_position[0] - (data.foodSize / 2), _position[0] + (data.foodSize / 2)};
-	unsigned int _foodPosy[] = {_position[1] - (data.foodSize / 2), _position[1] + (data.foodSize / 2)};
-
-	if ( (_creaturePosx[0] >= _foodPosx[0] && _creaturePosx[0] <= _foodPosx[1])
-		|| (_creaturePosx[1] >= _foodPosx[0] && _creaturePosx[0] <= _foodPosx[1]) )
-	{
-		if ( (_creaturePosy[0] >= _foodPosy[0] && _creaturePosy[0] <= _foodPosx[1])
-		|| (_creaturePosy[1] >= _foodPosy[0] && _creaturePosy[0] <= _foodPosy[1]) )
-		{
-			return (1);
-		}
-	}
-	return (0);
 }

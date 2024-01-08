@@ -26,6 +26,8 @@ Sensor::~Sensor( void )
 	return ;
 }
 
+
+
 bool	Sensor::findIntersection( sf::RectangleShape* r, int rayRotation, Creature& c, std::vector<Food *> const& food )
 {
 	double	pt[2];
@@ -38,6 +40,8 @@ bool	Sensor::findIntersection( sf::RectangleShape* r, int rayRotation, Creature&
 		rayRotation += 360;
 	else if (rayRotation >= 360)
 		rayRotation -= 360;
+	if (ptcheck.size())
+			ptcheck.clear();
 	for (unsigned int i = 0; i < data.nbFood; ++i)
 	{
 		if (food[i]->getPosition(0) < c.getPosition(0) + _rayLenght && food[i]->getPosition(0) > c.getPosition(0) - _rayLenght
@@ -45,12 +49,19 @@ bool	Sensor::findIntersection( sf::RectangleShape* r, int rayRotation, Creature&
 		{
 			pt[0] = c.getPosition(0);
 			pt[1] = c.getPosition(1);
+
+			// ptcheck.push_back(sf::RectangleShape(sf::Vector2f(5, 5)));
+			// ptcheck.back().setFillColor(sf::Color::Blue);
+			// ptcheck.back().setOrigin(2.5f, 2.5f);
+			// ptcheck.back().setPosition(pt[0], pt[1]);
+
 			for(unsigned int j = 0; j < _rayLenght; ++j)
 			{
 				pt[0] = pt[0] + sin(rayRotation * (3.14159265359f / 180));
 				pt[1] = pt[1] - cos(rayRotation * (3.14159265359f / 180));
-				if (food[i]->checkPosition(pt[0], pt[1]))
+				if (food[i]->checkPosition(pt[0], pt[1])){
 					return (1);
+				}
 			}
 		}
 	}
@@ -59,8 +70,8 @@ bool	Sensor::findIntersection( sf::RectangleShape* r, int rayRotation, Creature&
 
 void	Sensor::drawRay( sf::RenderWindow& win, assetManager& _assets, Creature& c, Simulation& sim  )
 {
-	std::string	path("./images/sensorRayON.png");
-	std::string	path1("./images/sensorRayOFF.png");
+	// std::string	path("./images/sensorRayON.png");
+	// std::string	path1("./images/sensorRayOFF.png");
 	sf::RectangleShape	r; // Left ray
 	sf::RectangleShape	r1; // Middle ray
 	sf::RectangleShape	r2; // Right ray
@@ -89,6 +100,9 @@ void	Sensor::drawRay( sf::RenderWindow& win, assetManager& _assets, Creature& c,
 		win.draw(r);
 		win.draw(r1);
 		win.draw(r2);
+		for (unsigned int i = 0; i != ptcheck.size(); ++i){
+			win.draw(ptcheck[i]);
+		}
 		(void)_assets;
 	}
 	return ;

@@ -18,6 +18,8 @@ class	Sensor
 		sf::Sprite		_raySprite[3];
 		std::vector<float>	_state;
 
+		std::vector<sf::RectangleShape> ptcheck;
+
 	public:
 		Sensor( void );
 		~Sensor( void );
