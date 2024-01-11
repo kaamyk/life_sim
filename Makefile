@@ -11,12 +11,14 @@
 # **************************************************************************** #
 
 NAME		=	lifesim
+
 SRCDIR		=	sources
 SRCS		=	$(wildcard $(SRCDIR)/*.cpp)
 OBJDIR		=	.obj
 OBJS		=	$(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRCS))
 DEPDIR		=	.dep
 DEPS		=	$(patsubst $(SRCDIR)/%.cpp, $(DEPDIR)/%.d, $(SRCS))
+
 CCPP		=	c++
 CFLAGS		=	-Wall -Wextra -Werror
 SFMLFLAGS	=	-lsfml-graphics -lsfml-window -lsfml-system
@@ -33,6 +35,7 @@ $(DEPDIR)		:
 $(OBJDIR)/%.o	:	$(SRCDIR)/%.cpp
 	@echo -n "Compiling " $< " ... "
 	@$(CCPP) $(VGFLAGS) $(CFLAGS) $(CPPFLAGS) $(SFMLFLAGS) -c $< -o $@ 
+	@$(CCPP) $(VGFLAGS) $(CFLAGS) -MM $< | sed 's,\($*\)\.o[ :]*,$(DEPDIR)/\1.o $@ : ,g' > $(DEPDIR)/$*.d
 	@echo -e '\x1b[32m>>> OK <<<\x1b[37m'
 
 $(NAME)			:	$(OBJS)
