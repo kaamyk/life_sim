@@ -59,10 +59,51 @@ void			Food::getsEaten( void ){
 	setPosition(rand() % data.windowLength, rand() % data.windowHeight);
 }
 
-void			Food::buildCheckPoints(float crPosX[2], float crPosY[2], float foPosX[2], float foPosY[2]){
+void			Food::buildCheckPoints(float crPosX[3], float crPosY[3], float foPosX[2], float foPosY[2]){
 	(void) crPosX;
 	(void) crPosY;
 
+	if (r.size()){
+		r.clear();
+	}
+
+	for (unsigned char i = 0; i < 13; ++i){
+		r.push_back(sf::RectangleShape(sf::Vector2f(5, 5)));
+		r[i].setOrigin(2.5, 2.5);
+	}
+
+	r[0].setPosition(foPosX[0], foPosY[0]);
+	r[0].setFillColor(sf::Color::Green);
+	r[1].setPosition(foPosX[1], foPosY[1]);
+	r[1].setFillColor(sf::Color::Green);
+	r[2].setPosition(foPosX[0], foPosY[1]);
+	r[2].setFillColor(sf::Color::Green);
+	r[3].setPosition(foPosX[1], foPosY[0]);
+	r[3].setFillColor(sf::Color::Green);
+	
+	for(unsigned char i = 4; i < r.size(); ++i){
+		for(unsigned char io = 0;  io < 3; ++io){
+			for (unsigned char ioo = 0; ioo < 3; ++ioo){
+				r[i].setPosition(crPosX[io], crPosY[ioo]);
+				r[i].setFillColor(sf::Color::Green);
+			}
+		}
+	}
+
+	// r[4].setPosition(crPosX[0], crPosY[0]);
+	// r[4].setFillColor(sf::Color::Green);
+	// r[5].setPosition(crPosX[1], crPosY[1]);
+	// r[5].setFillColor(sf::Color::Green);
+	// r[6].setPosition(crPosX[0], crPosY[1]);
+	// r[6].setFillColor(sf::Color::Green);
+	// r[7].setPosition(crPosX[1], crPosY[0]);
+	// r[7].setFillColor(sf::Color::Green);
+
+	// r[8].setPosition(x, y);
+	// r[8].setFillColor(sf::Color::Cyan);
+}
+
+void			Food::buildCheckPoints(float x, float y, float foPosX[2], float foPosY[2]){
 	if (r.size()){
 		r.clear();
 	}
@@ -71,41 +112,58 @@ void			Food::buildCheckPoints(float crPosX[2], float crPosY[2], float foPosX[2],
 		r.push_back(sf::RectangleShape(sf::Vector2f(5, 5)));
 		r[i].setOrigin(2.5, 2.5);
 	}
-	r[0].setPosition(crPosX[0], crPosY[0]);
-	r[0].setFillColor(sf::Color::Cyan);
-	r[1].setPosition(crPosX[1], crPosY[1]);
-	r[1].setFillColor(sf::Color::Cyan);
-	r[2].setPosition(crPosX[0], crPosY[1]);
-	r[2].setFillColor(sf::Color::Cyan);
-	r[3].setPosition(crPosX[1], crPosY[0]);
-	r[3].setFillColor(sf::Color::Cyan);
 
-	r[4].setPosition(foPosX[0], foPosY[0]);
-	r[4].setFillColor(sf::Color::Green);
-	r[5].setPosition(foPosX[1], foPosY[1]);
-	r[5].setFillColor(sf::Color::Green);
-	r[6].setPosition(foPosX[0], foPosY[1]);
-	r[6].setFillColor(sf::Color::Green);
-	r[7].setPosition(foPosX[1], foPosY[0]);
-	r[7].setFillColor(sf::Color::Green);
+	r[0].setPosition(foPosX[0], foPosY[0]);
+	r[0].setFillColor(sf::Color::Green);
+	r[1].setPosition(foPosX[1], foPosY[1]);
+	r[1].setFillColor(sf::Color::Green);
+	r[2].setPosition(foPosX[0], foPosY[1]);
+	r[2].setFillColor(sf::Color::Green);
+	r[3].setPosition(foPosX[1], foPosY[0]);
+	r[3].setFillColor(sf::Color::Green);
+
+	r[4].setPosition(x, y);
+	r[4].setFillColor(sf::Color::Cyan);
 }
 
-bool			Food::checkPosition( float x, float y ){
-	float	_creaturePosx[] = {x - static_cast<float>(data.creatureSize / 2), x + static_cast<float>(data.creatureSize / 2)};
-	float	_creaturePosy[] = {y - static_cast<float>(data.creatureSize / 2), y + static_cast<float>(data.creatureSize / 2)};
+bool			Food::checkPositionSe( float x, float y ){
 	float	_foodPosx[] = {_position[0] - static_cast<float>(data.foodSize / 2), _position[0] + static_cast<float>(data.foodSize / 2)};
 	float	_foodPosy[] = {_position[1] - static_cast<float>(data.foodSize / 2), _position[1] + static_cast<float>(data.foodSize / 2)};
 
 
-	if ( (_creaturePosx[0] >= _foodPosx[0] && _creaturePosx[0] <= _foodPosx[1])
-		|| (_creaturePosx[1] >= _foodPosx[0] && _creaturePosx[0] <= _foodPosx[1]) )
-	{
-		if ( (_creaturePosy[0] >= _foodPosy[0] && _creaturePosy[0] <= _foodPosx[1])
-		|| (_creaturePosy[1] >= _foodPosy[0] && _creaturePosy[0] <= _foodPosy[1]) )
+	for(__uint8_t i = 0; i < 3; ++i ){
+		if (x >= _foodPosx[0] && x <= _foodPosx[1]
+			&& y >= _foodPosy[0] && y <= _foodPosy[1])
 		{
-			// buildCheckPoints(_creaturePosx, _creaturePosy, _foodPosx, _foodPosy);
+			buildCheckPoints(x, y, _foodPosx, _foodPosy);
 			return (1);
 		}
 	}
+
+	return (0);
+}
+
+bool			Food::checkPositionCr( float x, float y, float r ){
+	float	crPosx[] = {x - (static_cast<float>(data.creatureSize / 2) * static_cast<float>(sin(r * (3.14159265359f / 180)))),
+						x,
+						x + (static_cast<float>(data.creatureSize / 2) * static_cast<float>(sin( r * (3.14159265359f / 180) )))};
+
+	float	crPosy[] = {y - (static_cast<float>(data.creatureSize / 2) * static_cast<float>(cos( r * (3.14159265359f / 180) ))),
+						y,
+						y + (static_cast<float>(data.creatureSize / 2) * static_cast<float>(cos( r * (3.14159265359f / 180) )))};
+
+	float	_foodPosx[] = {_position[0] - static_cast<float>(data.foodSize / 2), _position[0] + static_cast<float>(data.foodSize / 2)};
+	float	_foodPosy[] = {_position[1] - static_cast<float>(data.foodSize / 2), _position[1] + static_cast<float>(data.foodSize / 2)};
+
+
+	buildCheckPoints(crPosx, crPosy, _foodPosx, _foodPosy);
+	for(__uint8_t i = 0; i < 3; ++i ){
+		if (crPosx[i] >= _foodPosx[0] && crPosx[i] <= _foodPosx[1]
+			&& crPosy[i] >= _foodPosy[0] && crPosy[i] <= _foodPosy[1])
+		{
+			return (1);
+		}
+	}
+
 	return (0);
 }

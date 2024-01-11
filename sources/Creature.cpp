@@ -188,7 +188,7 @@ void	Creature::giveBirth( NeuralNetwork const& brain, std::vector<Creature *>& _
 
 void	Creature::eat( std::vector<Food *>& _food, std::vector<Creature *>& _population ){
 	for (std::vector<Food *>::iterator it = _food.begin(); it != _food.end(); ++it){
-		if ( (*it)->checkPosition( this->_position[0], this->_position[1]) ){
+		if ( (*it)->checkPositionCr( this->_position[0], this->_position[1], this->_rotation) ){
 			_timeLastEat = std::chrono::high_resolution_clock::now();
 			++_nbFoodEaten;
 			if((*it)->getIsSpecial()){
