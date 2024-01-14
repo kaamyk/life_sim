@@ -31,6 +31,8 @@ class	Creature
 		void			(Creature::*_moves[4])( void );
 		NeuralNetwork*	_brain;
 
+		std::vector<sf::RectangleShape> pt;
+
 	public :
 		Creature( void );
 		Creature( NeuralNetwork const& brain );
@@ -54,6 +56,8 @@ class	Creature
 		std::vector<float> const&	feedForward( std::vector<float> sensorInputs ) const;
 		void			giveBirth( NeuralNetwork const& brain, std::vector<Creature *>& _population );
 		void			eat( std::vector<Food *>& _food, std::vector<Creature *>& _population );
+
+		void			buildCheckPoints( void );
 };
 
 #endif

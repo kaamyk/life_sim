@@ -1,21 +1,17 @@
 #include <iostream>
 #include <time.h>
 #include <cstdlib>
+#include <vector>
 
 int main( void ){
-    {
-        srand(time(NULL));
-        for (unsigned int i = 0; i < 10; ++i){
-            // std::cout<< rand() << std::endl;
-        }
-    }
-    // std::cout<< std::endl << std::endl;
-    {
-            srand(time(NULL));
-        for (unsigned int i = 0; i < 10; ++i){
-            // std::cout<< rand() << std::endl;
-        }
-    }
-    
+   std::vector<int> v;
+
+   for (unsigned char i = 0; i < 5; i++){
+    v.push_back(i);
+   }
+   std::cout << v.size() << std::endl;
+   v.clear();
+   std::cout << v.size() << std::endl;
+
     return (0);
 }

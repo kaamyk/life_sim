@@ -52,8 +52,8 @@ bool	Sensor::findIntersection( sf::RectangleShape* r, int rayRotation, Creature&
 
 			for(unsigned int j = 0; j < _rayLenght; ++j)
 			{
-				pt[0] = pt[0] + sin(rayRotation * (3.14159265359f / 180));
-				pt[1] = pt[1] - cos(rayRotation * (3.14159265359f / 180));
+				pt[0] = pt[0] + sin(rayRotation * (3.14159265359f / 180.0f));
+				pt[1] = pt[1] - cos(rayRotation * (3.14159265359f / 180.0f));
 				if (food[i]->checkPositionSe(pt[0], pt[1])){
 					ptcheck.push_back(sf::RectangleShape(sf::Vector2f(5, 5)));
 					ptcheck.back().setFillColor(sf::Color::Green);

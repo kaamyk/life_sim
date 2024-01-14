@@ -20,6 +20,13 @@ Creature::Creature( void ): _fitness(0),
 	_moves[1] = &Creature::moveDown;
 	_moves[2] = &Creature::moveRight;
 	_moves[3] = &Creature::moveLeft;
+
+	for (unsigned char i = 0; i < 4; ++i){
+		pt.push_back(sf::RectangleShape(sf::Vector2f(5, 5)));
+		pt[i].setOrigin(2.5, 2.5);
+		pt[i].setFillColor(sf::Color::White);
+	}
+
 	return ;
 }
 
@@ -45,6 +52,13 @@ Creature::Creature( NeuralNetwork const& brain ): _fitness(0),
 	_moves[1] = &Creature::moveDown;
 	_moves[2] = &Creature::moveRight;
 	_moves[3] = &Creature::moveLeft;
+
+	for (unsigned char i = 0; i < 4; ++i){
+		pt.push_back(sf::RectangleShape(sf::Vector2f(5, 5)));
+		pt[i].setOrigin(2.5, 2.5);
+		pt[i].setFillColor(sf::Color::White);
+	}
+
 	return ;
 }
 
@@ -72,6 +86,9 @@ void	Creature::drawCreature( sf::RenderWindow& win, assetManager& _assets, Simul
 	this->_creatureSprite.setPosition(this->_position[0], this->_position[1]);
 	this->_creatureSprite.setRotation(_rotation);
 	win.draw( this->_creatureSprite );
+	for (unsigned char i = 0; i < pt.size(); i++){
+		win.draw(pt[i]);
+	}
 	return ;
 }
 
@@ -186,7 +203,31 @@ void	Creature::giveBirth( NeuralNetwork const& brain, std::vector<Creature *>& _
 	_population.push_back(new Creature(brain));
 }
 
+void			Creature::buildCheckPoints( void ){
+	float	tmpx[2] = {_position[0] + (data.creatureSize / 2), _position[0] - (data.creatureSize / 2)};
+	float	tmpy[2] = {_position[1] + (data.creatureSize / 2), _position[1] - (data.creatureSize / 2)};
+	unsigned int i = 0;
+
+	pt[i++].setPosition((tmpx[0] * cos(_rotation)) - (tmpy[0] * sin(_rotation)),
+						(tmpx[0] * sin(_rotation)) - (tmpy[0] * cos(_rotation)));
+	pt[i++].setPosition((tmpx[0] * cos(_rotation)) - (tmpy[1] * sin(_rotation)),
+						(tmpx[0] * sin(_rotation)) - (tmpy[1] * cos(_rotation)));
+	pt[i++].setPosition((tmpx[1] * cos(_rotation)) - (tmpy[0] * sin(_rotation)),
+						(tmpx[1] * sin(_rotation)) - (tmpy[0] * cos(_rotation)));
+	pt[i++].setPosition((tmpx[1] * cos(_rotation)) - (tmpy[1] * sin(_rotation)),
+						(tmpx[1] * sin(_rotation)) - (tmpy[1] * cos(_rotation)));
+}
+
 void	Creature::eat( std::vector<Food *>& _food, std::vector<Creature *>& _population ){
+		//  * static_cast<float>(sin(r * (3.14159265359f / 180)))
+	//  * static_cast<float>(cos( r * (3.14159265359f / 180) ))
+	// float	crPosx[] = {_position[0] - (static_cast<float>(data.creatureSize / 2) * static_cast<float>(sin(_rotation * (3.14159265359f / 180)))),
+	// 					_position[0] + (static_cast<float>(data.creatureSize / 2) * static_cast<float>(sin(_rotation * (3.14159265359f / 180))))};
+
+	// float	crPosy[] = {_position[1] - (static_cast<float>(data.creatureSize / 2) * static_cast<float>(cos( _rotation * (3.14159265359f / 180) ))),
+	// 					_position[1] + (static_cast<float>(data.creatureSize / 2) * static_cast<float>(cos( _rotation * (3.14159265359f / 180) )))};
+
+	buildCheckPoints();
 	for (std::vector<Food *>::iterator it = _food.begin(); it != _food.end(); ++it){
 		if ( (*it)->checkPositionCr( this->_position[0], this->_position[1], this->_rotation) ){
 			_timeLastEat = std::chrono::high_resolution_clock::now();
