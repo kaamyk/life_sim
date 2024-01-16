@@ -19,7 +19,7 @@ class	Creature
 		unsigned int	_fitness;
 		float			_gradientDescent;
 		sf::Vector2f	_position;
-		float			_rotation;
+		// float			_rotation;
 		float			_speed;
 		float			_size;
 		Sensor*			_sensor;
@@ -40,7 +40,7 @@ class	Creature
 
 		bool		checkTime( std::chrono::seconds const _timeToDie );
 		sf::Vector2f	getPosition( void ) const{ return (_position); }
-		float		getRotation( void ) const{ return (_rotation); }
+		float		getRotation( void ) const{ return (_creatureSprite.getRotation()); }
 		Sensor*		getSensor( void ) const{ return (_sensor); }
 		NeuralNetwork&	getBrain( void ){ return (*_brain); }
 		std::vector<float> const&	getSensorState( void ) const;
