@@ -34,7 +34,7 @@ bool	Sensor::findIntersection( sf::RectangleShape* r, int rayRotation, Creature&
 
 	r->setSize(sf::Vector2f(1, _rayLenght));
 	r->setRotation( rayRotation + 180 );
-	r->setPosition (c.getPosition(0), c.getPosition(1));
+	r->setPosition (c.getPosition().x, c.getPosition().y);
 
 	if (rayRotation < 0)
 		rayRotation += 360;
@@ -44,11 +44,11 @@ bool	Sensor::findIntersection( sf::RectangleShape* r, int rayRotation, Creature&
 			ptcheck.clear();
 	for (unsigned int i = 0; i < data.nbFood; ++i)
 	{
-		if (food[i]->getPosition(0) < c.getPosition(0) + _rayLenght && food[i]->getPosition(0) > c.getPosition(0) - _rayLenght
-			&& food[i]->getPosition(1) < c.getPosition(1) + _rayLenght && food[i]->getPosition(1) > c.getPosition(1) - _rayLenght)
+		if (food[i]->getPosition().x < c.getPosition().x + _rayLenght && food[i]->getPosition().x > c.getPosition().x - _rayLenght
+			&& food[i]->getPosition().y < c.getPosition().y + _rayLenght && food[i]->getPosition().y > c.getPosition().y - _rayLenght)
 		{
-			pt[0] = c.getPosition(0);
-			pt[1] = c.getPosition(1);
+			pt[0] = c.getPosition().x;
+			pt[1] = c.getPosition().y;
 
 			for(unsigned int j = 0; j < _rayLenght; ++j)
 			{

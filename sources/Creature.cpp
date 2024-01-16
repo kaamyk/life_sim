@@ -83,8 +83,8 @@ void	Creature::drawCreature( sf::RenderWindow& win, assetManager& _assets, Simul
 	this->_creatureSprite.setOrigin((data.creatureSize) / 2, data.creatureSize / 2);
 	this->_creatureSprite.setTexture(_assets.getTexture(path));
 	this->_creatureSprite.setTextureRect(sf::IntRect(0, 0, data.creatureSize, data.creatureSize));
-	this->_creatureSprite.setPosition(this->_position[0], this->_position[1]);
-	this->_creatureSprite.setRotation(_rotation);
+	this->_creatureSprite.setPosition(_position);
+	// this->_creatureSprite.setRotation(_rotation);
 	win.draw( this->_creatureSprite );
 	for (unsigned char i = 0; i < pt.size(); i++){
 		win.draw(pt[i]);
@@ -98,88 +98,116 @@ void	Creature::move( __uint8_t r ){
 
 void	Creature::moveUp( void )
 {
-	if (_position[1] >= float(_speed))
-		_position[1] = _position[1] - float(_speed);
+	
+	if (_position.y >= _speed)
+		_position.y = _position.y - _speed;
 	else
-		_position[1] = _position[1] + float(data.windowHeight);
+		_position.y = _position.y + float(data.windowHeight);
 
-	if ( _rotation >= float(10) && _rotation <= float(180) ){
-		_rotation = _rotation - float(10) ;
+
+	float rot = _creatureSprite.getRotation();
+	if ( rot == 360.0f )
+		rot = 0.0f;
+	if ( rot >= 10.0f && rot <= 180.0f ){
+		_creatureSprite.setRotation(rot - 10.0f);
+		// _rotation = _rotation - 10.0f ;
 	}
-	else if ( _rotation > float(180) && _rotation <= float(350) ){
-		_rotation = _rotation + float(10) ;
+	else if ( rot > 180.0f && rot <= 350.0f ){
+		_creatureSprite.setRotation(rot + 10.0f);
+		// _rotation = _rotation + 10.0f ;
 	}
-	else if ( (_rotation > 0 && _rotation < float(10)) || (_rotation > float(350) && _rotation < float(360)) ){
-		_rotation = 0;
+	else if ( (rot > 0.0f && rot < 10.0f) || (rot > 350.0f && rot < 360.0f) ){
+		_creatureSprite.setRotation(0.0f);
+		// _rotation = 0;
 	}
 	return ;
 }
 
 void	Creature::moveDown( void )
 {
-	if (_position[1] + float(_speed) <= float(data.windowHeight))
-		_position[1] = _position[1] + float(_speed);
+	if (_position.y + _speed <= float(data.windowHeight))
+		_position.y = _position.y + _speed;
 	else
-		_position[1] = _position[1] - float(data.windowHeight);
+		_position.y = _position.y - float(data.windowHeight);
 
-	if ( _rotation == float(360) )
-		_rotation = float(0);
-	if ( _rotation >= float(190) && _rotation < float(360) ){
-		_rotation = _rotation - float(10);
+
+		
+	float rot = _creatureSprite.getRotation();
+
+	if ( rot == 360.0f )
+		rot = 0.0f;
+	if ( rot >= 190.0f && rot < 360.0f ){
+		_creatureSprite.setRotation(rot - 10.0f);
+		// _rotation = _rotation - 10.0f;
 	}
-	else if ( (_rotation >= float(0)) && _rotation <= float(170) ){
-		_rotation = _rotation + float(10);
+	else if ( rot >= 0.0f && rot <= 170.0f ){
+		_creatureSprite.setRotation(rot + 10.0f);
+		// _rotation = _rotation + 10.0f;
 	}
-	else if ( _rotation > float(170) && _rotation < float(100) ){
-		_rotation = float(180);
+	else if ( rot > 170.0f && rot < float(100) ){
+		_creatureSprite.setRotation(180.0f);
+		// _rotation = 180.0f;
 	}
 	return ;
 }
 
 void	Creature::moveLeft( void )
 {
-	if (_position[0] >= float(_speed))
-		_position[0] =_position[0] - float(_speed);
+	if (_position.x >= _speed)
+		_position.x =_position.x - _speed;
 	else
-		_position[0] = _position[0] + float(data.windowLength);
+		_position.x = _position.x + float(data.windowLength);
 
-	if ((_rotation >= float(0) && _rotation <= float(90)) || (_rotation <= float(360) && _rotation > float(280))){
-		if (_rotation - float(10) < float(0)){
-			_rotation = _rotation + float(360);
+		
+	float rot = _creatureSprite.getRotation();
+
+	if ((rot >= 0.0f && rot <= 90.0f) || (rot <= 360.0f && rot > 280.0f)){
+		if (rot - 10.0f < 0.0f){
+			rot = rot + 360.0f;
 		}
-		_rotation = _rotation - float(10) ;
+		_creatureSprite.setRotation(rot - 10.0f);
+		// _rotation = _rotation - 10.0f ;
 	}
-	else if (_rotation > float(90) && _rotation <= float(260)){
-		_rotation = _rotation + float(10) ;
+	else if (rot > 90.0f && rot <= 260.0f){
+		_creatureSprite.setRotation(rot + 10.0f);
+		// _rotation = _rotation + 10.0f ;
 	}
-	else if (_rotation >= float(260) && _rotation <= float(280)){
-		_rotation = float(270);
+	else if (rot >= 260.0f && rot <= 280.0f){
+		_creatureSprite.setRotation(270.0f);
+		// _rotation = 270.0f;
 	}
 	return ;
 }
 
 void	Creature::moveRight( void )
 {
-	if (_position[0] + float(_speed) <= float(data.windowLength))
-		_position[0] = _position[0] + float(_speed);
+	if (_position.x + _speed <= float(data.windowLength))
+		_position.x = _position.x + _speed;
 	else
-		_position[0] = _position[0] - float(data.windowLength);
+		_position.x = _position.x - float(data.windowLength);
 
-	if ((_rotation >= 0.0f && _rotation < 80.0f)
-		|| (_rotation >= 280.0f && _rotation <= 360.0f))
+		
+	float rot = _creatureSprite.getRotation();
+
+	if ((rot >= 0.0f && rot < 80.0f)
+		|| (rot >= 280.0f && rot <= 360.0f))
 	{
-		if (_rotation + 10.0f > 360.0f){
-			_rotation = float(_rotation + 10) - 360.0f;
+		if (rot + 10.0f > 360.0f){
+			_creatureSprite.setRotation((rot + 10.0f) - 360.0f);
+			// _rotation = (_rotation + 10.0f) - 360.0f;
 		}
 		else{
-			_rotation = _rotation + float(10) ;
+			_creatureSprite.setRotation(rot + 10.0f);
+			// _rotation = _rotation + 10.0f ;
 		}
 	}
-	else if (_rotation > 100.0f && _rotation < 280.0f){
-		_rotation = _rotation - float(10) ;
+	else if (rot > 100.0f && rot < 280.0f){
+		_creatureSprite.setRotation(rot - 10.0f);
+		// _rotation = _rotation - 10.0f ;
 	}
-	else if (_rotation >= 80.0f && _rotation <= 100.0f){
-		_rotation = float(90);
+	else if (rot >= 80.0f && rot <= 100.0f){
+		_creatureSprite.setRotation(90.0f);
+		// _rotation = 90.0f;
 	}
 	return ;
 }
@@ -204,8 +232,8 @@ void	Creature::giveBirth( NeuralNetwork const& brain, std::vector<Creature *>& _
 }
 
 void			Creature::buildCheckPoints( void ){
-	float	tmpx[2] = {_position[0] + (data.creatureSize / 2), _position[0] - (data.creatureSize / 2)};
-	float	tmpy[2] = {_position[1] + (data.creatureSize / 2), _position[1] - (data.creatureSize / 2)};
+	float	tmpx[2] = {_position.x + (data.creatureSize / 2), _position.x - (data.creatureSize / 2)};
+	float	tmpy[2] = {_position.y + (data.creatureSize / 2), _position.y - (data.creatureSize / 2)};
 	unsigned int i = 0;
 
 	pt[i++].setPosition((tmpx[0] * cos(_rotation)) - (tmpy[0] * sin(_rotation)),
@@ -221,15 +249,15 @@ void			Creature::buildCheckPoints( void ){
 void	Creature::eat( std::vector<Food *>& _food, std::vector<Creature *>& _population ){
 		//  * static_cast<float>(sin(r * (3.14159265359f / 180)))
 	//  * static_cast<float>(cos( r * (3.14159265359f / 180) ))
-	// float	crPosx[] = {_position[0] - (static_cast<float>(data.creatureSize / 2) * static_cast<float>(sin(_rotation * (3.14159265359f / 180)))),
-	// 					_position[0] + (static_cast<float>(data.creatureSize / 2) * static_cast<float>(sin(_rotation * (3.14159265359f / 180))))};
+	// float	crPosx[] = {_position.x - (static_cast<float>(data.creatureSize / 2) * static_cast<float>(sin(_rotation * (3.14159265359f / 180)))),
+	// 					_position.x + (static_cast<float>(data.creatureSize / 2) * static_cast<float>(sin(_rotation * (3.14159265359f / 180))))};
 
-	// float	crPosy[] = {_position[1] - (static_cast<float>(data.creatureSize / 2) * static_cast<float>(cos( _rotation * (3.14159265359f / 180) ))),
-	// 					_position[1] + (static_cast<float>(data.creatureSize / 2) * static_cast<float>(cos( _rotation * (3.14159265359f / 180) )))};
+	// float	crPosy[] = {_position.y - (static_cast<float>(data.creatureSize / 2) * static_cast<float>(cos( _rotation * (3.14159265359f / 180) ))),
+	// 					_position.y + (static_cast<float>(data.creatureSize / 2) * static_cast<float>(cos( _rotation * (3.14159265359f / 180) )))};
 
 	buildCheckPoints();
 	for (std::vector<Food *>::iterator it = _food.begin(); it != _food.end(); ++it){
-		if ( (*it)->checkPositionCr( this->_position[0], this->_position[1], this->_rotation) ){
+		if ( (*it)->checkPositionCr( this->_position.x, this->_position.y, this->_rotation) ){
 			_timeLastEat = std::chrono::high_resolution_clock::now();
 			++_nbFoodEaten;
 			if((*it)->getIsSpecial()){

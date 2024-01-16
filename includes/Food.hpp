@@ -9,7 +9,7 @@
 class	Food
 {
 	private:
-		unsigned int	_position[2];
+		sf::Vector2f	_position;
 		sf::Texture		_foodTexture;
 		sf::Sprite		_foodSprite;
 		bool			_isSpecial;
@@ -23,8 +23,7 @@ class	Food
 		~Food( void );
 
 		bool const &	getIsSpecial( void );
-		unsigned int*	getCoordinates( void );
-		unsigned int	getPosition( bool xy );
+		sf::Vector2f const&	 	getPosition( void );
 		void			setPosition( unsigned int x, unsigned int y );
 
 		bool			checkPositionSe( float x, float y );
