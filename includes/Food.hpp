@@ -5,13 +5,15 @@
 #include <SFML/Graphics.hpp>
 
 #include "Simulation.hpp"
+#include <SFML/Graphics/RectangleShape.hpp>
 
 class	Food
 {
 	private:
-		sf::Vector2f	_position;
-		sf::Texture		_foodTexture;
-		sf::Sprite		_foodSprite;
+		// sf::Vector2f	_position;
+		// sf::Texture		_foodTexture;
+		// sf::Sprite		_foodSprite;
+		sf::RectangleShape	_foodSprite;
 		bool			_isSpecial;
 
 		std::vector<sf::RectangleShape>	r;
@@ -24,10 +26,10 @@ class	Food
 
 		bool const &	getIsSpecial( void );
 		sf::Vector2f const&	 	getPosition( void );
-		void			setPosition( unsigned int x, unsigned int y );
+		void			setPosition( sf::Vector2f np );
 
 		bool			checkPositionSe( float x, float y );
-		bool			checkPositionCr( float x, float y, float r );
+		bool			checkPositionCr( sf::RectangleShape const& R );
 		void			drawFood( sf::RenderWindow& win, assetManager& _assets );
 		void			getsEaten( void );
 

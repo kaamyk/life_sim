@@ -2,12 +2,12 @@
 
 Creature::Creature( void ): _fitness(0),
 							_gradientDescent(0),
-							_position {static_cast<float>(rand() % data.windowLength), static_cast<float>(rand() % data.windowHeight)},
 							_speed(3),
 							_size(rand() % 100),
 							_nbFoodEaten(0),
 							_birthTime(std::chrono::high_resolution_clock::now()),
 							_timeLastEat(std::chrono::high_resolution_clock::now())
+							// _position {static_cast<float>(rand() % data.windowLength), static_cast<float>(rand() % data.windowHeight)},
 							// _rotation(0),
 {
 	_sensor = new Sensor();
@@ -21,10 +21,20 @@ Creature::Creature( void ): _fitness(0),
 	_moves[2] = &Creature::moveRight;
 	_moves[3] = &Creature::moveLeft;
 
-	for (unsigned char i = 0; i < 4; ++i){
-		pt.push_back(sf::RectangleShape(sf::Vector2f(5, 5)));
-		pt[i].setOrigin(2.5, 2.5);
-		pt[i].setFillColor(sf::Color::White);
+	// for (unsigned char i = 0; i < 4; ++i){
+	// 	pt.push_back(sf::RectangleShape(sf::Vector2f(5, 5)));
+	// 	pt[i].setOrigin(2.5, 2.5);
+	// 	pt[i].setFillColor(sf::Color::White);
+	// }
+	R = sf::RectangleShape(sf::Vector2f(_size, _size));
+	R.setPosition(static_cast<float>(rand() % data.windowLength), static_cast<float>(rand() % data.windowHeight));
+	R.setOrigin(_size / 2, _size / 2);
+
+	for(__uint8_t i = 0; i < 4; i++){
+		pt[i].setPosition(R.getPoint(i));
+		pt[i].setFillColor(sf::Color::Cyan);
+		pt[i].setSize(sf::Vector2f(5, 5));
+		pt[i].setRotation(0.0f);
 	}
 
 	return ;
@@ -32,12 +42,12 @@ Creature::Creature( void ): _fitness(0),
 
 Creature::Creature( NeuralNetwork const& brain ): _fitness(0),
 							_gradientDescent(0),
-							_position {static_cast<float>(rand() % data.windowHeight), static_cast<float>(rand() % data.windowHeight)},
 							_speed(5),
 							_size(rand() % 100),
 							_nbFoodEaten(0),
 							_birthTime(std::chrono::high_resolution_clock::now()),
 							_timeLastEat(std::chrono::high_resolution_clock::now())
+							// _position {static_cast<float>(rand() % data.windowHeight), static_cast<float>(rand() % data.windowHeight)},
 							// _rotation(0),
 
 {
@@ -53,12 +63,22 @@ Creature::Creature( NeuralNetwork const& brain ): _fitness(0),
 	_moves[2] = &Creature::moveRight;
 	_moves[3] = &Creature::moveLeft;
 
-	for (unsigned char i = 0; i < 4; ++i){
-		pt.push_back(sf::RectangleShape(sf::Vector2f(5, 5)));
-		pt[i].setOrigin(2.5, 2.5);
-		pt[i].setFillColor(sf::Color::White);
-	}
+	// for (unsigned char i = 0; i < 4; ++i){
+	// 	pt.push_back(sf::RectangleShape(sf::Vector2f(5, 5)));
+	// 	pt[i].setOrigin(2.5, 2.5);
+	// 	pt[i].setFillColor(sf::Color::White);
+	// }
+	R = sf::RectangleShape(sf::Vector2f(_size, _size));
+	R.setPosition(static_cast<float>(rand() % data.windowLength), static_cast<float>(rand() % data.windowHeight));
+	R.setOrigin(_size / 2, _size / 2);
 
+	for(__uint8_t i = 0; i < 4; i++){
+		pt[i].setPosition(R.getPoint(i));
+		pt[i].setFillColor(sf::Color::Cyan);
+		pt[i].setSize(sf::Vector2f(5, 5));
+		pt[i].setRotation(0.0f);
+	}
+	
 	return ;
 }
 
@@ -80,14 +100,22 @@ void	Creature::drawCreature( sf::RenderWindow& win, assetManager& _assets, Simul
 	const std::string&	path("./images/SquareCreature.png");
 
 	_sensor->drawRay(win, _assets, *this, sim);
-	this->_creatureSprite.setOrigin((data.creatureSize) / 2, data.creatureSize / 2);
-	this->_creatureSprite.setTexture(_assets.getTexture(path));
-	this->_creatureSprite.setTextureRect(sf::IntRect(0, 0, data.creatureSize, data.creatureSize));
-	this->_creatureSprite.setPosition(_position);
-	// this->_creatureSprite.setRotation(_rotation);
-	win.draw( this->_creatureSprite );
+	// this->_creatureSprite.setOrigin((data.creatureSize) / 2, data.creatureSize / 2);
+	// this->_creatureSprite.setTexture(_assets.getTexture(path));
+	// this->_creatureSprite.setTextureRect(sf::IntRect(0, 0, data.creatureSize, data.creatureSize));
+	// this->_creatureSprite.setPosition(_position);
+	// this->R.setRotation(_rotation);
+	win.draw( this->R );
 	for (unsigned char i = 0; i < pt.size(); i++){
 		win.draw(pt[i]);
+	}
+	win.draw(R);
+	std::array<sf::RectangleShape, 4> Rar;
+	for(__uint8_t i = 0; i < 4; i++){
+		Rar[i].setPosition(R.getPoint(i));
+		Rar[i].setFillColor(sf::Color::Cyan);
+		Rar[i].setSize(sf::Vector2f(5, 5));
+		win.draw(Rar[i]);
 	}
 	return ;
 }
@@ -98,27 +126,29 @@ void	Creature::move( __uint8_t r ){
 
 void	Creature::moveUp( void )
 {
+	sf::Vector2f	p(R.getPosition());
 	
-	if (_position.y >= _speed)
-		_position.y = _position.y - _speed;
+	if (p.y >= _speed)
+		p.y = p.y - _speed;
 	else
-		_position.y = _position.y + float(data.windowHeight);
+		p.y = p.y + float(data.windowHeight);
+	R.setPosition(p);
 
 
-	float rot = _creatureSprite.getRotation();
+	float rot = R.getRotation();
 
 	if ( rot == 360.0f )
 		rot = 0.0f;
 	if ( rot >= 10.0f && rot <= 180.0f ){
-		_creatureSprite.setRotation(rot - 10.0f);
+		R.setRotation(rot - 10.0f);
 		// _rotation = _rotation - 10.0f ;
 	}
 	else if ( rot > 180.0f && rot <= 350.0f ){
-		_creatureSprite.setRotation(rot + 10.0f);
+		R.setRotation(rot + 10.0f);
 		// _rotation = _rotation + 10.0f ;
 	}
 	else if ( (rot > 0.0f && rot < 10.0f) || (rot > 350.0f && rot < 360.0f) ){
-		_creatureSprite.setRotation(0.0f);
+		R.setRotation(0.0f);
 		// _rotation = 0;
 	}
 	return ;
@@ -126,26 +156,28 @@ void	Creature::moveUp( void )
 
 void	Creature::moveDown( void )
 {
-	if (_position.y + _speed <= float(data.windowHeight))
-		_position.y = _position.y + _speed;
+	sf::Vector2f	p(R.getPosition());
+	if (p.y + _speed <= float(data.windowHeight))
+		p.y = p.y + _speed;
 	else
-		_position.y = _position.y - float(data.windowHeight);
+		p.y = p.y - float(data.windowHeight);
+	R.setPosition(p);
 
 
-	float rot = _creatureSprite.getRotation();
+	float rot = R.getRotation();
 
 	if ( rot == 360.0f )
 		rot = 0.0f;
 	if ( rot >= 190.0f && rot < 360.0f ){
-		_creatureSprite.setRotation(rot - 10.0f);
+		R.setRotation(rot - 10.0f);
 		// _rotation = _rotation - 10.0f;
 	}
 	else if ( rot >= 0.0f && rot <= 170.0f ){
-		_creatureSprite.setRotation(rot + 10.0f);
+		R.setRotation(rot + 10.0f);
 		// _rotation = _rotation + 10.0f;
 	}
 	else if ( rot > 170.0f && rot < 100.0f ){
-		_creatureSprite.setRotation(180.0f);
+		R.setRotation(180.0f);
 		// _rotation = 180.0f;
 	}
 	return ;
@@ -153,27 +185,29 @@ void	Creature::moveDown( void )
 
 void	Creature::moveLeft( void )
 {
-	if (_position.x >= _speed)
-		_position.x =_position.x - _speed;
+	sf::Vector2f	p(R.getPosition());
+	if (p.x >= _speed)
+		p.x =p.x - _speed;
 	else
-		_position.x = _position.x + float(data.windowLength);
+		p.x = p.x + float(data.windowLength);
+	R.setPosition(p);
 
 		
-	float rot = _creatureSprite.getRotation();
+	float rot = R.getRotation();
 
 	if ((rot >= 0.0f && rot <= 90.0f) || (rot <= 360.0f && rot > 280.0f)){
 		if (rot - 10.0f < 0.0f){
 			rot = rot + 360.0f;
 		}
-		_creatureSprite.setRotation(rot - 10.0f);
+		R.setRotation(rot - 10.0f);
 		// _rotation = _rotation - 10.0f ;
 	}
 	else if (rot > 90.0f && rot <= 260.0f){
-		_creatureSprite.setRotation(rot + 10.0f);
+		R.setRotation(rot + 10.0f);
 		// _rotation = _rotation + 10.0f ;
 	}
 	else if (rot >= 260.0f && rot <= 280.0f){
-		_creatureSprite.setRotation(270.0f);
+		R.setRotation(270.0f);
 		// _rotation = 270.0f;
 	}
 	return ;
@@ -181,32 +215,34 @@ void	Creature::moveLeft( void )
 
 void	Creature::moveRight( void )
 {
-	if (_position.x + _speed <= float(data.windowLength))
-		_position.x = _position.x + _speed;
+	sf::Vector2f	p(R.getPosition());
+	if (p.x + _speed <= float(data.windowLength))
+		p.x = p.x + _speed;
 	else
-		_position.x = _position.x - float(data.windowLength);
+		p.x = p.x - float(data.windowLength);
+	R.setPosition(p);
 
 		
-	float rot = _creatureSprite.getRotation();
+	float rot = R.getRotation();
 
 	if ((rot >= 0.0f && rot < 80.0f)
 		|| (rot >= 280.0f && rot <= 360.0f))
 	{
 		if (rot + 10.0f > 360.0f){
-			_creatureSprite.setRotation((rot + 10.0f) - 360.0f);
+			R.setRotation((rot + 10.0f) - 360.0f);
 			// _rotation = (_rotation + 10.0f) - 360.0f;
 		}
 		else{
-			_creatureSprite.setRotation(rot + 10.0f);
+			R.setRotation(rot + 10.0f);
 			// _rotation = _rotation + 10.0f ;
 		}
 	}
 	else if (rot > 100.0f && rot < 280.0f){
-		_creatureSprite.setRotation(rot - 10.0f);
+		R.setRotation(rot - 10.0f);
 		// _rotation = _rotation - 10.0f ;
 	}
 	else if (rot >= 80.0f && rot <= 100.0f){
-		_creatureSprite.setRotation(90.0f);
+		R.setRotation(90.0f);
 		// _rotation = 90.0f;
 	}
 	return ;
@@ -232,36 +268,17 @@ void	Creature::giveBirth( NeuralNetwork const& brain, std::vector<Creature *>& _
 }
 
 void			Creature::buildCheckPoints( void ){
-	float	tmpx[2] = {_position.x + (data.creatureSize / 2), _position.x - (data.creatureSize / 2)};
-	float	tmpy[2] = {_position.y + (data.creatureSize / 2), _position.y - (data.creatureSize / 2)};
-
-	( void )tmpx;
-	( void )tmpy ;
-	unsigned int i = 0;
-	(void )i;
-
-	// pt[i++].setPosition((tmpx[0] * cos(_rotation)) - (tmpy[0] * sin(_rotation)),
-	// 					(tmpx[0] * sin(_rotation)) - (tmpy[0] * cos(_rotation)));
-	// pt[i++].setPosition((tmpx[0] * cos(_rotation)) - (tmpy[1] * sin(_rotation)),
-	// 					(tmpx[0] * sin(_rotation)) - (tmpy[1] * cos(_rotation)));
-	// pt[i++].setPosition((tmpx[1] * cos(_rotation)) - (tmpy[0] * sin(_rotation)),
-	// 					(tmpx[1] * sin(_rotation)) - (tmpy[0] * cos(_rotation)));
-	// pt[i++].setPosition((tmpx[1] * cos(_rotation)) - (tmpy[1] * sin(_rotation)),
-	// 					(tmpx[1] * sin(_rotation)) - (tmpy[1] * cos(_rotation)));
+	R.setRotation(R.getRotation());
+	R.setPosition(R.getPosition());
+	for(__uint8_t i = 0; i < 4; i++){
+		pt[i].setPosition(R.getPoint(i));
+	}
 }
 
 void	Creature::eat( std::vector<Food *>& _food, std::vector<Creature *>& _population ){
-		//  * static_cast<float>(sin(r * (3.14159265359f / 180)))
-	//  * static_cast<float>(cos( r * (3.14159265359f / 180) ))
-	// float	crPosx[] = {_position.x - (static_cast<float>(data.creatureSize / 2) * static_cast<float>(sin(_rotation * (3.14159265359f / 180)))),
-	// 					_position.x + (static_cast<float>(data.creatureSize / 2) * static_cast<float>(sin(_rotation * (3.14159265359f / 180))))};
-
-	// float	crPosy[] = {_position.y - (static_cast<float>(data.creatureSize / 2) * static_cast<float>(cos( _rotation * (3.14159265359f / 180) ))),
-	// 					_position.y + (static_cast<float>(data.creatureSize / 2) * static_cast<float>(cos( _rotation * (3.14159265359f / 180) )))};
-
 	buildCheckPoints();
 	for (std::vector<Food *>::iterator it = _food.begin(); it != _food.end(); ++it){
-		if ( (*it)->checkPositionCr( this->_position.x, this->_position.y, this->_creatureSprite.getRotation()) ){
+		if ( (*it)->checkPositionCr( R ) ){
 			_timeLastEat = std::chrono::high_resolution_clock::now();
 			++_nbFoodEaten;
 			if((*it)->getIsSpecial()){

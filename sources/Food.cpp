@@ -2,14 +2,21 @@
 #include "../includes/assetManager.hpp"
 #include "../includes/Food.hpp"
 
-Food::Food( void ): _position(sf::Vector2f((unsigned int)rand() % data.windowLength, (unsigned int)rand() % data.windowHeight))
+Food::Food( void )
 {
+	_foodSprite.setOrigin(data.foodSize / 2, data.foodSize / 2);
+	_foodSprite.setPosition(sf::Vector2f(rand() % data.windowLength, rand() % data.windowHeight));
+	_foodSprite.setSize(sf::Vector2f(data.foodSize, data.foodSize));
+	_foodSprite.setRotation(0.0f);
 	return ;
 }
 
-Food::Food( bool special ): _position(sf::Vector2f((unsigned int)rand() % data.windowLength, (unsigned int)rand() % data.windowHeight))
-							, _isSpecial(special)
+Food::Food( bool special ):_isSpecial(special)
 {
+	_foodSprite.setOrigin(data.foodSize / 2, data.foodSize / 2);
+	_foodSprite.setPosition(sf::Vector2f(rand() % data.windowLength, rand() % data.windowHeight));
+	_foodSprite.setSize(sf::Vector2f(data.foodSize, data.foodSize));
+	_foodSprite.setRotation(0.0f);
 	return ;
 }
 
@@ -23,25 +30,26 @@ bool const &	Food::getIsSpecial( void ){
 }
 
 sf::Vector2f const&	Food::getPosition( void ){
-	return (_position);
+	return (_foodSprite.getPosition());
 }
 
-void			Food::setPosition( unsigned int x, unsigned int y ){
-	_position.x = x;
-	_position.y = y;
+void			Food::setPosition( sf::Vector2f np ){
+	_foodSprite.setPosition(np);
 }
 
 void			Food::drawFood( sf::RenderWindow& win, assetManager& _assets )
 {
-	std::string	path;
+	( void ) _assets;
+	// std::string	path;
 
-	this->_isSpecial ? path = "./images/SquareSpecialFood.png" : path = "./images/SquareFood.png";
+	// this->_isSpecial ? path = "./images/SquareSpecialFood.png" : path = "./images/SquareFood.png";
+	_isSpecial ? _foodSprite.setFillColor(sf::Color::Green) :  _foodSprite.setFillColor(sf::Color::White);
 
-	_foodSprite.setOrigin(data.foodSize / 2, data.foodSize / 2);
-	_foodSprite.setTexture(_assets.getTexture(path));
-	_foodSprite.setTextureRect(sf::IntRect(0, 0, data.foodSize, data.foodSize));
-	_foodSprite.setPosition(_position);
-	_foodSprite.setRotation(0);
+	// _foodSprite.setOrigin(data.foodSize / 2, data.foodSize / 2);
+	// _foodSprite.setTexture(_assets.getTexture(path));
+	// _foodSprite.setTextureRect(sf::IntRect(0, 0, data.foodSize, data.foodSize));
+	// _foodSprite.setPosition(_foodSprite.getPosition());
+	// _foodSprite.setRotation(0);
 	win.draw(_foodSprite);
 	return ;
 }
@@ -53,7 +61,7 @@ void			Food::drawCheckPoints( sf::RenderWindow& win ){
 }
 
 void			Food::getsEaten( void ){
-	setPosition(rand() % data.windowLength, rand() % data.windowHeight);
+	setPosition(sf::Vector2f(rand() % data.windowLength, rand() % data.windowHeight));
 }
 
 void			Food::buildCheckPoints(float x, float y, float foPosX[2], float foPosY[2]){
@@ -80,8 +88,8 @@ void			Food::buildCheckPoints(float x, float y, float foPosX[2], float foPosY[2]
 }
 
 bool			Food::checkPositionSe( float x, float y ){
-	float	_foodPosx[] = {_position.x - static_cast<float>(data.foodSize / 2), _position.x + static_cast<float>(data.foodSize / 2)};
-	float	_foodPosy[] = {_position.y - static_cast<float>(data.foodSize / 2), _position.y + static_cast<float>(data.foodSize / 2)};
+	float	_foodPosx[] = {_foodSprite.getPosition().x - static_cast<float>(data.foodSize / 2), _foodSprite.getPosition().x + static_cast<float>(data.foodSize / 2)};
+	float	_foodPosy[] = {_foodSprite.getPosition().y - static_cast<float>(data.foodSize / 2), _foodSprite.getPosition().y + static_cast<float>(data.foodSize / 2)};
 
 
 	for(__uint8_t i = 0; i < 3; ++i ){
@@ -124,30 +132,33 @@ void			Food::buildCheckPoints(float crPosX[3], float crPosY[3], float foPosX[2],
 	}
 }
 
-bool			Food::checkPositionCr( float x, float y, float r ){
+bool			Food::checkPositionCr( sf::RectangleShape const& R ){
+	( void )R;
 	//  * static_cast<float>(sin(r * (3.14159265359f / 180)))
 	//  * static_cast<float>(cos( r * (3.14159265359f / 180) ))
-	( void )r;
-	float	crPosx[] = {x - (static_cast<float>(data.creatureSize / 2)),
-						x,
-						x + (static_cast<float>(data.creatureSize / 2))};
+	// ( void )r;
+	// float	crPosx[] = {x - (static_cast<float>(data.creatureSize / 2)),
+	// 					x,
+	// 					x + (static_cast<float>(data.creatureSize / 2))};
 
-	float	crPosy[] = {y - (static_cast<float>(data.creatureSize / 2)),
-						y,
-						y + (static_cast<float>(data.creatureSize / 2))};
+	// float	crPosy[] = {y - (static_cast<float>(data.creatureSize / 2)),
+	// 					y,
+	// 					y + (static_cast<float>(data.creatureSize / 2))};
 
-	float	_foodPosx[] = {_position.x - static_cast<float>(data.foodSize / 2), _position.x + static_cast<float>(data.foodSize / 2)};
-	float	_foodPosy[] = {_position.y - static_cast<float>(data.foodSize / 2), _position.y + static_cast<float>(data.foodSize / 2)};
+	// float	_foodPosx[] = {_foodSprite.getPosition().x - static_cast<float>(data.foodSize / 2), _foodSprite.getPosition().x + static_cast<float>(data.foodSize / 2)};
+	// float	_foodPosy[] = {_foodSprite.getPosition().y - static_cast<float>(data.foodSize / 2), _foodSprite.getPosition().y + static_cast<float>(data.foodSize / 2)};
 
 
 	// buildCheckPoints(crPosx, crPosy, _foodPosx, _foodPosy);
-	for(__uint8_t i = 0; i < 3; i++ ){
-		if (crPosx[i] >= _foodPosx[0] && crPosx[i] <= _foodPosx[1]
-			&& crPosy[i] >= _foodPosy[0] && crPosy[i] <= _foodPosy[1])
-		{
-			return (1);
-		}
-	}
+
+
+	// for(__uint8_t i = 0; i < 3; i++ ){
+	// 	if (Rar[i].getPosition().x >= _foodPosx[0] && Rar[i].getPosition().x <= _foodPosx[1]
+	// 		&& Rar[i].getPosition().y >= _foodPosy[0] && Rar[i].getPosition().y <= _foodPosy[1])
+	// 	{
+	// 		return (1);
+	// 	}
+	// }
 
 	return (0);
 }

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cmath>
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 
 #include "Simulation.hpp"
 
@@ -18,7 +19,7 @@ class	Creature
 		unsigned int	_index;
 		unsigned int	_fitness;
 		float			_gradientDescent;
-		sf::Vector2f	_position;
+		// sf::Vector2f	_position;
 		// float			_rotation;
 		float			_speed;
 		float			_size;
@@ -26,12 +27,13 @@ class	Creature
 		unsigned int 	_nbFoodEaten;
 		std::chrono::high_resolution_clock::time_point	_birthTime;
 		std::chrono::high_resolution_clock::time_point	_timeLastEat;
-		sf::Texture		_creatureTexture;
-		sf::Sprite		_creatureSprite;
+		// sf::Texture		_creatureTexture;
+		// sf::Sprite		_creatureSprite;
 		void			(Creature::*_moves[4])( void );
 		NeuralNetwork*	_brain;
 
-		std::vector<sf::RectangleShape> pt;
+		sf::RectangleShape	R;
+		std::array<sf::RectangleShape, 4> pt;
 
 	public :
 		Creature( void );
@@ -39,8 +41,8 @@ class	Creature
 		~Creature( void );
 
 		bool		checkTime( std::chrono::seconds const _timeToDie );
-		sf::Vector2f	getPosition( void ) const{ return (_position); }
-		float		getRotation( void ) const{ return (_creatureSprite.getRotation()); }
+		sf::Vector2f	getPosition( void ) const{ return (R.getPosition()); }
+		float		getRotation( void ) const{ return (R.getRotation()); }
 		Sensor*		getSensor( void ) const{ return (_sensor); }
 		NeuralNetwork&	getBrain( void ){ return (*_brain); }
 		std::vector<float> const&	getSensorState( void ) const;
