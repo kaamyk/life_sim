@@ -117,7 +117,7 @@ void	Creature::drawCreature( sf::RenderWindow& win, assetManager& _assets, Simul
 void	Creature::move( __uint8_t r ){
 	(this->*_moves[r])();
 	for(__uint8_t i = 0; i < 4; i++){
-		pt[i].setPosition(R.getPosition());
+		pt[i].setPosition(R.getTransform().transformPoint(R.getPoint(i)));
 	}
 }
 
@@ -265,15 +265,13 @@ void	Creature::giveBirth( NeuralNetwork const& brain, std::vector<Creature *>& _
 }
 
 void			Creature::buildCheckPoints( void ){
-	R.setRotation(R.getRotation());
-	R.setPosition(R.getPosition());
 	for(__uint8_t i = 0; i < 4; i++){
 		pt[i].setPosition(R.getTransform().transformPoint(R.getPoint(i)));
 	}
 }
 
 void	Creature::eat( std::vector<Food *>& _food, std::vector<Creature *>& _population ){
-	buildCheckPoints();
+	// buildCheckPoints();
 	for (std::vector<Food *>::iterator it = _food.begin(); it != _food.end(); ++it){
 		if ( (*it)->checkPositionCr( pt ) ){
 			std::cout << "eat" << std::endl;
