@@ -132,8 +132,8 @@ void			Food::buildCheckPoints(float crPosX[3], float crPosY[3], float foPosX[2],
 	}
 }
 
-bool			Food::checkPositionCr( sf::RectangleShape const& R ){
-	( void )R;
+bool			Food::checkPositionCr( std::array<sf::RectangleShape, 4> pt ){
+	( void )pt;
 	//  * static_cast<float>(sin(r * (3.14159265359f / 180)))
 	//  * static_cast<float>(cos( r * (3.14159265359f / 180) ))
 	// ( void )r;
@@ -152,13 +152,13 @@ bool			Food::checkPositionCr( sf::RectangleShape const& R ){
 	// buildCheckPoints(crPosx, crPosy, _foodPosx, _foodPosy);
 
 
-	// for(__uint8_t i = 0; i < 3; i++ ){
-	// 	if (Rar[i].getPosition().x >= _foodPosx[0] && Rar[i].getPosition().x <= _foodPosx[1]
-	// 		&& Rar[i].getPosition().y >= _foodPosy[0] && Rar[i].getPosition().y <= _foodPosy[1])
-	// 	{
-	// 		return (1);
-	// 	}
-	// }
+	for(__uint8_t i = 0; i < 4; i++ ){
+		if (pt[i].getPosition().x >= _foodSprite.getPosition().x && pt[i].getPosition().x <= _foodSprite.getPosition().y
+			&& pt[i].getPosition().y >= _foodSprite.getPosition().y && pt[i].getPosition().y <= _foodSprite.getPosition().y)
+		{
+			return (1);
+		}
+	}
 
 	return (0);
 }

@@ -31,9 +31,10 @@ Creature::Creature( void ): _fitness(0),
 	R.setOrigin(_size / 2, _size / 2);
 
 	for(__uint8_t i = 0; i < 4; i++){
-		pt[i].setPosition(R.getPoint(i));
-		pt[i].setFillColor(sf::Color::Cyan);
+		pt[i].setPosition(R.getTransform().transformPoint(R.getPoint(i)));
+		pt[i].setFillColor(sf::Color::Red);
 		pt[i].setSize(sf::Vector2f(5, 5));
+		pt[i].setOrigin(sf::Vector2f(2.5, 2.5));
 		pt[i].setRotation(0.0f);
 	}
 
@@ -73,9 +74,10 @@ Creature::Creature( NeuralNetwork const& brain ): _fitness(0),
 	R.setOrigin(_size / 2, _size / 2);
 
 	for(__uint8_t i = 0; i < 4; i++){
-		pt[i].setPosition(R.getPoint(i));
-		pt[i].setFillColor(sf::Color::Cyan);
+		pt[i].setPosition(R.getTransform().transformPoint(R.getPoint(i)));
+		pt[i].setFillColor(sf::Color::Red);
 		pt[i].setSize(sf::Vector2f(5, 5));
+		pt[i].setOrigin(sf::Vector2f(2.5, 2.5));
 		pt[i].setRotation(0.0f);
 	}
 	
@@ -109,19 +111,14 @@ void	Creature::drawCreature( sf::RenderWindow& win, assetManager& _assets, Simul
 	for (unsigned char i = 0; i < pt.size(); i++){
 		win.draw(pt[i]);
 	}
-	win.draw(R);
-	std::array<sf::RectangleShape, 4> Rar;
-	for(__uint8_t i = 0; i < 4; i++){
-		Rar[i].setPosition(R.getPoint(i));
-		Rar[i].setFillColor(sf::Color::Cyan);
-		Rar[i].setSize(sf::Vector2f(5, 5));
-		win.draw(Rar[i]);
-	}
 	return ;
 }
 
 void	Creature::move( __uint8_t r ){
 	(this->*_moves[r])();
+	for(__uint8_t i = 0; i < 4; i++){
+		pt[i].setPosition(R.getPosition());
+	}
 }
 
 void	Creature::moveUp( void )
@@ -271,14 +268,15 @@ void			Creature::buildCheckPoints( void ){
 	R.setRotation(R.getRotation());
 	R.setPosition(R.getPosition());
 	for(__uint8_t i = 0; i < 4; i++){
-		pt[i].setPosition(R.getPoint(i));
+		pt[i].setPosition(R.getTransform().transformPoint(R.getPoint(i)));
 	}
 }
 
 void	Creature::eat( std::vector<Food *>& _food, std::vector<Creature *>& _population ){
 	buildCheckPoints();
 	for (std::vector<Food *>::iterator it = _food.begin(); it != _food.end(); ++it){
-		if ( (*it)->checkPositionCr( R ) ){
+		if ( (*it)->checkPositionCr( pt ) ){
+			std::cout << "eat" << std::endl;
 			_timeLastEat = std::chrono::high_resolution_clock::now();
 			++_nbFoodEaten;
 			if((*it)->getIsSpecial()){
