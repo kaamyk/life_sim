@@ -102,8 +102,10 @@ void			Food::buildCheckPoints(float x, float y ){
 }
 
 bool			Food::checkPositionSe( float x, float y ){
-	if (x >= _foodSprite.getPosition().x && x <= _foodSprite.getPosition().x
-		&& y >= _foodSprite.getPosition().y && y <= _foodSprite.getPosition().y)
+	// if (x >= _foodSprite.getPosition().x && x <= _foodSprite.getPosition().x
+	// 	&& y >= _foodSprite.getPosition().y && y <= _foodSprite.getPosition().y)
+	if (x >= foodVrt[0].getPosition().x && x <= foodVrt[2].getPosition().x
+		&& y >= foodVrt[0].getPosition().y && y <= foodVrt[2].getPosition().y)
 	{
 		buildCheckPoints(x, y);
 		return (1);
@@ -111,38 +113,10 @@ bool			Food::checkPositionSe( float x, float y ){
 	return (0);
 }
 
-// void			Food::buildCheckPoints(float crPosX[3], float crPosY[3], float foPosX[2], float foPosY[2]){
-// 	(void) crPosX;
-// 	(void) crPosY;
-
-// 	for (unsigned char i = 0; i < 13; ++i){
-// 		r.push_back(sf::RectangleShape(sf::Vector2f(5, 5)));
-// 		r[i].setOrigin(2.5, 2.5);
-// 	}
-
-// 	unsigned int i = 0;
-	
-// 	r[i].setPosition(foPosX[0], foPosY[0]);
-// 	r[i++].setFillColor(sf::Color::Green);
-// 	r[i].setPosition(foPosX[1], foPosY[1]);
-// 	r[i++].setFillColor(sf::Color::Green);
-// 	r[i].setPosition(foPosX[0], foPosY[1]);
-// 	r[i++].setFillColor(sf::Color::Green);
-// 	r[i].setPosition(foPosX[1], foPosY[0]);
-// 	r[i++].setFillColor(sf::Color::Green);
-	
-// 	for(unsigned char io = 0;  io < 3; ++io){
-// 		for (unsigned char ioo = 0; ioo < 3; ++ioo){
-// 			r[i].setPosition(crPosX[io], crPosY[ioo]);
-// 			r[i++].setFillColor(sf::Color::Magenta);
-// 		}
-// 	}
-// }
-
-bool			Food::checkPositionCr( std::array<sf::RectangleShape, 4> const& pt ){
+bool			Food::checkPositionCr( std::array<sf::RectangleShape, 4> const& crVrt ){
 	for(__uint8_t i = 0; i < 4; i++ ){
-		if (foodVrt[i].getPosition().x >= pt[0].getPosition().x && foodVrt[i].getPosition().x <= pt[2].getPosition().x
-			&& foodVrt[i].getPosition().y >= pt[2].getPosition().y && foodVrt[i].getPosition().y <= pt[0].getPosition().y)
+		if (foodVrt[i].getPosition().x >= crVrt[0].getPosition().x && foodVrt[i].getPosition().x <= crVrt[2].getPosition().x
+			&& foodVrt[i].getPosition().y >= crVrt[0].getPosition().y && foodVrt[i].getPosition().y <= crVrt[2].getPosition().y)
 		{
 			std::cout << "Position OK" << std::endl;
 			return (1);

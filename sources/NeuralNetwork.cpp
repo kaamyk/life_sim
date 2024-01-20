@@ -14,14 +14,11 @@ NeuralNetwork::~NeuralNetwork( void ){
 }
 
 NeuralNetwork&  NeuralNetwork::operator=( NeuralNetwork const& source){
-    _levels = source._levels;
-    try{
-        for (size_t i = 0; i < this->_levels.size() && source._levels.size() ; ++i){
-            *(this->_levels[i]) = *(source._levels[i]);
-        }
+    if (_levels.size()){
+        _levels.clear();
     }
-    catch(std::exception& e){
-        std::cerr << e.what() << std::endl;
+    for (size_t i = 0; i < source._levels.size() ; ++i){
+        this->_levels.push_back(new Level(*(source._levels[i])));
     }
     return (*this);
 }
@@ -29,7 +26,7 @@ NeuralNetwork&  NeuralNetwork::operator=( NeuralNetwork const& source){
 std::vector<float>&    NeuralNetwork::feedForward( std::vector<float> sensorInputs ){
     unsigned int i;
     
-    this->_levels[0]->feedForward(sensorInputs);
+    _levels[0]->feedForward(sensorInputs);
     for(i = 1; i < _levels.size(); ++i){
         this->_levels[i]->feedForward(_levels[i - 1]->getOutputs());
     }

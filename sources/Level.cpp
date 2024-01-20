@@ -17,30 +17,30 @@ Level::Level( unsigned int nbInputs, unsigned int nbOutputs ):
     return ;
 }
 
-Level::Level( Level const& source){
+Level::Level( Level const& source ){
     *this = source;
 }
 
 Level&  Level::operator=( Level const& source ){
-    if (this->_nbInputs != source._nbInputs || this->_nbOutputs != source._nbOutputs){
-        throw WrongCopySource();
-    }
+    // if (this->_nbInputs != source._nbInputs || this->_nbOutputs != source._nbOutputs){
+    //     throw WrongCopySource();
+    // }
     _nbInputs = source._nbInputs;
     _nbOutputs = source._nbOutputs;
     _inputs = source._inputs;
-    for (size_t i = 0; i < source._inputs.size() && i < this->_inputs.size() ; ++i){
+    for (size_t i = 0; i < source._inputs.size(); ++i){
         this->_inputs[i] = source._inputs[i];
     }
     _outputs = source._outputs;
-    for (size_t i = 0; i < source._outputs.size() && i < this->_outputs.size() ; ++i){
+    for (size_t i = 0; i < source._outputs.size(); ++i){
         this->_outputs[i] = source._outputs[i];
     }
     _biases = source._biases;
-    for (size_t i = 0; i < source._biases.size() && i < this->_biases.size() ; ++i){
+    for (size_t i = 0; i < source._biases.size(); ++i){
         this->_biases[i] = source._biases[i];
     }
     _weights = source._weights;
-    for (size_t i = 0; i < source._weights.size() && i < this->_weights.size() ; ++i){
+    for (size_t i = 0; i < source._weights.size(); ++i){
         for (size_t j = 0; j < source._weights[i].size() && j < this->_weights[i].size(); ++j){
             this->_weights[i][j] = source._weights[i][j];
         }

@@ -14,9 +14,9 @@ class Level
 private:
     unsigned int _nbInputs;
     unsigned int _nbOutputs;
-    std::vector<float>     _inputs;
-    std::vector<float>     _outputs;
-    std::vector<float>    _biases;
+    std::vector<float>  _inputs;
+    std::vector<float>  _outputs;
+    std::vector<float>  _biases;
     std::vector< std::vector<float> >  _weights;
 
 public:
