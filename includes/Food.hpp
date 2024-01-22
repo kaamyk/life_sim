@@ -34,8 +34,8 @@ class	Food
 		void			drawFood( sf::RenderWindow& win );
 		void			getsEaten( void );
 
-		void			buildCheckPoints( float crPosX[2], float crPosY[2], float foPosX[2], float foPosY[2] );
-		void			buildCheckPoints( float x, float y );
+		void			buildCheckPointsCr( float x, float y );
+		void			buildCheckPointsSe( float x, float y );
 		void			drawCheckPoints( sf::RenderWindow& win );
 };
 

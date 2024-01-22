@@ -19,18 +19,15 @@ class	Creature
 		unsigned int	_index;
 		unsigned int	_fitness;
 		float			_gradientDescent;
-		// sf::Vector2f	_position;
-		// float			_rotation;
 		float			_speed;
 		float			_size;
 		Sensor*			_sensor;
 		unsigned int 	_nbFoodEaten;
 		std::chrono::high_resolution_clock::time_point	_birthTime;
 		std::chrono::high_resolution_clock::time_point	_timeLastEat;
-		// sf::Texture		_creatureTexture;
-		// sf::Sprite		_creatureSprite;
 		void			(Creature::*_moves[4])( void );
 		NeuralNetwork*	_brain;
+		std::vector<sf::Vector2f>	_lastPositions;
 
 		sf::RectangleShape	R;
 		std::array<sf::RectangleShape, 4> pt;
@@ -49,7 +46,10 @@ class	Creature
 		
 		void		drawCreature( sf::RenderWindow& win, assetManager& _assets, Simulation& sim );
 
-		void		move( uint8_t r );
+		bool	checkLastPositions( void );
+		void	updatePosition( void );
+
+		bool		move( uint8_t r );
 		void		moveUp( void );
 		void		moveDown( void );
 		void		moveLeft( void );

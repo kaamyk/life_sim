@@ -9,8 +9,9 @@ NeuralNetwork::NeuralNetwork( NeuralNetwork const& brain ){
 }
 NeuralNetwork::~NeuralNetwork( void ){
     for (std::vector<Level*>::iterator it = _levels.begin(); it != _levels.end(); ++it){
-        _levels.erase(it);
+        delete *it;
     }
+    _levels.clear();
 }
 
 NeuralNetwork&  NeuralNetwork::operator=( NeuralNetwork const& source){

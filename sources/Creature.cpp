@@ -2,7 +2,7 @@
 
 Creature::Creature( void ): _fitness(0),
 							_gradientDescent(0),
-							_speed(3),
+							_speed(5),
 							_size(rand() % 100),
 							_nbFoodEaten(0),
 							_birthTime(std::chrono::high_resolution_clock::now()),
@@ -58,17 +58,12 @@ Creature::Creature( NeuralNetwork const& brain ): _fitness(0),
 	neuronCount.push_back(6);
 	neuronCount.push_back(4);
 	_brain = new NeuralNetwork(brain);
-	_brain->mutate(0.1f);
+	_brain->mutate(0.2f);
 	_moves[0] = &Creature::moveUp;
 	_moves[1] = &Creature::moveDown;
 	_moves[2] = &Creature::moveRight;
 	_moves[3] = &Creature::moveLeft;
 
-	// for (unsigned char i = 0; i < 4; ++i){
-	// 	pt.push_back(sf::RectangleShape(sf::Vector2f(5, 5)));
-	// 	pt[i].setOrigin(2.5, 2.5);
-	// 	pt[i].setFillColor(sf::Color::White);
-	// }
 	R = sf::RectangleShape(sf::Vector2f(_size, _size));
 	R.setPosition(static_cast<float>(rand() % data.windowLength), static_cast<float>(rand() % data.windowHeight));
 	R.setOrigin(_size / 2, _size / 2);
@@ -102,11 +97,6 @@ void	Creature::drawCreature( sf::RenderWindow& win, assetManager& _assets, Simul
 	const std::string&	path("./images/SquareCreature.png");
 
 	_sensor->drawRay(win, _assets, *this, sim);
-	// this->_creatureSprite.setOrigin((data.creatureSize) / 2, data.creatureSize / 2);
-	// this->_creatureSprite.setTexture(_assets.getTexture(path));
-	// this->_creatureSprite.setTextureRect(sf::IntRect(0, 0, data.creatureSize, data.creatureSize));
-	// this->_creatureSprite.setPosition(_position);
-	// this->R.setRotation(_rotation);
 	win.draw( this->R );
 	for (unsigned char i = 0; i < pt.size(); i++){
 		win.draw(pt[i]);
@@ -114,11 +104,35 @@ void	Creature::drawCreature( sf::RenderWindow& win, assetManager& _assets, Simul
 	return ;
 }
 
-void	Creature::move( __uint8_t r ){
+bool	Creature::checkLastPositions( void ){
+	std::cout << ">> Dans check Position" << std::endl;
+	if (_lastPositions.size() < 10){
+		return (0);
+	}
+	std::cout << "check last position" << std::endl;
+	std::cout << "\tSize => " << _lastPositions.size() << std::endl;
+	for (unsigned int i = 1; i < _lastPositions.size(); i++){
+		if (_lastPositions[i].x != _lastPositions[i - 1].x || _lastPositions[i].y != _lastPositions[i - 1].y){
+			_lastPositions.clear();
+			return (0);
+		}
+	}
+	std::cout << "Return 1" << std::endl;
+	return (1);
+}
+
+void	Creature::updatePosition( void ){
+	_lastPositions.push_back(R.getPosition());
+}
+
+bool	Creature::move( __uint8_t r ){
+	std::cout << "Creature -> move" << std::endl;
 	(this->*_moves[r])();
+	_lastPositions.push_back(sf::Vector2f(R.getPosition()));
 	for(__uint8_t i = 0; i < 4; i++){
 		pt[i].setPosition(R.getTransform().transformPoint(R.getPoint(i)));
 	}
+	return (checkLastPositions());
 }
 
 void	Creature::moveUp( void )
@@ -184,7 +198,7 @@ void	Creature::moveLeft( void )
 {
 	sf::Vector2f	p(R.getPosition());
 	if (p.x >= _speed)
-		p.x =p.x - _speed;
+		p.x = p.x - _speed;
 	else
 		p.x = p.x + float(data.windowLength);
 	R.setPosition(p);

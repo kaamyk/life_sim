@@ -85,7 +85,7 @@ void			Food::getsEaten( void ){
 	}
 }
 
-void			Food::buildCheckPoints(float x, float y ){
+void			Food::buildCheckPointsSe(float x, float y ){
 	if (sensPt.size()){
 		sensPt.clear();
 	}
@@ -102,12 +102,10 @@ void			Food::buildCheckPoints(float x, float y ){
 }
 
 bool			Food::checkPositionSe( float x, float y ){
-	// if (x >= _foodSprite.getPosition().x && x <= _foodSprite.getPosition().x
-	// 	&& y >= _foodSprite.getPosition().y && y <= _foodSprite.getPosition().y)
 	if (x >= foodVrt[0].getPosition().x && x <= foodVrt[2].getPosition().x
 		&& y >= foodVrt[0].getPosition().y && y <= foodVrt[2].getPosition().y)
 	{
-		buildCheckPoints(x, y);
+		buildCheckPointsSe(x, y);
 		return (1);
 	}
 	return (0);

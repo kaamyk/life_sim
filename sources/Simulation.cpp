@@ -25,10 +25,12 @@ Simulation::~Simulation( void )
 		delete *i;
 		_food.erase(i);
 	}
+	_food.clear();
 	for(std::vector<Creature *>::iterator i = _population.begin(); i != _population.end(); ++i){
 		delete *i;
 		_population.erase(i);
 	}
+	_population.clear();
 	return ;
 }
 
@@ -110,41 +112,36 @@ void	Simulation::checkLifeTimes( void ){
 	}
 }
 
-// void	printSensors(const std::vector<float> sensorInputs, size_t i){
-// 	std::cout<< "Creature[" << i << "] Sensors => ["
-// 		<< sensorInputs[0] << ", "
-// 		<< sensorInputs[1] << ", "
-// 		<< sensorInputs[2] << "]" << std::endl;
-// }
-
-// void	printControls(std::vector<float> outputs, size_t i){
-// 	std::cout<< "Creature[" << i << "] controls => ["
-// 		<< outputs[0] << ", "
-// 		<< outputs[1] << ", "
-// 		<< outputs[2] << ", "
-// 		<< outputs[3] << "]" << std::endl;
-// }
-
-void	Simulation::creatureMove( Creature* Cr ){
+bool	Simulation::creatureMove( Creature* Cr ){
 	std::vector<float>	outputs = Cr->feedForward(Cr->getSensor()->getState());
 
 	for (__uint8_t j = 0; j < 4; ++j){
-		if (outputs[j])
-			Cr->move(j);
+		if (outputs[j] && Cr->move(j)){
+				return (1);
+		}
 	}
+	Cr->updatePosition();
+	return (0);
 }
 
 void	Simulation::updatePopulation( sf::RenderWindow& win ){
-	for (size_t i = 0; i < _population.size(); ++i){
-		creatureMove(_population[i]);
-		_population[i]->eat(_food, getPopulation());
-		_population[i]->drawCreature(win, _assets, *this);
+	for (std::vector<Creature *>::iterator i = _population.begin(); i != _population.end(); ++i){
+	std::cout << "Creature position: {" << (*i)->getPosition().x << ", " << (*i)->getPosition().y << "}" << std::endl;
+		if(creatureMove(*i)){
+			std::cout << "Creature erased" << std::endl;
+			delete (*i);
+			_population.erase(i);
+			continue;
+		}
+		(*i)->eat(_food, getPopulation());
+		(*i)->drawCreature(win, _assets, *this);
 	}
+	std::cout << "Population size == " << _population.size() << std::endl;
 }
 
 void	Simulation::drawAllFood( sf::RenderWindow& win ){
-	for (unsigned int i = 0; i < data.nbFood; ++i){
-		_food[i]->drawFood(win);
-		_food[i]->drawCheckPoints(win);
+	for (std::vector<Food *>::iterator i = _food.begin(); i != _food.end(); ++i){
+		(*i)->drawFood(win);
+		(*i)->drawCheckPoints(win);
 	}
 }
