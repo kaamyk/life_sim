@@ -3,10 +3,11 @@
 Creature::Creature( void ): _fitness(0),
 							_gradientDescent(0),
 							_speed(5),
-							_size(rand() % 100),
+							_size(50),
 							_nbFoodEaten(0),
 							_birthTime(std::chrono::high_resolution_clock::now()),
 							_timeLastEat(std::chrono::high_resolution_clock::now())
+							// _size(rand() % 100),
 							// _position {static_cast<float>(rand() % data.windowLength), static_cast<float>(rand() % data.windowHeight)},
 							// _rotation(0),
 {
@@ -44,10 +45,11 @@ Creature::Creature( void ): _fitness(0),
 Creature::Creature( NeuralNetwork const& brain ): _fitness(0),
 							_gradientDescent(0),
 							_speed(5),
-							_size(rand() % 100),
+							_size(50),
 							_nbFoodEaten(0),
 							_birthTime(std::chrono::high_resolution_clock::now()),
 							_timeLastEat(std::chrono::high_resolution_clock::now())
+							// _size(rand() % 100),
 							// _position {static_cast<float>(rand() % data.windowHeight), static_cast<float>(rand() % data.windowHeight)},
 							// _rotation(0),
 
@@ -105,34 +107,32 @@ void	Creature::drawCreature( sf::RenderWindow& win, assetManager& _assets, Simul
 }
 
 bool	Creature::checkLastPositions( void ){
-	std::cout << ">> Dans check Position" << std::endl;
-	if (_lastPositions.size() < 10){
+	if (_lastPositions.size() < 100){
 		return (0);
 	}
-	std::cout << "check last position" << std::endl;
-	std::cout << "\tSize => " << _lastPositions.size() << std::endl;
 	for (unsigned int i = 1; i < _lastPositions.size(); i++){
 		if (_lastPositions[i].x != _lastPositions[i - 1].x || _lastPositions[i].y != _lastPositions[i - 1].y){
 			_lastPositions.clear();
 			return (0);
 		}
 	}
-	std::cout << "Return 1" << std::endl;
 	return (1);
 }
 
 void	Creature::updatePosition( void ){
 	_lastPositions.push_back(R.getPosition());
+	buildCheckPoints();
 }
 
-bool	Creature::move( __uint8_t r ){
-	std::cout << "Creature -> move" << std::endl;
-	(this->*_moves[r])();
-	_lastPositions.push_back(sf::Vector2f(R.getPosition()));
+void			Creature::buildCheckPoints( void ){
 	for(__uint8_t i = 0; i < 4; i++){
 		pt[i].setPosition(R.getTransform().transformPoint(R.getPoint(i)));
 	}
-	return (checkLastPositions());
+}
+
+void	Creature::move( __uint8_t r ){
+	// std::cout << "Creature -> move" << std::endl;
+	(this->*_moves[r])();
 }
 
 void	Creature::moveUp( void )
@@ -276,12 +276,6 @@ std::vector<float> const&	Creature::feedForward( std::vector<float> sensorInputs
 
 void	Creature::giveBirth( NeuralNetwork const& brain, std::vector<Creature *>& _population ){
 	_population.push_back(new Creature(brain));
-}
-
-void			Creature::buildCheckPoints( void ){
-	for(__uint8_t i = 0; i < 4; i++){
-		pt[i].setPosition(R.getTransform().transformPoint(R.getPoint(i)));
-	}
 }
 
 void	Creature::eat( std::vector<Food *>& _food, std::vector<Creature *>& _population ){

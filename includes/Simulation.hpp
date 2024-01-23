@@ -13,9 +13,9 @@ struct{
 	const unsigned int	windowHeight = 1080;
 	const unsigned int	creatureSize = 20;
 	const unsigned int	foodSize = 15;
-	const unsigned int	nbCreature = 2;
+	const unsigned int	nbCreature = 30;
 	const unsigned int	nbFood = 60;
-	const std::chrono::seconds	timeToDie = std::chrono::seconds(40);
+	const std::chrono::seconds	timeToDie = std::chrono::seconds(10);
 } data;
 
 // # include "float.hpp"

@@ -49,7 +49,7 @@ class	Creature
 		bool	checkLastPositions( void );
 		void	updatePosition( void );
 
-		bool		move( uint8_t r );
+		void		move( uint8_t r );
 		void		moveUp( void );
 		void		moveDown( void );
 		void		moveLeft( void );

@@ -57,7 +57,7 @@ std::vector<float>&  Level::getOutputs( void ){
 }
 
 std::vector<float>&  Level::getBiases( void ){
-    return (_outputs);
+    return (_biases);
 }
 
 void   Level::feedForward( std::vector<float> inputs ){
@@ -66,8 +66,9 @@ void   Level::feedForward( std::vector<float> inputs ){
     _outputs.clear();
     for (unsigned int i = 0; i < _nbOutputs; ++i){
         sum = 0;
-        for (unsigned int j = 0; j < _nbInputs; ++j){
-            sum += inputs[j] * _weights[j][i];
+        for (unsigned int j = 0; j < inputs.size(); ++j){
+            sum += inputs[j] \
+            * _weights[j][i];
         }
         _outputs.push_back(static_cast<float>(sum > _biases[i]));
     }

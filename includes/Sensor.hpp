@@ -10,7 +10,7 @@ class Creature;
 class	Sensor
 {
 	private:
-		unsigned int***	_rays;
+		// unsigned int***	_rays;
 		unsigned int	_rayCount;
 		unsigned int	_rayLenght;
 		const unsigned int	_rayAngle;

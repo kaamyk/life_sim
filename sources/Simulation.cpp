@@ -21,14 +21,12 @@ Simulation::Simulation( void ){
 
 Simulation::~Simulation( void )
 {
-	for(std::vector<Food *>::iterator i = _food.begin(); i != _food.end(); ++i){
+	for(std::vector<Food *>::iterator i = _food.begin(); i < _food.end(); ++i){
 		delete *i;
-		_food.erase(i);
 	}
 	_food.clear();
-	for(std::vector<Creature *>::iterator i = _population.begin(); i != _population.end(); ++i){
+	for(std::vector<Creature *>::iterator i = _population.begin(); i < _population.end(); ++i){
 		delete *i;
-		_population.erase(i);
 	}
 	_population.clear();
 	return ;
@@ -116,19 +114,21 @@ bool	Simulation::creatureMove( Creature* Cr ){
 	std::vector<float>	outputs = Cr->feedForward(Cr->getSensor()->getState());
 
 	for (__uint8_t j = 0; j < 4; ++j){
-		if (outputs[j] && Cr->move(j)){
-				return (1);
+		if (outputs[j]){
+			Cr->move(j);
 		}
 	}
 	Cr->updatePosition();
+	if (Cr->checkLastPositions())
+		return (1);
 	return (0);
 }
 
 void	Simulation::updatePopulation( sf::RenderWindow& win ){
-	for (std::vector<Creature *>::iterator i = _population.begin(); i != _population.end(); ++i){
-	std::cout << "Creature position: {" << (*i)->getPosition().x << ", " << (*i)->getPosition().y << "}" << std::endl;
+	for (std::vector<Creature *>::iterator i = _population.begin(); i < _population.end(); ++i){
+	// std::cout << "Creature position: {" << (*i)->getPosition().x << ", " << (*i)->getPosition().y << "}" << std::endl;
 		if(creatureMove(*i)){
-			std::cout << "Creature erased" << std::endl;
+			// std::cout << "Creature erased" << std::endl;
 			delete (*i);
 			_population.erase(i);
 			continue;
@@ -136,7 +136,7 @@ void	Simulation::updatePopulation( sf::RenderWindow& win ){
 		(*i)->eat(_food, getPopulation());
 		(*i)->drawCreature(win, _assets, *this);
 	}
-	std::cout << "Population size == " << _population.size() << std::endl;
+	// std::cout << "Population size == " << _population.size() << std::endl;
 }
 
 void	Simulation::drawAllFood( sf::RenderWindow& win ){

@@ -5,14 +5,14 @@
 Sensor::Sensor( void ): _rayCount(3), _rayLenght(100),
 						_rayAngle(30)
 {
-	_rays = new unsigned int**[_rayCount];
-	for(unsigned int i = 0; i < _rayCount; ++i)
-	{
-		_rays[i] = new unsigned int*[2];
-		_rays[i][0] = new unsigned int[2];
-		_rays[i][1] = new unsigned int[2];
-		_state.push_back(0);
-	}
+	// _rays = new unsigned int**[_rayCount];
+	// for(unsigned int i = 0; i < _rayCount; ++i)
+	// {
+	// 	_rays[i] = new unsigned int*[2];
+	// 	_rays[i][0] = new unsigned int[2];
+	// 	_rays[i][1] = new unsigned int[2];
+	// 	_state.push_back(0);
+	// }
 	// // std::cout<< "In constructor:" << std::endl;
 	// for (size_t i = 0; i < _state.size(); ++i){
 	// 	// std::cout<< "\t_state [" << i << "] == " << _state[i] << std::endl;
@@ -22,7 +22,7 @@ Sensor::Sensor( void ): _rayCount(3), _rayLenght(100),
 
 Sensor::~Sensor( void )
 {
-	delete [] _rays;
+	// delete [] _rays;
 	return ;
 }
 
