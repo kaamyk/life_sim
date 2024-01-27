@@ -14,9 +14,9 @@ Sensor::Sensor( void ): _rayCount(3), _rayLenght(100),
 	// 	_state.push_back(0);
 	// }
 	// // std::cout<< "In constructor:" << std::endl;
-	// for (size_t i = 0; i < _state.size(); ++i){
-	// 	// std::cout<< "\t_state [" << i << "] == " << _state[i] << std::endl;
-	// }
+	for (__uint8_t i = 0; i < _rayCount; i++){
+		_state.push_back(0);
+	}
 	return ;
 }
 
@@ -75,12 +75,16 @@ void	Sensor::drawRay( sf::RenderWindow& win, assetManager& _assets, Creature& c,
 	sf::RectangleShape	r1; // Middle ray
 	sf::RectangleShape	r2; // Right ray
 
-	for (unsigned int i = 0; i < _rayCount; ++i){
+	for (unsigned int i = 0; i < _rayCount; i++){
 
 		switch(i){
 			case 0:
 				this->_raySprite[i].setRotation(c.getRotation() - _rayAngle);
-				_state[i] = findIntersection(&r, c.getRotation() + _rayAngle, c, sim.getFood());
+				_state[i] = \
+				findIntersection(&r\
+				, c.getRotation() +\
+				 _rayAngle, c,\
+				  sim.getFood());
 				_state[i] ? r.setFillColor( sf::Color::Red ) : r.setFillColor( sf::Color::White );
 				break ;
 			case 1:
@@ -99,7 +103,7 @@ void	Sensor::drawRay( sf::RenderWindow& win, assetManager& _assets, Creature& c,
 		win.draw(r);
 		win.draw(r1);
 		win.draw(r2);
-		for (unsigned int i = 0; i != ptcheck.size(); ++i){
+		for (unsigned int i = 0; i != ptcheck.size(); i++){
 			win.draw(ptcheck[i]);
 		}
 		(void)_assets;

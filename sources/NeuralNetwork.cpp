@@ -18,7 +18,7 @@ NeuralNetwork&  NeuralNetwork::operator=( NeuralNetwork const& source){
     if (_levels.size()){
         _levels.clear();
     }
-    for (size_t i = 0; i < source._levels.size() ; ++i){
+    for (size_t i = 0; i < source._levels.size() ; i++){
         this->_levels.push_back(new Level(*(source._levels[i])));
     }
     return (*this);
@@ -28,14 +28,14 @@ std::vector<float>&    NeuralNetwork::feedForward( std::vector<float> sensorInpu
     unsigned int i;
     
     _levels[0]->feedForward(sensorInputs);
-    for(i = 1; i < _levels.size(); ++i){
+    for(i = 1; i < _levels.size(); i++){
         this->_levels[i]->feedForward(_levels[i - 1]->getOutputs());
     }
     return (_levels[i - 1]->getOutputs());
 }
 
 void    NeuralNetwork::mutate( float amount ){
-    for(std::vector<Level *>::iterator i = _levels.begin(); i != _levels.end(); ++i){
+    for(std::vector<Level *>::iterator i = _levels.begin(); i != _levels.end(); i++){
         (*i)->mutate(amount);
     }
 }

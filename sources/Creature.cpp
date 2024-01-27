@@ -22,7 +22,7 @@ Creature::Creature( void ): _fitness(0),
 	_moves[2] = &Creature::moveRight;
 	_moves[3] = &Creature::moveLeft;
 
-	// for (unsigned char i = 0; i < 4; ++i){
+	// for (unsigned char i = 0; i < 4; i++){
 	// 	pt.push_back(sf::RectangleShape(sf::Vector2f(5, 5)));
 	// 	pt[i].setOrigin(2.5, 2.5);
 	// 	pt[i].setFillColor(sf::Color::White);

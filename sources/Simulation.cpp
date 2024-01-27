@@ -10,10 +10,10 @@
 #include "../includes/Simulation.hpp"
 
 Simulation::Simulation( void ){
-	for(size_t i = 0; i < data.nbFood; ++i){
+	for(size_t i = 0; i < data.nbFood; i++){
 		_food.push_back(new Food(i % 5 == 0));
 	}
-	for(unsigned int i = 0; i < data.nbCreature; ++i){
+	for(unsigned int i = 0; i < data.nbCreature; i++){
 		createNewCreature();
 	}
 	return ;
@@ -21,11 +21,11 @@ Simulation::Simulation( void ){
 
 Simulation::~Simulation( void )
 {
-	for(std::vector<Food *>::iterator i = _food.begin(); i < _food.end(); ++i){
+	for(std::vector<Food *>::iterator i = _food.begin(); i < _food.end(); i++){
 		delete *i;
 	}
 	_food.clear();
-	for(std::vector<Creature *>::iterator i = _population.begin(); i < _population.end(); ++i){
+	for(std::vector<Creature *>::iterator i = _population.begin(); i < _population.end(); i++){
 		delete *i;
 	}
 	_population.clear();
@@ -41,7 +41,7 @@ void			Simulation::loadTextures( void ){
 }
 
 void			Simulation::printData( void ){
-	for (unsigned int i = 0; i < _population.size(); ++i){
+	for (unsigned int i = 0; i < _population.size(); i++){
 		std::vector<Level *>& tmpBrain(_population[i]->getBrain().getLevels());
 		std::cout << "Creature["<< i << "]:" << std::endl;
 		for (unsigned int j = 0; j < tmpBrain.size(); ++j){
@@ -104,6 +104,7 @@ void	Simulation::checkLifeTimes( void ){
 	for(std::vector<Creature *>::iterator i = _population.begin();  !_population.empty() && i != _population.end(); ++i)
 	{
 		if ((*i)->checkTime(data.timeToDie)){
+			delete *i;
 			this->_population.erase(i);
 			i = _population.begin();
 		}
@@ -125,7 +126,7 @@ bool	Simulation::creatureMove( Creature* Cr ){
 }
 
 void	Simulation::updatePopulation( sf::RenderWindow& win ){
-	for (std::vector<Creature *>::iterator i = _population.begin(); i < _population.end(); ++i){
+	for (std::vector<Creature *>::iterator i = _population.begin(); i < _population.end(); i++){
 	// std::cout << "Creature position: {" << (*i)->getPosition().x << ", " << (*i)->getPosition().y << "}" << std::endl;
 		if(creatureMove(*i)){
 			// std::cout << "Creature erased" << std::endl;
@@ -140,7 +141,7 @@ void	Simulation::updatePopulation( sf::RenderWindow& win ){
 }
 
 void	Simulation::drawAllFood( sf::RenderWindow& win ){
-	for (std::vector<Food *>::iterator i = _food.begin(); i != _food.end(); ++i){
+	for (std::vector<Food *>::iterator i = _food.begin(); i != _food.end(); i++){
 		(*i)->drawFood(win);
 		(*i)->drawCheckPoints(win);
 	}

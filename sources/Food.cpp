@@ -64,7 +64,7 @@ void			Food::drawFood( sf::RenderWindow& win )
 	}
 	
 	if (sensPt.size()){
-		for (unsigned char i = 0; i < sensPt.size(); ++i){
+		for (unsigned char i = 0; i < sensPt.size(); i++){
 			win.draw(sensPt[i]);
 		}
 	}
@@ -73,7 +73,7 @@ void			Food::drawFood( sf::RenderWindow& win )
 }
 
 void			Food::drawCheckPoints( sf::RenderWindow& win ){
-	for (unsigned char i = 0; i < foodVrt.size(); ++i){
+	for (unsigned char i = 0; i < foodVrt.size(); i++){
 		win.draw(foodVrt[i]);
 	}
 }
@@ -89,7 +89,7 @@ void			Food::buildCheckPointsSe(float x, float y ){
 	if (sensPt.size()){
 		sensPt.clear();
 	}
-	for (unsigned char i = 0; i < 4; ++i){
+	for (unsigned char i = 0; i < 4; i++){
 		sensPt.push_back(sf::RectangleShape(sf::Vector2f(8, 8)));
 		sensPt[i].setOrigin(4, 4);
 		sensPt[i].setFillColor(sf::Color::Green);
