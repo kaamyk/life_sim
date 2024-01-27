@@ -132,12 +132,12 @@ void	Simulation::updatePopulation( sf::RenderWindow& win ){
 			// std::cout << "Creature erased" << std::endl;
 			delete (*i);
 			_population.erase(i);
+			i = _population.begin();
 			continue;
 		}
 		(*i)->eat(_food, getPopulation());
-		(*i)->drawCreature(win, _assets, *this);
+		(*i)->drawCreature(win, *this);
 	}
-	// std::cout << "Population size == " << _population.size() << std::endl;
 }
 
 void	Simulation::drawAllFood( sf::RenderWindow& win ){

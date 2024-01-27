@@ -16,6 +16,9 @@ Food::Food( void )
 		foodVrt[i].setOrigin(sf::Vector2f(2.5, 2.5));
 		foodVrt[i].setRotation(0.0f);
 	}
+
+	sensPt = sf::RectangleShape(sf::Vector2f(8, 8));
+	sensPt.setFillColor(sf::Color::Green);
 	
 	return ;
 }
@@ -34,6 +37,9 @@ Food::Food( bool special ):_isSpecial(special)
 		foodVrt[i].setOrigin(sf::Vector2f(2.5, 2.5));
 		foodVrt[i].setRotation(0.0f);
 	}
+
+	sensPt = sf::RectangleShape(sf::Vector2f(8, 8));
+	sensPt.setFillColor(sf::Color::Green);
 	
 	return ;
 }
@@ -51,31 +57,28 @@ sf::Vector2f const&	Food::getPosition( void ){
 	return (_foodSprite.getPosition());
 }
 
-void			Food::setPosition( sf::Vector2f np ){
+void			Food::setPosition( sf::Vector2f const& np ){
 	_foodSprite.setPosition(np);
 }
 
-void			Food::drawFood( sf::RenderWindow& win )
-{
-	_isSpecial ? _foodSprite.setFillColor(sf::Color::Green) :  _foodSprite.setFillColor(sf::Color::White);
-
+void			Food::drawCheckPoints( sf::RenderWindow& win ){
 	for (__uint8_t i = 0; i < 4; i++){
 		win.draw(foodVrt[i]);
 	}
-	
-	if (sensPt.size()){
-		for (unsigned char i = 0; i < sensPt.size(); i++){
-			win.draw(sensPt[i]);
-		}
-	}
-	win.draw(_foodSprite);
-	return ;
 }
 
-void			Food::drawCheckPoints( sf::RenderWindow& win ){
-	for (unsigned char i = 0; i < foodVrt.size(); i++){
-		win.draw(foodVrt[i]);
-	}
+void			Food::drawFood( sf::RenderWindow& win ){
+	_isSpecial ? _foodSprite.setFillColor(sf::Color::Green) :  _foodSprite.setFillColor(sf::Color::White);
+
+	drawCheckPoints(win);
+	
+	// if (sensPt.size()){
+	// 	for (unsigned char i = 0; i < sensPt.size(); i++){
+	// 		win.draw(sensPt[i]);
+	// 	}
+	// }
+	win.draw(_foodSprite);
+	return ;
 }
 
 void			Food::getsEaten( void ){
@@ -86,26 +89,25 @@ void			Food::getsEaten( void ){
 }
 
 void			Food::buildCheckPointsSe(float x, float y ){
-	if (sensPt.size()){
-		sensPt.clear();
-	}
-	for (unsigned char i = 0; i < 4; i++){
-		sensPt.push_back(sf::RectangleShape(sf::Vector2f(8, 8)));
-		sensPt[i].setOrigin(4, 4);
-		sensPt[i].setFillColor(sf::Color::Green);
-		sensPt[i].setPosition(_foodSprite.getTransform().transformPoint(_foodSprite.getPoint(i)));
-	}
-
-	sensPt.push_back(sf::RectangleShape(sf::Vector2f(8, 8)));
-	sensPt[4].setFillColor(sf::Color::Green);
-	sensPt[4].setPosition(x, y);
+	// if (sensPt.size()){
+	// 	sensPt.clear();
+	// }
+	// for (unsigned char i = 0; i < 4; i++){
+	// 	sensPt.push_back(sf::RectangleShape(sf::Vector2f(8, 8)));
+	// 	sensPt[i].setOrigin(4, 4);
+	// 	sensPt[i].setFillColor(sf::Color::Green);
+	// 	sensPt[i].setPosition(_foodSprite.getTransform().transformPoint(_foodSprite.getPoint(i)));
+	// }
+	
+	sensPt.setPosition(x, y);
 }
 
 bool			Food::checkPositionSe( float x, float y ){
 	if (x >= foodVrt[0].getPosition().x && x <= foodVrt[2].getPosition().x
 		&& y >= foodVrt[0].getPosition().y && y <= foodVrt[2].getPosition().y)
 	{
-		buildCheckPointsSe(x, y);
+		// buildCheckPointsSe(x, y);
+		sensPt.setPosition(x, y);
 		return (1);
 	}
 	return (0);

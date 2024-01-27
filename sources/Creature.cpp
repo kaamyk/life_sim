@@ -94,11 +94,11 @@ bool	Creature::checkTime( std::chrono::seconds const _timeToDie )
 	return (t - this->_timeLastEat >= _timeToDie);
 }
 
-void	Creature::drawCreature( sf::RenderWindow& win, assetManager& _assets, Simulation& sim )
+void	Creature::drawCreature( sf::RenderWindow& win, Simulation& sim )
 {
 	const std::string&	path("./images/SquareCreature.png");
 
-	_sensor->drawRay(win, _assets, *this, sim);
+	_sensor->drawRay(win, *this, sim);
 	win.draw( this->R );
 	for (unsigned char i = 0; i < pt.size(); i++){
 		win.draw(pt[i]);
@@ -282,7 +282,7 @@ void	Creature::eat( std::vector<Food *>& _food, std::vector<Creature *>& _popula
 	// buildCheckPoints();
 	for (std::vector<Food *>::iterator it = _food.begin(); it != _food.end(); ++it){
 		if ( (*it)->checkPositionCr( pt ) ){
-			std::cout << "eat" << std::endl;
+			// std::cout << "eat" << std::endl;
 			_timeLastEat = std::chrono::high_resolution_clock::now();
 			++_nbFoodEaten;
 			if((*it)->getIsSpecial()){

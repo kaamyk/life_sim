@@ -18,7 +18,7 @@ class	Sensor
 		sf::Sprite		_raySprite[3];
 		std::vector<float>	_state;
 
-		std::vector<sf::RectangleShape> ptcheck;
+		sf::RectangleShape ptcheck;
 
 	public:
 		Sensor( void );
@@ -32,7 +32,7 @@ class	Sensor
 
 		// int		lerp(unsigned int A, unsigned int B, unsigned int t){ return (A + ((B - A) * t)); }
 		bool	findIntersection( sf::RectangleShape* r, int rayRotation, Creature& c, std::vector<Food *> const& food );
-		void	drawRay( sf::RenderWindow& win, assetManager& _assets, Creature& c, Simulation& sim );
+		void	drawRay( sf::RenderWindow& win, Creature& c, Simulation& sim );
 };
 
 #endif

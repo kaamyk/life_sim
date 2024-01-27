@@ -15,7 +15,7 @@ struct{
 	const unsigned int	foodSize = 15;
 	const unsigned int	nbCreature = 30;
 	const unsigned int	nbFood = 60;
-	const std::chrono::seconds	timeToDie = std::chrono::seconds(2);
+	const std::chrono::seconds	timeToDie = std::chrono::seconds(20);
 } data;
 
 // # include "float.hpp"

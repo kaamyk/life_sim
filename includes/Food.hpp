@@ -17,7 +17,7 @@ class	Food
 		bool			_isSpecial;
 
 		std::array<sf::RectangleShape, 4>	foodVrt;
-		std::vector<sf::RectangleShape>	sensPt;
+		sf::RectangleShape	sensPt;
 
 
 	public:
@@ -27,7 +27,7 @@ class	Food
 
 		bool const &	getIsSpecial( void );
 		sf::Vector2f const&	 	getPosition( void );
-		void			setPosition( sf::Vector2f np );
+		void			setPosition( sf::Vector2f const& np );
 
 		bool			checkPositionSe( float x, float y );
 		bool			checkPositionCr( std::array<sf::RectangleShape, 4> const& pt );

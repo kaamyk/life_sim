@@ -44,7 +44,7 @@ class	Creature
 		NeuralNetwork&	getBrain( void ){ return (*_brain); }
 		std::vector<float> const&	getSensorState( void ) const;
 		
-		void		drawCreature( sf::RenderWindow& win, assetManager& _assets, Simulation& sim );
+		void		drawCreature( sf::RenderWindow& win, Simulation& sim );
 
 		bool	checkLastPositions( void );
 		void	updatePosition( void );
