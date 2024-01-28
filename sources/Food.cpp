@@ -18,7 +18,13 @@ Food::Food( void )
 	}
 
 	sensPt = sf::RectangleShape(sf::Vector2f(8, 8));
+	sensPt.setOrigin(sf::Vector2f(4.0f, 4.0f));
 	sensPt.setFillColor(sf::Color::Green);
+
+	PtPosFo = sf::RectangleShape(sf::Vector2f(10, 10));
+	PtPosFo.setPosition(_foodSprite.getPosition());
+	PtPosFo.setOrigin(sf::Vector2f(5.0f, 5.0f));
+	PtPosFo.setFillColor(sf::Color::Red);
 	
 	return ;
 }
@@ -40,6 +46,11 @@ Food::Food( bool special ):_isSpecial(special)
 
 	sensPt = sf::RectangleShape(sf::Vector2f(8, 8));
 	sensPt.setFillColor(sf::Color::Green);
+
+	PtPosFo = sf::RectangleShape(sf::Vector2f(10, 10));
+	PtPosFo.setPosition(_foodSprite.getPosition());
+	PtPosFo.setOrigin(sf::Vector2f(5.0f, 5.0f));
+	PtPosFo.setFillColor(sf::Color::Red);
 	
 	return ;
 }
@@ -70,14 +81,15 @@ void			Food::drawCheckPoints( sf::RenderWindow& win ){
 void			Food::drawFood( sf::RenderWindow& win ){
 	_isSpecial ? _foodSprite.setFillColor(sf::Color::Green) :  _foodSprite.setFillColor(sf::Color::White);
 
-	drawCheckPoints(win);
+	// drawCheckPoints(win);
 	
 	// if (sensPt.size()){
-	// 	for (unsigned char i = 0; i < sensPt.size(); i++){
+	// 	for (__uint8_t i = 0; i < sensPt.size(); i++){
 	// 		win.draw(sensPt[i]);
 	// 	}
 	// }
 	win.draw(_foodSprite);
+	win.draw(PtPosFo);
 	return ;
 }
 
@@ -85,21 +97,8 @@ void			Food::getsEaten( void ){
 	setPosition(sf::Vector2f(rand() % data.windowLength, rand() % data.windowHeight));
 	for (__uint8_t i = 0; i < 4; i++){
 		foodVrt[i].setPosition(_foodSprite.getTransform().transformPoint(_foodSprite.getPoint(i)));
+		PtPosFo.setPosition(_foodSprite.getPosition());
 	}
-}
-
-void			Food::buildCheckPointsSe(float x, float y ){
-	// if (sensPt.size()){
-	// 	sensPt.clear();
-	// }
-	// for (unsigned char i = 0; i < 4; i++){
-	// 	sensPt.push_back(sf::RectangleShape(sf::Vector2f(8, 8)));
-	// 	sensPt[i].setOrigin(4, 4);
-	// 	sensPt[i].setFillColor(sf::Color::Green);
-	// 	sensPt[i].setPosition(_foodSprite.getTransform().transformPoint(_foodSprite.getPoint(i)));
-	// }
-	
-	sensPt.setPosition(x, y);
 }
 
 bool			Food::checkPositionSe( float x, float y ){

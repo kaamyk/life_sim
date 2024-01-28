@@ -31,7 +31,7 @@ class	Sensor
 		}
 
 		// int		lerp(unsigned int A, unsigned int B, unsigned int t){ return (A + ((B - A) * t)); }
-		bool	findIntersection( sf::RectangleShape* r, int rayRotation, Creature& c, std::vector<Food *> const& food );
+		bool	findIntersection( sf::RenderWindow& win, sf::RectangleShape* r, int rayRotation, Creature& c, std::vector<Food *> const& food );
 		void	drawRay( sf::RenderWindow& win, Creature& c, Simulation& sim );
 };
 

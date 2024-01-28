@@ -22,20 +22,20 @@ Creature::Creature( void ): _fitness(0),
 	_moves[2] = &Creature::moveRight;
 	_moves[3] = &Creature::moveLeft;
 
-	// for (unsigned char i = 0; i < 4; i++){
+	// for (__uint8_t i = 0; i < 4; i++){
 	// 	pt.push_back(sf::RectangleShape(sf::Vector2f(5, 5)));
 	// 	pt[i].setOrigin(2.5, 2.5);
 	// 	pt[i].setFillColor(sf::Color::White);
 	// }
-	R = sf::RectangleShape(sf::Vector2f(_size, _size));
-	R.setPosition(static_cast<float>(rand() % data.windowLength), static_cast<float>(rand() % data.windowHeight));
-	R.setOrigin(_size / 2, _size / 2);
+	CrSprite = sf::RectangleShape(sf::Vector2f(_size, _size));
+	CrSprite.setPosition(static_cast<float>(rand() % data.windowLength), static_cast<float>(rand() % data.windowHeight));
+	CrSprite.setOrigin(_size / 2, _size / 2);
 
 	for(__uint8_t i = 0; i < 4; i++){
-		pt[i].setPosition(R.getTransform().transformPoint(R.getPoint(i)));
+		pt[i].setPosition(CrSprite.getTransform().transformPoint(CrSprite.getPoint(i)));
 		pt[i].setFillColor(sf::Color::Red);
-		pt[i].setSize(sf::Vector2f(5, 5));
-		pt[i].setOrigin(sf::Vector2f(2.5, 2.5));
+		pt[i].setSize(sf::Vector2f(10, 10));
+		pt[i].setOrigin(sf::Vector2f(5.0f, 5.0f));
 		pt[i].setRotation(0.0f);
 	}
 
@@ -66,44 +66,43 @@ Creature::Creature( NeuralNetwork const& brain ): _fitness(0),
 	_moves[2] = &Creature::moveRight;
 	_moves[3] = &Creature::moveLeft;
 
-	R = sf::RectangleShape(sf::Vector2f(_size, _size));
-	R.setPosition(static_cast<float>(rand() % data.windowLength), static_cast<float>(rand() % data.windowHeight));
-	R.setOrigin(_size / 2, _size / 2);
+	CrSprite = sf::RectangleShape(sf::Vector2f(_size, _size));
+	CrSprite.setPosition(static_cast<float>(rand() % data.windowLength), static_cast<float>(rand() % data.windowHeight));
+	CrSprite.setOrigin(_size / 2, _size / 2);
 
 	for(__uint8_t i = 0; i < 4; i++){
-		pt[i].setPosition(R.getTransform().transformPoint(R.getPoint(i)));
+		pt[i].setPosition(CrSprite.getTransform().transformPoint(CrSprite.getPoint(i)));
 		pt[i].setFillColor(sf::Color::Red);
-		pt[i].setSize(sf::Vector2f(5, 5));
-		pt[i].setOrigin(sf::Vector2f(2.5, 2.5));
+		pt[i].setSize(sf::Vector2f(10, 10));
+		pt[i].setOrigin(sf::Vector2f(5.0f, 5.0f));
 		pt[i].setRotation(0.0f);
 	}
 	
 	return ;
 }
 
-Creature::~Creature( void )
-{
+Creature::~Creature( void ){
 	delete _sensor;
 	delete _brain;
 	return ;
 }
 
-bool	Creature::checkTime( std::chrono::seconds const _timeToDie )
-{
+bool	Creature::checkTime( std::chrono::seconds const _timeToDie ){
 	std::chrono::high_resolution_clock::time_point	t = std::chrono::high_resolution_clock::now();
 	return (t - this->_timeLastEat >= _timeToDie);
 }
 
-void	Creature::drawCreature( sf::RenderWindow& win, Simulation& sim )
-{
-	const std::string&	path("./images/SquareCreature.png");
-
-	_sensor->drawRay(win, *this, sim);
-	win.draw( this->R );
-	for (unsigned char i = 0; i < pt.size(); i++){
+void	Creature::drawCheckPoints( sf::RenderWindow& win ){
+	for (__uint8_t i = 0; i < pt.size(); i++){
 		win.draw(pt[i]);
 	}
-	return ;
+}
+
+void	Creature::drawCreature( sf::RenderWindow& win, Simulation& sim ){
+	// const std::string&	path("./images/SquareCreature.png");
+
+	_sensor->drawRay(win, *this, sim);
+	win.draw( this->CrSprite );
 }
 
 bool	Creature::checkLastPositions( void ){
@@ -120,13 +119,13 @@ bool	Creature::checkLastPositions( void ){
 }
 
 void	Creature::updatePosition( void ){
-	_lastPositions.push_back(R.getPosition());
+	_lastPositions.push_back(CrSprite.getPosition());
 	buildCheckPoints();
 }
 
 void			Creature::buildCheckPoints( void ){
 	for(__uint8_t i = 0; i < 4; i++){
-		pt[i].setPosition(R.getTransform().transformPoint(R.getPoint(i)));
+		pt[i].setPosition(CrSprite.getTransform().transformPoint(CrSprite.getPoint(i)));
 	}
 }
 
@@ -137,29 +136,29 @@ void	Creature::move( __uint8_t r ){
 
 void	Creature::moveUp( void )
 {
-	sf::Vector2f	p(R.getPosition());
+	sf::Vector2f	p(CrSprite.getPosition());
 	
 	if (p.y >= _speed)
 		p.y = p.y - _speed;
 	else
 		p.y = p.y + float(data.windowHeight);
-	R.setPosition(p);
+	CrSprite.setPosition(p);
 
 
-	float rot = R.getRotation();
+	float rot = CrSprite.getRotation();
 
 	if ( rot == 360.0f )
 		rot = 0.0f;
 	if ( rot >= 10.0f && rot <= 180.0f ){
-		R.setRotation(rot - 10.0f);
+		CrSprite.setRotation(rot - 10.0f);
 		// _rotation = _rotation - 10.0f ;
 	}
 	else if ( rot > 180.0f && rot <= 350.0f ){
-		R.setRotation(rot + 10.0f);
+		CrSprite.setRotation(rot + 10.0f);
 		// _rotation = _rotation + 10.0f ;
 	}
 	else if ( (rot > 0.0f && rot < 10.0f) || (rot > 350.0f && rot < 360.0f) ){
-		R.setRotation(0.0f);
+		CrSprite.setRotation(0.0f);
 		// _rotation = 0;
 	}
 	return ;
@@ -167,28 +166,28 @@ void	Creature::moveUp( void )
 
 void	Creature::moveDown( void )
 {
-	sf::Vector2f	p(R.getPosition());
+	sf::Vector2f	p(CrSprite.getPosition());
 	if (p.y + _speed <= float(data.windowHeight))
 		p.y = p.y + _speed;
 	else
 		p.y = p.y - float(data.windowHeight);
-	R.setPosition(p);
+	CrSprite.setPosition(p);
 
 
-	float rot = R.getRotation();
+	float rot = CrSprite.getRotation();
 
 	if ( rot == 360.0f )
 		rot = 0.0f;
 	if ( rot >= 190.0f && rot < 360.0f ){
-		R.setRotation(rot - 10.0f);
+		CrSprite.setRotation(rot - 10.0f);
 		// _rotation = _rotation - 10.0f;
 	}
 	else if ( rot >= 0.0f && rot <= 170.0f ){
-		R.setRotation(rot + 10.0f);
+		CrSprite.setRotation(rot + 10.0f);
 		// _rotation = _rotation + 10.0f;
 	}
 	else if ( rot > 170.0f && rot < 100.0f ){
-		R.setRotation(180.0f);
+		CrSprite.setRotation(180.0f);
 		// _rotation = 180.0f;
 	}
 	return ;
@@ -196,29 +195,29 @@ void	Creature::moveDown( void )
 
 void	Creature::moveLeft( void )
 {
-	sf::Vector2f	p(R.getPosition());
+	sf::Vector2f	p(CrSprite.getPosition());
 	if (p.x >= _speed)
 		p.x = p.x - _speed;
 	else
 		p.x = p.x + float(data.windowLength);
-	R.setPosition(p);
+	CrSprite.setPosition(p);
 
 		
-	float rot = R.getRotation();
+	float rot = CrSprite.getRotation();
 
 	if ((rot >= 0.0f && rot <= 90.0f) || (rot <= 360.0f && rot > 280.0f)){
 		if (rot - 10.0f < 0.0f){
 			rot = rot + 360.0f;
 		}
-		R.setRotation(rot - 10.0f);
+		CrSprite.setRotation(rot - 10.0f);
 		// _rotation = _rotation - 10.0f ;
 	}
 	else if (rot > 90.0f && rot <= 260.0f){
-		R.setRotation(rot + 10.0f);
+		CrSprite.setRotation(rot + 10.0f);
 		// _rotation = _rotation + 10.0f ;
 	}
 	else if (rot >= 260.0f && rot <= 280.0f){
-		R.setRotation(270.0f);
+		CrSprite.setRotation(270.0f);
 		// _rotation = 270.0f;
 	}
 	return ;
@@ -226,34 +225,34 @@ void	Creature::moveLeft( void )
 
 void	Creature::moveRight( void )
 {
-	sf::Vector2f	p(R.getPosition());
+	sf::Vector2f	p(CrSprite.getPosition());
 	if (p.x + _speed <= float(data.windowLength))
 		p.x = p.x + _speed;
 	else
 		p.x = p.x - float(data.windowLength);
-	R.setPosition(p);
+	CrSprite.setPosition(p);
 
 		
-	float rot = R.getRotation();
+	float rot = CrSprite.getRotation();
 
 	if ((rot >= 0.0f && rot < 80.0f)
 		|| (rot >= 280.0f && rot <= 360.0f))
 	{
 		if (rot + 10.0f > 360.0f){
-			R.setRotation((rot + 10.0f) - 360.0f);
+			CrSprite.setRotation((rot + 10.0f) - 360.0f);
 			// _rotation = (_rotation + 10.0f) - 360.0f;
 		}
 		else{
-			R.setRotation(rot + 10.0f);
+			CrSprite.setRotation(rot + 10.0f);
 			// _rotation = _rotation + 10.0f ;
 		}
 	}
 	else if (rot > 100.0f && rot < 280.0f){
-		R.setRotation(rot - 10.0f);
+		CrSprite.setRotation(rot - 10.0f);
 		// _rotation = _rotation - 10.0f ;
 	}
 	else if (rot >= 80.0f && rot <= 100.0f){
-		R.setRotation(90.0f);
+		CrSprite.setRotation(90.0f);
 		// _rotation = 90.0f;
 	}
 	return ;
@@ -278,13 +277,14 @@ void	Creature::giveBirth( NeuralNetwork const& brain, std::vector<Creature *>& _
 	_population.push_back(new Creature(brain));
 }
 
-void	Creature::eat( std::vector<Food *>& _food, std::vector<Creature *>& _population ){
+void	Creature::eat( sf::RenderWindow& win, std::vector<Food *>& _food, std::vector<Creature *>& _population ){
 	// buildCheckPoints();
 	for (std::vector<Food *>::iterator it = _food.begin(); it != _food.end(); ++it){
 		if ( (*it)->checkPositionCr( pt ) ){
 			// std::cout << "eat" << std::endl;
 			_timeLastEat = std::chrono::high_resolution_clock::now();
 			++_nbFoodEaten;
+			drawCheckPoints(win);
 			if((*it)->getIsSpecial()){
 				giveBirth(getBrain(), _population);
 			}

@@ -135,7 +135,7 @@ void	Simulation::updatePopulation( sf::RenderWindow& win ){
 			i = _population.begin();
 			continue;
 		}
-		(*i)->eat(_food, getPopulation());
+		(*i)->eat(win, _food, getPopulation());
 		(*i)->drawCreature(win, *this);
 	}
 }
@@ -143,6 +143,5 @@ void	Simulation::updatePopulation( sf::RenderWindow& win ){
 void	Simulation::drawAllFood( sf::RenderWindow& win ){
 	for (std::vector<Food *>::iterator i = _food.begin(); i != _food.end(); i++){
 		(*i)->drawFood(win);
-		(*i)->drawCheckPoints(win);
 	}
 }

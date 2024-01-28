@@ -29,7 +29,7 @@ class	Creature
 		NeuralNetwork*	_brain;
 		std::vector<sf::Vector2f>	_lastPositions;
 
-		sf::RectangleShape	R;
+		sf::RectangleShape	CrSprite;
 		std::array<sf::RectangleShape, 4> pt;
 
 	public :
@@ -38,16 +38,17 @@ class	Creature
 		~Creature( void );
 
 		bool		checkTime( std::chrono::seconds const _timeToDie );
-		sf::Vector2f	getPosition( void ) const{ return (R.getPosition()); }
-		float		getRotation( void ) const{ return (R.getRotation()); }
+		sf::Vector2f	getPosition( void ) const{ return (CrSprite.getPosition()); }
+		float		getRotation( void ) const{ return (CrSprite.getRotation()); }
 		Sensor*		getSensor( void ) const{ return (_sensor); }
 		NeuralNetwork&	getBrain( void ){ return (*_brain); }
 		std::vector<float> const&	getSensorState( void ) const;
 		
+		void		drawCheckPoints( sf::RenderWindow& win );
 		void		drawCreature( sf::RenderWindow& win, Simulation& sim );
 
-		bool	checkLastPositions( void );
-		void	updatePosition( void );
+		bool		checkLastPositions( void );
+		void		updatePosition( void );
 
 		void		move( uint8_t r );
 		void		moveUp( void );
@@ -57,7 +58,7 @@ class	Creature
 
 		std::vector<float> const&	feedForward( std::vector<float> sensorInputs ) const;
 		void			giveBirth( NeuralNetwork const& brain, std::vector<Creature *>& _population );
-		void			eat( std::vector<Food *>& _food, std::vector<Creature *>& _population );
+		void			eat( sf::RenderWindow& win, std::vector<Food *>& _food, std::vector<Creature *>& _population );
 
 		void			buildCheckPoints( void );
 };

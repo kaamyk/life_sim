@@ -18,6 +18,7 @@ class	Food
 
 		std::array<sf::RectangleShape, 4>	foodVrt;
 		sf::RectangleShape	sensPt;
+		sf::RectangleShape	PtPosFo;
 
 
 	public:

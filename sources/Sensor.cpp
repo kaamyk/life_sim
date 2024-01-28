@@ -31,7 +31,7 @@ Sensor::~Sensor( void )
 
 
 
-bool	Sensor::findIntersection( sf::RectangleShape* r, int rayRotation, Creature& c, std::vector<Food *> const& food )
+bool	Sensor::findIntersection( sf::RenderWindow& win, sf::RectangleShape* r, int rayRotation, Creature& c, std::vector<Food *> const& food )
 {
 	double	pt[2];
 
@@ -56,8 +56,8 @@ bool	Sensor::findIntersection( sf::RectangleShape* r, int rayRotation, Creature&
 				pt[0] = pt[0] + sin(rayRotation * (3.14159265359f / 180.0f));
 				pt[1] = pt[1] - cos(rayRotation * (3.14159265359f / 180.0f));
 				if (food[i]->checkPositionSe(pt[0], pt[1])){
-					ptcheck.setPosition(pt[0], pt[1]);
 					food[i]->drawCheckPoints(win);
+					ptcheck.setPosition(pt[0], pt[1]);
 					return (1);
 				}
 			}
@@ -79,17 +79,17 @@ void	Sensor::drawRay( sf::RenderWindow& win, Creature& c, Simulation& sim  )
 		switch(i){
 			case 0:
 				this->_raySprite[i].setRotation(c.getRotation() - _rayAngle);
-				_state[i] = findIntersection(&r, c.getRotation() + _rayAngle, c,  sim.getFood());
+				_state[i] = findIntersection(win, &r, c.getRotation() + _rayAngle, c,  sim.getFood());
 				_state[i] ? r.setFillColor( sf::Color::Red ) : r.setFillColor( sf::Color::White );
 				break ;
 			case 1:
 				this->_raySprite[i].setRotation(c.getRotation());
-				_state[i] = findIntersection(&r1, c.getRotation(), c, sim.getFood());
+				_state[i] = findIntersection(win, &r1, c.getRotation(), c, sim.getFood());
 				_state[i] ? r1.setFillColor( sf::Color::Red ) : r1.setFillColor( sf::Color::White );
 				break ;
 			case 2:
 				this->_raySprite[i].setRotation(c.getRotation() + _rayAngle);
-				_state[i] = findIntersection(&r2, c.getRotation() - _rayAngle, c, sim.getFood());
+				_state[i] = findIntersection(win, &r2, c.getRotation() - _rayAngle, c, sim.getFood());
 				_state[i] ? r2.setFillColor( sf::Color::Red ) : r2.setFillColor( sf::Color::White );
 				break ;
 			default:
