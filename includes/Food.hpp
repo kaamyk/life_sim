@@ -32,6 +32,7 @@ class	Food
 
 		bool			checkPositionSe( float x, float y );
 		bool			checkPositionCr( std::array<sf::RectangleShape, 4> const& pt );
+		bool			checkPositionCr1( sf::RectangleShape& CrSprite );
 		void			drawFood( sf::RenderWindow& win );
 		void			getsEaten( void );
 

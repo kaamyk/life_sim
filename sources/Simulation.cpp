@@ -111,8 +111,63 @@ void	Simulation::checkLifeTimes( void ){
 	}
 }
 
-bool	Simulation::creatureMove( Creature* Cr ){
-	std::vector<float>	outputs = Cr->feedForward(Cr->getSensor()->getState());
+bool	Simulation::creatureMove( Creature* Cr, __uint8_t i ){
+	// std::vector<float>	outputs = Cr->feedForward(Cr->getSensor()->getState());
+
+	std::vector<float>	outputs;
+	switch (i){
+		case 0:
+			outputs.push_back(1.0f);
+			outputs.push_back(0.0f);
+			outputs.push_back(0.0f);
+			outputs.push_back(0.0f);
+			break;
+		case 1:
+			outputs.push_back(0.0f);
+			outputs.push_back(1.0f);
+			outputs.push_back(0.0f);
+			outputs.push_back(0.0f);
+			break;
+		case 2:
+			outputs.push_back(0.0f);
+			outputs.push_back(0.0f);
+			outputs.push_back(1.0f);
+			outputs.push_back(0.0f);
+			break;
+		case 3:
+			outputs.push_back(0.0f);
+			outputs.push_back(0.0f);
+			outputs.push_back(0.0f);
+			outputs.push_back(1.0f);
+			break;
+		case 4:
+			outputs.push_back(1.0f);
+			outputs.push_back(0.0f);
+			outputs.push_back(1.0f);
+			outputs.push_back(0.0f);
+			break;
+		case 5:
+			outputs.push_back(1.0f);
+			outputs.push_back(0.0f);
+			outputs.push_back(0.0f);
+			outputs.push_back(1.0f);
+			break;
+		case 6:
+			outputs.push_back(0.0f);
+			outputs.push_back(1.0f);
+			outputs.push_back(1.0f);
+			outputs.push_back(0.0f);
+			break;
+		case 7:
+			outputs.push_back(0.0f);
+			outputs.push_back(1.0f);
+			outputs.push_back(0.0f);
+			outputs.push_back(1.0f);
+			break;
+		default:
+			outputs = Cr->feedForward(Cr->getSensor()->getState());
+			break;
+	}
 
 	for (__uint8_t j = 0; j < 4; ++j){
 		if (outputs[j]){
@@ -128,7 +183,7 @@ bool	Simulation::creatureMove( Creature* Cr ){
 void	Simulation::updatePopulation( sf::RenderWindow& win ){
 	for (std::vector<Creature *>::iterator i = _population.begin(); i < _population.end(); i++){
 	// std::cout << "Creature position: {" << (*i)->getPosition().x << ", " << (*i)->getPosition().y << "}" << std::endl;
-		if(creatureMove(*i)){
+		if(creatureMove(*i, std::distance(_population.begin(), i))){
 			// std::cout << "Creature erased" << std::endl;
 			delete (*i);
 			_population.erase(i);

@@ -87,10 +87,22 @@ Creature::~Creature( void ){
 	return ;
 }
 
+
+
+/********************************************************/
+/*						CHECKERS 						*/
+/********************************************************/
+
 bool	Creature::checkTime( std::chrono::seconds const _timeToDie ){
 	std::chrono::high_resolution_clock::time_point	t = std::chrono::high_resolution_clock::now();
 	return (t - this->_timeLastEat >= _timeToDie);
 }
+
+
+
+/********************************************************/
+/*						DRAWING 						*/
+/********************************************************/
 
 void	Creature::drawCheckPoints( sf::RenderWindow& win ){
 	for (__uint8_t i = 0; i < pt.size(); i++){
@@ -128,6 +140,12 @@ void			Creature::buildCheckPoints( void ){
 		pt[i].setPosition(CrSprite.getTransform().transformPoint(CrSprite.getPoint(i)));
 	}
 }
+
+
+
+/********************************************************/
+/*						MOVEMENTS 						*/
+/********************************************************/
 
 void	Creature::move( __uint8_t r ){
 	// std::cout << "Creature -> move" << std::endl;
@@ -258,6 +276,10 @@ void	Creature::moveRight( void )
 	return ;
 }
 
+
+
+
+
 std::vector<float> const&	Creature::feedForward( std::vector<float> sensorInputs ) const
 {
 	return (_brain->feedForward(sensorInputs));
@@ -280,7 +302,8 @@ void	Creature::giveBirth( NeuralNetwork const& brain, std::vector<Creature *>& _
 void	Creature::eat( sf::RenderWindow& win, std::vector<Food *>& _food, std::vector<Creature *>& _population ){
 	// buildCheckPoints();
 	for (std::vector<Food *>::iterator it = _food.begin(); it != _food.end(); ++it){
-		if ( (*it)->checkPositionCr( pt ) ){
+		// if ( (*it)->checkPositionCr( pt ) ){
+		if ( (*it)->checkPositionCr1( CrSprite ) ){
 			// std::cout << "eat" << std::endl;
 			_timeLastEat = std::chrono::high_resolution_clock::now();
 			++_nbFoodEaten;
