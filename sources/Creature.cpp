@@ -296,20 +296,20 @@ std::vector<float> const&	Creature::feedForward( std::vector<float> sensorInputs
 }
 
 void	Creature::giveBirth( NeuralNetwork const& brain, std::vector<Creature *>& _population ){
-	_population.push_back(new Creature(brain));
+	_population.emplace_back(new Creature(brain));
 }
 
 void	Creature::eat( sf::RenderWindow& win, std::vector<Food *>& _food, std::vector<Creature *>& _population ){
 	// buildCheckPoints();
 	for (std::vector<Food *>::iterator it = _food.begin(); it != _food.end(); ++it){
 		// if ( (*it)->checkPositionCr( pt ) ){
-		if ( (*it)->checkPositionCr1( CrSprite ) ){
+		if ( (*it)->checkPositionCr1( CrSprite.getSize(), pt ) ){
 			// std::cout << "eat" << std::endl;
 			_timeLastEat = std::chrono::high_resolution_clock::now();
 			++_nbFoodEaten;
 			drawCheckPoints(win);
 			if((*it)->getIsSpecial()){
-				giveBirth(getBrain(), _population);
+				Simulation::createMutatedCreature(brain);
 			}
 			(*it)->getsEaten();
 			return ;

@@ -124,28 +124,11 @@ bool			Food::checkPositionCr( std::array<sf::RectangleShape, 4> const& crVrt ){
 	return (0);
 }
 
-void	ft_abs( float &N )
-{
-	if (N < 0)
-		N = N * (-1);
-	return ;
-}
-
-float	getArea( sf::Vector2f P1, sf::Vector2f P2, sf::Vector2f P3 )
-{
-	float	tmp;
-
-	tmp = P1.x * (P2.y - P3.y);
-	tmp = tmp + (P2.x * (P3.y - P1.y));
-	tmp = tmp + (P3.x * (P1.y - P2.y));
-	tmp = tmp / 2;
-	ft_abs(tmp);
-	return ( tmp );
-}
-
-bool		Food::checkPositionCr1( sf::RectangleShape& CrSprite ){
+bool		Food::checkPositionCr1( sf::Vector2f CrSize, std::array<sf::RectangleShape, 4>& CrVrt ){
 	for (__uint8_t i = 0; i < foodVrt.size(); i++){
-		
+		if ( bsp(CrSize, CrVrt, foodVrt[i].getPosition()) ){
+			return (1);
+		}
 	}
 	return (0);
 }

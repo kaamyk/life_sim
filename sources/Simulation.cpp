@@ -90,6 +90,15 @@ void	Simulation::createNewCreature( void ){
 	}
 }
 
+static void	Simulation::createMutatedCreature( NeuralNetwork& brain ){
+	try{
+		_population.push_back(new Creature(brain));
+	}
+	catch(std::exception& e){
+		std::cerr << e.what() << std::endl;
+	}
+}
+
 bool	Simulation::checkNbCreature( void ){
 	return (_population.size() != 0);
 }

@@ -7,6 +7,8 @@
 #include "Simulation.hpp"
 #include <SFML/Graphics/RectangleShape.hpp>
 
+#include "bsp.hpp"
+
 class	Food
 {
 	private:
@@ -32,7 +34,7 @@ class	Food
 
 		bool			checkPositionSe( float x, float y );
 		bool			checkPositionCr( std::array<sf::RectangleShape, 4> const& pt );
-		bool			checkPositionCr1( sf::RectangleShape& CrSprite );
+		bool			checkPositionCr1( sf::Vector2f CrSize, std::array<sf::RectangleShape, 4>& CrVrt );
 		void			drawFood( sf::RenderWindow& win );
 		void			getsEaten( void );
 

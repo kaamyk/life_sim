@@ -46,9 +46,9 @@ class	Simulation
 		std::vector<Creature *>&	getPopulation( void );
 		size_t			getPopulationSize( void );
 
-
 		bool			creatureMove( Creature* Cr, __uint8_t i );
 		void			createNewCreature( void );
+		static void		createMutatedCreature( NeuralNetwork& brain );
 
 	public :
 		Simulation( void );
