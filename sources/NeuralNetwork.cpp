@@ -4,9 +4,15 @@ NeuralNetwork::NeuralNetwork( std::vector<unsigned int> neuronCount ){
     for (unsigned int i = 0; i + 1 < neuronCount.size(); ++i)
         _levels.emplace_back(new Level(neuronCount[i], neuronCount[i + 1]));
 }
+
 NeuralNetwork::NeuralNetwork( NeuralNetwork const& brain ){
     *this = brain;
 }
+
+NeuralNetwork::NeuralNetwork( NeuralNetwork* brain ){
+    *this = *brain;
+}
+
 NeuralNetwork::~NeuralNetwork( void ){
     for (std::vector<Level*>::iterator it = _levels.begin(); it != _levels.end(); ++it){
         delete *it;

@@ -34,7 +34,7 @@ class	Creature
 
 	public :
 		Creature( void );
-		Creature( NeuralNetwork const& brain );
+		Creature( NeuralNetwork* brain );
 		~Creature( void );
 
 		bool		checkTime( std::chrono::seconds const _timeToDie );
@@ -57,8 +57,9 @@ class	Creature
 		void		moveRight( void );
 
 		std::vector<float> const&	feedForward( std::vector<float> sensorInputs ) const;
-		void			giveBirth( NeuralNetwork const& brain, std::vector<Creature *>& _population );
+		void			giveBirth( NeuralNetwork* brain, std::vector<Creature *>& _population );
 		void			eat( sf::RenderWindow& win, std::vector<Food *>& _food, std::vector<Creature *>& _population );
+		// void			eat( sf::RenderWindow& win, std::vector<Food *>& _food, Simulation& sim );
 
 		void			buildCheckPoints( void );
 };

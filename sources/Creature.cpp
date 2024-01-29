@@ -42,7 +42,7 @@ Creature::Creature( void ): _fitness(0),
 	return ;
 }
 
-Creature::Creature( NeuralNetwork const& brain ): _fitness(0),
+Creature::Creature( NeuralNetwork* brain ): _fitness(0),
 							_gradientDescent(0),
 							_speed(5),
 							_size(50),
@@ -295,10 +295,14 @@ std::vector<float> const&	Creature::feedForward( std::vector<float> sensorInputs
 
 }
 
-void	Creature::giveBirth( NeuralNetwork const& brain, std::vector<Creature *>& _population ){
-	_population.emplace_back(new Creature(brain));
+void	Creature::giveBirth( NeuralNetwork* brain, std::vector<Creature *>& _population ){
+	NeuralNetwork*	n_NN(brain);
+	Creature*		n_Cr(new Creature(n_NN));
+	
+	_population.push_back(n_Cr);
 }
 
+// void	Creature::eat( sf::RenderWindow& win, std::vector<Food *>& _food, Simulation& sim ){
 void	Creature::eat( sf::RenderWindow& win, std::vector<Food *>& _food, std::vector<Creature *>& _population ){
 	// buildCheckPoints();
 	for (std::vector<Food *>::iterator it = _food.begin(); it != _food.end(); ++it){
@@ -309,7 +313,7 @@ void	Creature::eat( sf::RenderWindow& win, std::vector<Food *>& _food, std::vect
 			++_nbFoodEaten;
 			drawCheckPoints(win);
 			if((*it)->getIsSpecial()){
-				Simulation::createMutatedCreature(brain);
+				giveBirth(_brain, _population);
 			}
 			(*it)->getsEaten();
 			return ;

@@ -81,24 +81,6 @@ std::vector<Creature *>&		Simulation::getPopulation( void ){
 	return (_population);
 }
 
-void	Simulation::createNewCreature( void ){
-	try{
-		_population.push_back(new Creature());
-	}
-	catch(std::exception& e){
-		std::cerr << e.what() << std::endl;
-	}
-}
-
-static void	Simulation::createMutatedCreature( NeuralNetwork& brain ){
-	try{
-		_population.push_back(new Creature(brain));
-	}
-	catch(std::exception& e){
-		std::cerr << e.what() << std::endl;
-	}
-}
-
 bool	Simulation::checkNbCreature( void ){
 	return (_population.size() != 0);
 }
@@ -118,6 +100,22 @@ void	Simulation::checkLifeTimes( void ){
 			i = _population.begin();
 		}
 	}
+}
+
+void	Simulation::createNewCreature( void ){
+	try{
+		_population.push_back(new Creature());
+	}
+	catch(std::exception& e){
+		std::cerr << e.what() << std::endl;
+	}
+}
+
+void	Simulation::createMutatedCreature( NeuralNetwork* brain ){
+	NeuralNetwork* n_brain = new NeuralNetwork(brain);
+	Creature* n_creature = new Creature(n_brain);
+	
+	_population.push_back(n_creature);
 }
 
 bool	Simulation::creatureMove( Creature* Cr, __uint8_t i ){
@@ -193,14 +191,17 @@ void	Simulation::updatePopulation( sf::RenderWindow& win ){
 	for (std::vector<Creature *>::iterator i = _population.begin(); i < _population.end(); i++){
 	// std::cout << "Creature position: {" << (*i)->getPosition().x << ", " << (*i)->getPosition().y << "}" << std::endl;
 		if(creatureMove(*i, std::distance(_population.begin(), i))){
-			// std::cout << "Creature erased" << std::endl;
+			std::cout << "Creature erased" << std::endl;
 			delete (*i);
 			_population.erase(i);
 			i = _population.begin();
 			continue;
 		}
-		(*i)->eat(win, _food, getPopulation());
-		(*i)->drawCreature(win, *this);
+		if (*i){
+			(*i)->eat(win, _food, getPopulation());
+			// (*i)->eat(win, _food, *this);
+			(*i)->drawCreature(win, *this);
+		}
 	}
 }
 

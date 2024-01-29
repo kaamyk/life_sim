@@ -19,6 +19,7 @@ private:
 public:
     NeuralNetwork( std::vector<unsigned int> neuronCount );
     NeuralNetwork( NeuralNetwork const& brain );
+    NeuralNetwork( NeuralNetwork* brain );
     ~NeuralNetwork( void );
 
     NeuralNetwork&  operator=( NeuralNetwork const& source);

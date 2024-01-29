@@ -48,7 +48,6 @@ class	Simulation
 
 		bool			creatureMove( Creature* Cr, __uint8_t i );
 		void			createNewCreature( void );
-		static void		createMutatedCreature( NeuralNetwork& brain );
 
 	public :
 		Simulation( void );
@@ -63,6 +62,8 @@ class	Simulation
 		void			updatePopulation( sf::RenderWindow& win );
 		void			loadTextures( void );
 		void			drawAllFood( sf::RenderWindow& win );
+
+		void		createMutatedCreature( NeuralNetwork* brain );
 };
 
 #endif
