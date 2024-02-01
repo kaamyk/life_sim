@@ -2,26 +2,22 @@
 #define FOOD_HPP
 
 #include <iostream>
-#include <SFML/Graphics.hpp>
+#include <vector>
 
-#include "Simulation.hpp"
+#include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 
+
+// #include "Simulation.hpp"
 #include "bsp.hpp"
+
+#include "s_data.hpp"
+#include "s_particule.hpp"
 
 class	Food
 {
 	private:
-		// sf::Vector2f	_position;
-		// sf::Texture		_foodTexture;
-		// sf::Sprite		_foodSprite;
-		sf::RectangleShape	_foodSprite;
-		bool			_isSpecial;
-
-		std::array<sf::RectangleShape, 4>	foodVrt;
-		sf::RectangleShape	sensPt;
-		sf::RectangleShape	PtPosFo;
-
+		std::vector<s_particule *>	particules;
 
 	public:
 		Food( void );
@@ -36,6 +32,7 @@ class	Food
 		bool			checkPositionCr( std::array<sf::RectangleShape, 4> const& pt );
 		bool			checkPositionCr1( sf::Vector2f CrSize, std::array<sf::RectangleShape, 4>& CrVrt );
 		void			drawFood( sf::RenderWindow& win );
+		void			drawAllFood( sf::RenderWindow& win );
 		void			getsEaten( void );
 
 		void			buildCheckPointsCr( float x, float y );

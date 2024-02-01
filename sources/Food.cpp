@@ -1,9 +1,9 @@
-#include "../includes/Simulation.hpp"
-#include "../includes/assetManager.hpp"
 #include "../includes/Food.hpp"
 
-Food::Food( void )
-{
+Food::Food( void ){
+	for (unsigned int i = 0; i < s_data.ndFood; i++){
+		particules.push_back(new s_particule);
+	}
 	_foodSprite.setOrigin(data.foodSize / 2, data.foodSize / 2);
 	_foodSprite.setPosition(sf::Vector2f(rand() % data.windowLength, rand() % data.windowHeight));
 	_foodSprite.setSize(sf::Vector2f(data.foodSize, data.foodSize));
@@ -29,8 +29,7 @@ Food::Food( void )
 	return ;
 }
 
-Food::Food( bool special ):_isSpecial(special)
-{
+Food::Food( bool special ):_isSpecial(special){
 	_foodSprite.setOrigin(data.foodSize / 2, data.foodSize / 2);
 	_foodSprite.setPosition(sf::Vector2f(rand() % data.windowLength, rand() % data.windowHeight));
 	_foodSprite.setSize(sf::Vector2f(data.foodSize, data.foodSize));
@@ -55,8 +54,7 @@ Food::Food( bool special ):_isSpecial(special)
 	return ;
 }
 
-Food::~Food( void )
-{
+Food::~Food( void ){
 	return ;
 }
 
@@ -91,6 +89,12 @@ void			Food::drawFood( sf::RenderWindow& win ){
 	win.draw(_foodSprite);
 	win.draw(PtPosFo);
 	return ;
+}
+
+void	Simulation::drawAllFood( sf::RenderWindow& win ){
+	for (std::vector<Food *>::iterator i = _food.begin(); i != _food.end(); i++){
+		(*i)->drawFood(win);
+	}
 }
 
 void			Food::getsEaten( void ){
