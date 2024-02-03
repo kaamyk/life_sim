@@ -7,11 +7,13 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 
+#include "s_data.hpp"
 
 // #include "Simulation.hpp"
 #include "Particule.hpp"
 
-#include "s_data.hpp"
+
+class Particule;
 
 class	Food
 {
@@ -32,9 +34,9 @@ class	Food
 		bool			checkPositionCr1( sf::Vector2f CrSize, std::array<sf::RectangleShape, 4>& CrVrt );
 		void			drawFood( sf::RenderWindow& win );
 		void			drawFood( sf::RenderWindow& win );
-		void			getsEaten( void );
+		bool			getsEaten( std::vector<Particule *>::iterator& itFood );
 
-		void			buildCheckPointsCr( float x, float y );
+		bool*			checkPositionCr( sf::Vector2f crSize, std::array<sf::Vector2f, 4>& crVrt );
 		void			buildCheckPointsSe( float x, float y );
 		void			drawCheckPoints( sf::RenderWindow& win );
 };

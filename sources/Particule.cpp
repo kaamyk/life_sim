@@ -10,9 +10,10 @@ Particule::Particule( void ):
     _sprite.setFillColor(sf::Color::White);
     for(__uint8_t i = 0; i < 4; i++){
 		// foodVrt[i].setPosition(_foodSprite.getTransform().transformPoint(_foodSprite.getPoint(i)));
-        _partVrtx[i] = sf::RectangleShape(sf::Vector2f(5, 5));
-        _partVrtx[i].setPosition( _sprite.getTransform().transformPoint(_sprite.getPoint(i)) );
-        _partVrtx[i].setFillColor( sf::Color::Red );
+        _partVtx[i] = sf::RectangleShape(sf::Vector2f(5, 5));
+        _partVtx[i].setOrigin(sf::Vector2f(2.5f, 2.5f));
+        _partVtx[i].setPosition( _sprite.getTransform().transformPoint(_sprite.getPoint(i)) );
+        _partVtx[i].setFillColor( sf::Color::Red );
     }
 
     _sensorPt.setFillColor(sf::Color::Cyan);
@@ -45,8 +46,8 @@ sf::Vector2f const&	Particule::getPosition( void ) const {
         /************************/
 
 bool			Particule::checkPositionSe( float x, float y ){
-	if (x >= _partVrtx[0].getPosition().x && x <= _partVrtx[2].getPosition().x
-		&& y >= _partVrtx[0].getPosition().y && y <= _partVrtx[2].getPosition().y)
+	if (x >= _partVtx[0].getPosition().x && x <= _partVtx[2].getPosition().x
+		&& y >= _partVtx[0].getPosition().y && y <= _partVtx[2].getPosition().y)
 	{
 		// buildCheckPointsSe(x, y);
 		_sensorPt.setPosition(x, y);
@@ -81,4 +82,7 @@ void			Particule::setColorParticule( void ){
 
 void    Particule::drawParticule( sf::RenderWindow& win ){
     win.draw(_sprite);
+    for (__uint8_t i = 0; i < 4; i++){
+		win.draw(_partVtx[i]);
+	}
 }

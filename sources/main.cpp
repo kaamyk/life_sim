@@ -10,17 +10,20 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
-#include "../includes/Simulation.hpp"
-#include "../includes/Creature.hpp"
+#include "../includes/Population.hpp"
+#include "../includes/Food.hpp"
+
+#include "../s_data.hpp"
 
 int	main( void )	
 {
     srand(time(NULL));
-	Simulation	sim;
-	sf::RenderWindow	win(sf::VideoMode(data.windowLength, data.windowHeight), "Life Simulation");
+	sf::RenderWindow	win(sf::VideoMode(s_data.windowLength, s_data.windowHeight), "Life Simulation");
+
+	Food	food;
+	Population	population;
 
 	win.setFramerateLimit(30);
-	sim.loadTextures();
 	while (win.isOpen() && sim.checkNbCreature())
 	{
 		sf::Event	event;
@@ -28,10 +31,10 @@ int	main( void )
 		while(win.pollEvent(event))
 			if (event.type == sf::Event::Closed)
 				win.close();
-		sim.checkLifeTimes();
 		win.clear();
-		sim.updatePopulation(win);
-		sim.drawAllFood(win);
+
+		
+		
 		win.display();
 	}
 	return (0);

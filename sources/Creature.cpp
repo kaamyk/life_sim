@@ -1,10 +1,8 @@
 #include "../includes/Simulation.hpp"
 
-Creature::Creature( void ): _fitness(0),
-							_gradientDescent(0),
+Creature::Creature( void ): _gradientDescent(0),
 							_speed(5),
 							_size(50),
-							_nbFoodEaten(0),
 							_birthTime(std::chrono::high_resolution_clock::now()),
 							_timeLastEat(std::chrono::high_resolution_clock::now())
 							// _size(rand() % 100),
@@ -23,30 +21,28 @@ Creature::Creature( void ): _fitness(0),
 	_moves[3] = &Creature::moveLeft;
 
 	// for (__uint8_t i = 0; i < 4; i++){
-	// 	pt.push_back(sf::RectangleShape(sf::Vector2f(5, 5)));
-	// 	pt[i].setOrigin(2.5, 2.5);
-	// 	pt[i].setFillColor(sf::Color::White);
+	// 	crVtx.push_back(sf::RectangleShape(sf::Vector2f(5, 5)));
+	// 	crVtx[i].setOrigin(2.5, 2.5);
+	// 	crVtx[i].setFillColor(sf::Color::White);
 	// }
 	CrSprite = sf::RectangleShape(sf::Vector2f(_size, _size));
 	CrSprite.setPosition(static_cast<float>(rand() % s_data.windowLength), static_cast<float>(rand() % s_data.windowHeight));
 	CrSprite.setOrigin(_size / 2, _size / 2);
 
 	for(__uint8_t i = 0; i < 4; i++){
-		pt[i].setPosition(CrSprite.getTransform().transformPoint(CrSprite.getPoint(i)));
-		pt[i].setFillColor(sf::Color::Red);
-		pt[i].setSize(sf::Vector2f(10, 10));
-		pt[i].setOrigin(sf::Vector2f(5.0f, 5.0f));
-		pt[i].setRotation(0.0f);
+		crVtx[i].setPosition(CrSprite.getTransform().transformPoint(CrSprite.getPoint(i)));
+		crVtx[i].setFillColor(sf::Color::Red);
+		crVtx[i].setSize(sf::Vector2f(10, 10));
+		crVtx[i].setOrigin(sf::Vector2f(5.0f, 5.0f));
+		crVtx[i].setRotation(0.0f);
 	}
 
 	return ;
 }
 
-Creature::Creature( NeuralNetwork* brain ): _fitness(0),
-							_gradientDescent(0),
+Creature::Creature( NeuralNetwork* brain ):_gradientDescent(0),
 							_speed(5),
 							_size(50),
-							_nbFoodEaten(0),
 							_birthTime(std::chrono::high_resolution_clock::now()),
 							_timeLastEat(std::chrono::high_resolution_clock::now())
 							// _size(rand() % 100),
@@ -71,20 +67,17 @@ Creature::Creature( NeuralNetwork* brain ): _fitness(0),
 	CrSprite.setOrigin(_size / 2, _size / 2);
 
 	for(__uint8_t i = 0; i < 4; i++){
-		pt[i].setPosition(CrSprite.getTransform().transformPoint(CrSprite.getPoint(i)));
-		pt[i].setFillColor(sf::Color::Red);
-		pt[i].setSize(sf::Vector2f(10, 10));
-		pt[i].setOrigin(sf::Vector2f(5.0f, 5.0f));
-		pt[i].setRotation(0.0f);
+		crVtx[i].setPosition(CrSprite.getTransform().transformPoint(CrSprite.getPoint(i)));
+		crVtx[i].setFillColor(sf::Color::Red);
+		crVtx[i].setSize(sf::Vector2f(10, 10));
+		crVtx[i].setOrigin(sf::Vector2f(5.0f, 5.0f));
+		crVtx[i].setRotation(0.0f);
 	}
-	
-	return ;
 }
 
 Creature::~Creature( void ){
 	delete _sensor;
 	delete _brain;
-	return ;
 }
 
 
@@ -105,8 +98,8 @@ bool	Creature::checkTime( std::chrono::seconds const _timeToDie ){
 /********************************************************/
 
 void	Creature::drawCheckPoints( sf::RenderWindow& win ){
-	for (__uint8_t i = 0; i < pt.size(); i++){
-		win.draw(pt[i]);
+	for (__uint8_t i = 0; i < crVtx.size(); i++){
+		win.draw(crVtx[i]);
 	}
 }
 
@@ -137,7 +130,7 @@ void	Creature::updatePosition( void ){
 
 void			Creature::buildCheckPoints( void ){
 	for(__uint8_t i = 0; i < 4; i++){
-		pt[i].setPosition(CrSprite.getTransform().transformPoint(CrSprite.getPoint(i)));
+		crVtx[i].setPosition(CrSprite.getTransform().transformPoint(CrSprite.getPoint(i)));
 	}
 }
 
@@ -302,15 +295,22 @@ void	Creature::giveBirth( NeuralNetwork* brain, std::vector<Creature *>& _popula
 	_population.push_back(n_Cr);
 }
 
+std::array<sf::Vector2f, 4>	Creature::getVtxPos( void ){
+	std::array<sf::Vector2f, 4> res;
+	for (__uint8_t i = 0; i < 4; i++){
+		res[i] = crVtx.getPosition();
+	}
+	return (res);
+}
+
 // void	Creature::eat( sf::RenderWindow& win, std::vector<Food *>& _food, Simulation& sim ){
 void	Creature::eat( sf::RenderWindow& win, std::vector<Food *>& _food, std::vector<Creature *>& _population ){
-	// buildCheckPoints();
+	std::array<sf::Vector2f, 4> vtxPos = getVtxPos();
 	for (std::vector<Food *>::iterator it = _food.begin(); it != _food.end(); ++it){
 		// if ( (*it)->checkPositionCr( pt ) ){
-		if ( (*it)->checkPositionCr1( CrSprite.getSize(), pt ) ){
+		if ( (*it)->checkPositionCr( CrSprite.getSize(), crVtx ) ){
 			// std::cout << "eat" << std::endl;
 			_timeLastEat = std::chrono::high_resolution_clock::now();
-			++_nbFoodEaten;
 			drawCheckPoints(win);
 			if((*it)->getIsSpecial()){
 				giveBirth(_brain, _population);

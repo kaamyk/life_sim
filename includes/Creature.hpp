@@ -15,21 +15,18 @@ class NeuralNetwork;
 class	Creature
 {
 	private :
-		unsigned int	_index;
-		unsigned int	_fitness;
 		float			_gradientDescent;
 		float			_speed;
 		float			_size;
-		Sensor*			_sensor;
-		unsigned int 	_nbFoodEaten;
 		std::chrono::high_resolution_clock::time_point	_birthTime;
 		std::chrono::high_resolution_clock::time_point	_timeLastEat;
 		void			(Creature::*_moves[4])( void );
+		Sensor*			_sensor;
 		NeuralNetwork*	_brain;
 		std::vector<sf::Vector2f>	_lastPositions;
 
 		sf::RectangleShape	CrSprite;
-		std::array<sf::RectangleShape, 4> pt;
+		std::array<sf::RectangleShape, 4> crVtx;
 
 	public :
 		Creature( void );
@@ -57,6 +54,7 @@ class	Creature
 
 		std::vector<float> const&	feedForward( std::vector<float> sensorInputs ) const;
 		void			giveBirth( NeuralNetwork* brain, std::vector<Creature *>& _population );
+		std::array<sf::Vector2f, 4>	getVtxPos( void );
 		void			eat( sf::RenderWindow& win, std::vector<Food *>& _food, std::vector<Creature *>& _population );
 		// void			eat( sf::RenderWindow& win, std::vector<Food *>& _food, Simulation& sim );
 
