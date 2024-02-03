@@ -9,15 +9,14 @@
 
 
 // #include "Simulation.hpp"
-#include "bsp.hpp"
+#include "Particule.hpp"
 
 #include "s_data.hpp"
-#include "s_particule.hpp"
 
 class	Food
 {
 	private:
-		std::vector<s_particule *>	particules;
+		std::vector<Particule *>	_particules;
 
 	public:
 		Food( void );
@@ -32,7 +31,7 @@ class	Food
 		bool			checkPositionCr( std::array<sf::RectangleShape, 4> const& pt );
 		bool			checkPositionCr1( sf::Vector2f CrSize, std::array<sf::RectangleShape, 4>& CrVrt );
 		void			drawFood( sf::RenderWindow& win );
-		void			drawAllFood( sf::RenderWindow& win );
+		void			drawFood( sf::RenderWindow& win );
 		void			getsEaten( void );
 
 		void			buildCheckPointsCr( float x, float y );

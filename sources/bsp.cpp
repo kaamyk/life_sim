@@ -19,8 +19,7 @@ float	getArea( sf::Vector2f P1, sf::Vector2f P2, sf::Vector2f P3 )
 	return ( tmp );
 }
 
-bool	bsp( sf::Vector2f CrSize, std::array<sf::RectangleShape, 4>& vrtx, sf::Vector2f const P )
-{
+bool	bsp( sf::Vector2f CrSize, std::array<sf::Vector2f, 4>& vrtx, sf::Vector2f const P ){
 	float	squareArea;
 	float	partArea = 0.0f;
 
@@ -29,9 +28,9 @@ bool	bsp( sf::Vector2f CrSize, std::array<sf::RectangleShape, 4>& vrtx, sf::Vect
 	// partArea = partArea + getArea(B, C, P);
 
 	for (__uint8_t i = 1; i < 4; i++){
-		partArea = getArea(vrtx[i - 1].getPosition(), vrtx[i].getPosition(), P);
+		partArea = getArea(vrtx[i - 1], vrtx[i], P);
 	}
-	partArea = getArea(vrtx[3].getPosition(), vrtx[0].getPosition(), P);
+	partArea = getArea(vrtx[3], vrtx[0], P);
 
 	squareArea = CrSize.x * CrSize.y;
 	return (squareArea == partArea);

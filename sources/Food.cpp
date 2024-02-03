@@ -4,9 +4,9 @@ Food::Food( void ){
 	for (unsigned int i = 0; i < s_data.ndFood; i++){
 		particules.push_back(new s_particule);
 	}
-	_foodSprite.setOrigin(data.foodSize / 2, data.foodSize / 2);
-	_foodSprite.setPosition(sf::Vector2f(rand() % data.windowLength, rand() % data.windowHeight));
-	_foodSprite.setSize(sf::Vector2f(data.foodSize, data.foodSize));
+	_foodSprite.setOrigin(s_data.foodSize / 2, s_data.foodSize / 2);
+	_foodSprite.setPosition(sf::Vector2f(rand() % s_data.windowLength, rand() % s_data.windowHeight));
+	_foodSprite.setSize(sf::Vector2f(s_data.foodSize, s_data.foodSize));
 	_foodSprite.setRotation(0.0f);
 
 	for(__uint8_t i = 0; i < 4; i++){
@@ -30,9 +30,9 @@ Food::Food( void ){
 }
 
 Food::Food( bool special ):_isSpecial(special){
-	_foodSprite.setOrigin(data.foodSize / 2, data.foodSize / 2);
-	_foodSprite.setPosition(sf::Vector2f(rand() % data.windowLength, rand() % data.windowHeight));
-	_foodSprite.setSize(sf::Vector2f(data.foodSize, data.foodSize));
+	_foodSprite.setOrigin(s_data.foodSize / 2, s_data.foodSize / 2);
+	_foodSprite.setPosition(sf::Vector2f(rand() % s_data.windowLength, rand() % s_data.windowHeight));
+	_foodSprite.setSize(sf::Vector2f(s_data.foodSize, s_data.foodSize));
 	_foodSprite.setRotation(0.0f);
 
 	for(__uint8_t i = 0; i < 4; i++){
@@ -58,18 +58,6 @@ Food::~Food( void ){
 	return ;
 }
 
-bool const &	Food::getIsSpecial( void ){
-	return (_isSpecial);
-}
-
-sf::Vector2f const&	Food::getPosition( void ){
-	return (_foodSprite.getPosition());
-}
-
-void			Food::setPosition( sf::Vector2f const& np ){
-	_foodSprite.setPosition(np);
-}
-
 void			Food::drawCheckPoints( sf::RenderWindow& win ){
 	for (__uint8_t i = 0; i < 4; i++){
 		win.draw(foodVrt[i]);
@@ -91,14 +79,15 @@ void			Food::drawFood( sf::RenderWindow& win ){
 	return ;
 }
 
-void	Simulation::drawAllFood( sf::RenderWindow& win ){
-	for (std::vector<Food *>::iterator i = _food.begin(); i != _food.end(); i++){
-		(*i)->drawFood(win);
+void	Food::drawFood( sf::RenderWindow& win ){
+	for (std::vector<Particule *>::iterator i = _particules.begin(); i != _particules.end(); i++){
+		(*i)->drawParticule(win);
 	}
 }
 
+// Modify to delete particule eated and Create a new one
 void			Food::getsEaten( void ){
-	setPosition(sf::Vector2f(rand() % data.windowLength, rand() % data.windowHeight));
+	setPosition(sf::Vector2f(rand() % s_data.windowLength, rand() % s_data.windowHeight));
 	for (__uint8_t i = 0; i < 4; i++){
 		foodVrt[i].setPosition(_foodSprite.getTransform().transformPoint(_foodSprite.getPoint(i)));
 		PtPosFo.setPosition(_foodSprite.getPosition());
@@ -106,31 +95,17 @@ void			Food::getsEaten( void ){
 }
 
 bool			Food::checkPositionSe( float x, float y ){
-	if (x >= foodVrt[0].getPosition().x && x <= foodVrt[2].getPosition().x
-		&& y >= foodVrt[0].getPosition().y && y <= foodVrt[2].getPosition().y)
-	{
-		// buildCheckPointsSe(x, y);
-		sensPt.setPosition(x, y);
-		return (1);
-	}
-	return (0);
-}
-
-bool			Food::checkPositionCr( std::array<sf::RectangleShape, 4> const& crVrt ){
-	for(__uint8_t i = 0; i < 4; i++ ){
-		if (foodVrt[i].getPosition().x >= crVrt[0].getPosition().x && foodVrt[i].getPosition().x <= crVrt[2].getPosition().x
-			&& foodVrt[i].getPosition().y >= crVrt[0].getPosition().y && foodVrt[i].getPosition().y <= crVrt[2].getPosition().y)
-		{
-			std::cout << "Position OK" << std::endl;
+	for(std::vector<Particule *>::iterator i = _particules.begin(); i < _paricules.end(); i++){
+		if ( (*i)->checkPositionSe(x, y) ){
 			return (1);
 		}
 	}
 	return (0);
 }
 
-bool		Food::checkPositionCr1( sf::Vector2f CrSize, std::array<sf::RectangleShape, 4>& CrVrt ){
-	for (__uint8_t i = 0; i < foodVrt.size(); i++){
-		if ( bsp(CrSize, CrVrt, foodVrt[i].getPosition()) ){
+bool			Food::checkPositionCr( std::array<sf::RectangleShape, 4> const& crVrt ){
+	for(std::vector<Particule *>::iterator i = _particules.begin(); i < _paricules.end(); i++){
+		if ( (*i)->checkPositionCr(x, y) ){
 			return (1);
 		}
 	}

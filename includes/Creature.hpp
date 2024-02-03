@@ -8,7 +8,6 @@
 
 #include "Simulation.hpp"
 
-class Simulation;
 class Sensor;
 class Food;
 class NeuralNetwork;

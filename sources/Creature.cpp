@@ -8,7 +8,7 @@ Creature::Creature( void ): _fitness(0),
 							_birthTime(std::chrono::high_resolution_clock::now()),
 							_timeLastEat(std::chrono::high_resolution_clock::now())
 							// _size(rand() % 100),
-							// _position {static_cast<float>(rand() % data.windowLength), static_cast<float>(rand() % data.windowHeight)},
+							// _position {static_cast<float>(rand() % s_data.windowLength), static_cast<float>(rand() % s_data.windowHeight)},
 							// _rotation(0),
 {
 	_sensor = new Sensor();
@@ -28,7 +28,7 @@ Creature::Creature( void ): _fitness(0),
 	// 	pt[i].setFillColor(sf::Color::White);
 	// }
 	CrSprite = sf::RectangleShape(sf::Vector2f(_size, _size));
-	CrSprite.setPosition(static_cast<float>(rand() % data.windowLength), static_cast<float>(rand() % data.windowHeight));
+	CrSprite.setPosition(static_cast<float>(rand() % s_data.windowLength), static_cast<float>(rand() % s_data.windowHeight));
 	CrSprite.setOrigin(_size / 2, _size / 2);
 
 	for(__uint8_t i = 0; i < 4; i++){
@@ -50,7 +50,7 @@ Creature::Creature( NeuralNetwork* brain ): _fitness(0),
 							_birthTime(std::chrono::high_resolution_clock::now()),
 							_timeLastEat(std::chrono::high_resolution_clock::now())
 							// _size(rand() % 100),
-							// _position {static_cast<float>(rand() % data.windowHeight), static_cast<float>(rand() % data.windowHeight)},
+							// _position {static_cast<float>(rand() % s_data.windowHeight), static_cast<float>(rand() % s_data.windowHeight)},
 							// _rotation(0),
 
 {
@@ -67,7 +67,7 @@ Creature::Creature( NeuralNetwork* brain ): _fitness(0),
 	_moves[3] = &Creature::moveLeft;
 
 	CrSprite = sf::RectangleShape(sf::Vector2f(_size, _size));
-	CrSprite.setPosition(static_cast<float>(rand() % data.windowLength), static_cast<float>(rand() % data.windowHeight));
+	CrSprite.setPosition(static_cast<float>(rand() % s_data.windowLength), static_cast<float>(rand() % s_data.windowHeight));
 	CrSprite.setOrigin(_size / 2, _size / 2);
 
 	for(__uint8_t i = 0; i < 4; i++){
@@ -159,7 +159,7 @@ void	Creature::moveUp( void )
 	if (p.y >= _speed)
 		p.y = p.y - _speed;
 	else
-		p.y = p.y + float(data.windowHeight);
+		p.y = p.y + float(s_data.windowHeight);
 	CrSprite.setPosition(p);
 
 
@@ -185,10 +185,10 @@ void	Creature::moveUp( void )
 void	Creature::moveDown( void )
 {
 	sf::Vector2f	p(CrSprite.getPosition());
-	if (p.y + _speed <= float(data.windowHeight))
+	if (p.y + _speed <= float(s_data.windowHeight))
 		p.y = p.y + _speed;
 	else
-		p.y = p.y - float(data.windowHeight);
+		p.y = p.y - float(s_data.windowHeight);
 	CrSprite.setPosition(p);
 
 
@@ -217,7 +217,7 @@ void	Creature::moveLeft( void )
 	if (p.x >= _speed)
 		p.x = p.x - _speed;
 	else
-		p.x = p.x + float(data.windowLength);
+		p.x = p.x + float(s_data.windowLength);
 	CrSprite.setPosition(p);
 
 		
@@ -244,10 +244,10 @@ void	Creature::moveLeft( void )
 void	Creature::moveRight( void )
 {
 	sf::Vector2f	p(CrSprite.getPosition());
-	if (p.x + _speed <= float(data.windowLength))
+	if (p.x + _speed <= float(s_data.windowLength))
 		p.x = p.x + _speed;
 	else
-		p.x = p.x - float(data.windowLength);
+		p.x = p.x - float(s_data.windowLength);
 	CrSprite.setPosition(p);
 
 		

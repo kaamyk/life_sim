@@ -4,7 +4,7 @@
 #include <iostream>
 #include <chrono>
 
-struct s_data {
+struct {
 	const unsigned int	windowLength = 1920;
 	const unsigned int	windowHeight = 1080;
 	const unsigned int	creatureSize = 20;
@@ -12,6 +12,6 @@ struct s_data {
 	const unsigned int	nbCreature = 8;
 	const unsigned int	nbFood = 60;
 	const std::chrono::seconds	timeToDie = std::chrono::seconds(40);
-};
+} s_data;
 
 #endif
