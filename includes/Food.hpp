@@ -33,7 +33,6 @@ class	Food
 		bool			checkPositionCr( std::array<sf::RectangleShape, 4> const& pt );
 		bool			checkPositionCr1( sf::Vector2f CrSize, std::array<sf::RectangleShape, 4>& CrVrt );
 		void			drawFood( sf::RenderWindow& win );
-		void			drawFood( sf::RenderWindow& win );
 		bool			getsEaten( std::vector<Particule *>::iterator& itFood );
 
 		bool*			checkPositionCr( sf::Vector2f crSize, std::array<sf::Vector2f, 4>& crVrt );

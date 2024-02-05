@@ -25,12 +25,12 @@ Creature::Creature( void ): _gradientDescent(0),
 	// 	crVtx[i].setOrigin(2.5, 2.5);
 	// 	crVtx[i].setFillColor(sf::Color::White);
 	// }
-	CrSprite = sf::RectangleShape(sf::Vector2f(_size, _size));
-	CrSprite.setPosition(static_cast<float>(rand() % s_data.windowLength), static_cast<float>(rand() % s_data.windowHeight));
-	CrSprite.setOrigin(_size / 2, _size / 2);
+	crSprite = sf::RectangleShape(sf::Vector2f(_size, _size));
+	crSprite.setPosition(static_cast<float>(rand() % s_data.windowLength), static_cast<float>(rand() % s_data.windowHeight));
+	crSprite.setOrigin(_size / 2, _size / 2);
 
 	for(__uint8_t i = 0; i < 4; i++){
-		crVtx[i].setPosition(CrSprite.getTransform().transformPoint(CrSprite.getPoint(i)));
+		crVtx[i].setPosition(crSprite.getTransform().transformPoint(crSprite.getPoint(i)));
 		crVtx[i].setFillColor(sf::Color::Red);
 		crVtx[i].setSize(sf::Vector2f(10, 10));
 		crVtx[i].setOrigin(sf::Vector2f(5.0f, 5.0f));
@@ -62,12 +62,12 @@ Creature::Creature( NeuralNetwork* brain ):_gradientDescent(0),
 	_moves[2] = &Creature::moveRight;
 	_moves[3] = &Creature::moveLeft;
 
-	CrSprite = sf::RectangleShape(sf::Vector2f(_size, _size));
-	CrSprite.setPosition(static_cast<float>(rand() % s_data.windowLength), static_cast<float>(rand() % s_data.windowHeight));
-	CrSprite.setOrigin(_size / 2, _size / 2);
+	crSprite = sf::RectangleShape(sf::Vector2f(_size, _size));
+	crSprite.setPosition(static_cast<float>(rand() % s_data.windowLength), static_cast<float>(rand() % s_data.windowHeight));
+	crSprite.setOrigin(_size / 2, _size / 2);
 
 	for(__uint8_t i = 0; i < 4; i++){
-		crVtx[i].setPosition(CrSprite.getTransform().transformPoint(CrSprite.getPoint(i)));
+		crVtx[i].setPosition(crSprite.getTransform().transformPoint(crSprite.getPoint(i)));
 		crVtx[i].setFillColor(sf::Color::Red);
 		crVtx[i].setSize(sf::Vector2f(10, 10));
 		crVtx[i].setOrigin(sf::Vector2f(5.0f, 5.0f));
@@ -103,11 +103,11 @@ void	Creature::drawCheckPoints( sf::RenderWindow& win ){
 	}
 }
 
-void	Creature::drawCreature( sf::RenderWindow& win, Simulation& sim ){
+void	Creature::drawCreature( sf::RenderWindow& win ){
 	// const std::string&	path("./images/SquareCreature.png");
 
-	_sensor->drawRay(win, *this, sim);
-	win.draw( this->CrSprite );
+	_sensor->drawRays(win);
+	win.draw( this->crSprite );
 }
 
 bool	Creature::checkLastPositions( void ){
@@ -124,13 +124,13 @@ bool	Creature::checkLastPositions( void ){
 }
 
 void	Creature::updatePosition( void ){
-	_lastPositions.push_back(CrSprite.getPosition());
+	_lastPositions.push_back(crSprite.getPosition());
 	buildCheckPoints();
 }
 
 void			Creature::buildCheckPoints( void ){
 	for(__uint8_t i = 0; i < 4; i++){
-		crVtx[i].setPosition(CrSprite.getTransform().transformPoint(CrSprite.getPoint(i)));
+		crVtx[i].setPosition(crSprite.getTransform().transformPoint(crSprite.getPoint(i)));
 	}
 }
 
@@ -147,29 +147,29 @@ void	Creature::move( __uint8_t r ){
 
 void	Creature::moveUp( void )
 {
-	sf::Vector2f	p(CrSprite.getPosition());
+	sf::Vector2f	p(crSprite.getPosition());
 	
 	if (p.y >= _speed)
 		p.y = p.y - _speed;
 	else
 		p.y = p.y + float(s_data.windowHeight);
-	CrSprite.setPosition(p);
+	crSprite.setPosition(p);
 
 
-	float rot = CrSprite.getRotation();
+	float rot = crSprite.getRotation();
 
 	if ( rot == 360.0f )
 		rot = 0.0f;
 	if ( rot >= 10.0f && rot <= 180.0f ){
-		CrSprite.setRotation(rot - 10.0f);
+		crSprite.setRotation(rot - 10.0f);
 		// _rotation = _rotation - 10.0f ;
 	}
 	else if ( rot > 180.0f && rot <= 350.0f ){
-		CrSprite.setRotation(rot + 10.0f);
+		crSprite.setRotation(rot + 10.0f);
 		// _rotation = _rotation + 10.0f ;
 	}
 	else if ( (rot > 0.0f && rot < 10.0f) || (rot > 350.0f && rot < 360.0f) ){
-		CrSprite.setRotation(0.0f);
+		crSprite.setRotation(0.0f);
 		// _rotation = 0;
 	}
 	return ;
@@ -177,28 +177,28 @@ void	Creature::moveUp( void )
 
 void	Creature::moveDown( void )
 {
-	sf::Vector2f	p(CrSprite.getPosition());
+	sf::Vector2f	p(crSprite.getPosition());
 	if (p.y + _speed <= float(s_data.windowHeight))
 		p.y = p.y + _speed;
 	else
 		p.y = p.y - float(s_data.windowHeight);
-	CrSprite.setPosition(p);
+	crSprite.setPosition(p);
 
 
-	float rot = CrSprite.getRotation();
+	float rot = crSprite.getRotation();
 
 	if ( rot == 360.0f )
 		rot = 0.0f;
 	if ( rot >= 190.0f && rot < 360.0f ){
-		CrSprite.setRotation(rot - 10.0f);
+		crSprite.setRotation(rot - 10.0f);
 		// _rotation = _rotation - 10.0f;
 	}
 	else if ( rot >= 0.0f && rot <= 170.0f ){
-		CrSprite.setRotation(rot + 10.0f);
+		crSprite.setRotation(rot + 10.0f);
 		// _rotation = _rotation + 10.0f;
 	}
 	else if ( rot > 170.0f && rot < 100.0f ){
-		CrSprite.setRotation(180.0f);
+		crSprite.setRotation(180.0f);
 		// _rotation = 180.0f;
 	}
 	return ;
@@ -206,29 +206,29 @@ void	Creature::moveDown( void )
 
 void	Creature::moveLeft( void )
 {
-	sf::Vector2f	p(CrSprite.getPosition());
+	sf::Vector2f	p(crSprite.getPosition());
 	if (p.x >= _speed)
 		p.x = p.x - _speed;
 	else
 		p.x = p.x + float(s_data.windowLength);
-	CrSprite.setPosition(p);
+	crSprite.setPosition(p);
 
 		
-	float rot = CrSprite.getRotation();
+	float rot = crSprite.getRotation();
 
 	if ((rot >= 0.0f && rot <= 90.0f) || (rot <= 360.0f && rot > 280.0f)){
 		if (rot - 10.0f < 0.0f){
 			rot = rot + 360.0f;
 		}
-		CrSprite.setRotation(rot - 10.0f);
+		crSprite.setRotation(rot - 10.0f);
 		// _rotation = _rotation - 10.0f ;
 	}
 	else if (rot > 90.0f && rot <= 260.0f){
-		CrSprite.setRotation(rot + 10.0f);
+		crSprite.setRotation(rot + 10.0f);
 		// _rotation = _rotation + 10.0f ;
 	}
 	else if (rot >= 260.0f && rot <= 280.0f){
-		CrSprite.setRotation(270.0f);
+		crSprite.setRotation(270.0f);
 		// _rotation = 270.0f;
 	}
 	return ;
@@ -236,34 +236,34 @@ void	Creature::moveLeft( void )
 
 void	Creature::moveRight( void )
 {
-	sf::Vector2f	p(CrSprite.getPosition());
+	sf::Vector2f	p(crSprite.getPosition());
 	if (p.x + _speed <= float(s_data.windowLength))
 		p.x = p.x + _speed;
 	else
 		p.x = p.x - float(s_data.windowLength);
-	CrSprite.setPosition(p);
+	crSprite.setPosition(p);
 
 		
-	float rot = CrSprite.getRotation();
+	float rot = crSprite.getRotation();
 
 	if ((rot >= 0.0f && rot < 80.0f)
 		|| (rot >= 280.0f && rot <= 360.0f))
 	{
 		if (rot + 10.0f > 360.0f){
-			CrSprite.setRotation((rot + 10.0f) - 360.0f);
+			crSprite.setRotation((rot + 10.0f) - 360.0f);
 			// _rotation = (_rotation + 10.0f) - 360.0f;
 		}
 		else{
-			CrSprite.setRotation(rot + 10.0f);
+			crSprite.setRotation(rot + 10.0f);
 			// _rotation = _rotation + 10.0f ;
 		}
 	}
 	else if (rot > 100.0f && rot < 280.0f){
-		CrSprite.setRotation(rot - 10.0f);
+		crSprite.setRotation(rot - 10.0f);
 		// _rotation = _rotation - 10.0f ;
 	}
 	else if (rot >= 80.0f && rot <= 100.0f){
-		CrSprite.setRotation(90.0f);
+		crSprite.setRotation(90.0f);
 		// _rotation = 90.0f;
 	}
 	return ;
@@ -288,35 +288,29 @@ std::vector<float> const&	Creature::feedForward( std::vector<float> sensorInputs
 
 }
 
-void	Creature::giveBirth( NeuralNetwork* brain, std::vector<Creature *>& _population ){
+Creature*	Creature::giveBirth( NeuralNetwork* brain ){
 	NeuralNetwork*	n_NN(brain);
-	Creature*		n_Cr(new Creature(n_NN));
-	
-	_population.push_back(n_Cr);
+	return (new Creature(n_NN));
 }
 
-std::array<sf::Vector2f, 4>	Creature::getVtxPos( void ){
-	std::array<sf::Vector2f, 4> res;
+void	Creature::getVtxPos( std::array<sf::Vector2f, 4> *vtxPos ){
 	for (__uint8_t i = 0; i < 4; i++){
-		res[i] = crVtx.getPosition();
+		(*vtxPos)[i] = crVtx[i].getPosition();
 	}
-	return (res);
 }
 
-// void	Creature::eat( sf::RenderWindow& win, std::vector<Food *>& _food, Simulation& sim ){
-void	Creature::eat( sf::RenderWindow& win, std::vector<Food *>& _food, std::vector<Creature *>& _population ){
-	std::array<sf::Vector2f, 4> vtxPos = getVtxPos();
-	for (std::vector<Food *>::iterator it = _food.begin(); it != _food.end(); ++it){
-		// if ( (*it)->checkPositionCr( pt ) ){
-		if ( (*it)->checkPositionCr( CrSprite.getSize(), crVtx ) ){
-			// std::cout << "eat" << std::endl;
-			_timeLastEat = std::chrono::high_resolution_clock::now();
-			drawCheckPoints(win);
-			if((*it)->getIsSpecial()){
-				giveBirth(_brain, _population);
-			}
-			(*it)->getsEaten();
-			return ;
+Creature*	Creature::eat( sf::RenderWindow& win, Food& food ){
+	// std::array<sf::Vector2f, 4> vtxPos = getVtxPos();
+	// bool *checkRes = food.checkPositionCr(crSprite.getSize(), vtxPos);
+	std::array<sf::Vector2f, 4>	vtxPos;
+	getVtxPos(&vtxPos);
+	bool *checkRes = food.checkPositionCr(crSprite.getSize(), vtxPos);
+
+	if (checkRes[0]){
+		_timeLastEat = std::chrono::high_resolution_clock::now();
+		if (checkRes[1]){
+			return (giveBirth(_brain));
 		}
 	}
+	return (NULL);
 }

@@ -46,14 +46,13 @@ sf::Vector2f const&	Particule::getPosition( void ) const {
         /************************/
 
 bool			Particule::checkPositionSe( float x, float y ){
-	if (x >= _partVtx[0].getPosition().x && x <= _partVtx[2].getPosition().x
-		&& y >= _partVtx[0].getPosition().y && y <= _partVtx[2].getPosition().y)
-	{
-		// buildCheckPointsSe(x, y);
-		_sensorPt.setPosition(x, y);
-		return (1);
-	}
-	return (0);
+        if (x >= _partVtx[0].getPosition().x && x <= _partVtx[2].getPosition().x
+                && y >= _partVtx[0].getPosition().y && y <= _partVtx[2].getPosition().y)
+        {
+                _sensorPt.setPosition(x, y);
+                return (1);
+        }
+        return (0);
 }
 
 bool			Particule::checkPositionCr( sf::Vector2f crSize, std::array<sf::Vector2f, 4>& checkpointsPos ) {
@@ -76,12 +75,13 @@ bool			Particule::checkPositionCr( sf::Vector2f crSize, std::array<sf::Vector2f,
         /*      VISUALS        */
         /***********************/
 
-void			Particule::setColorParticule( void ){
-	_isSpecial ? _sprite.setFillColor(sf::Color::Green) :  _sprite.setFillColor(sf::Color::White);
+void    Particule::setColorParticule( void ){
+	_isSpecial ? _sprite.setFillColor(sf::Color::Green) : _sprite.setFillColor(sf::Color::White);
 }
 
 void    Particule::drawParticule( sf::RenderWindow& win ){
     win.draw(_sprite);
+    win.draw(_sensorPt);
     for (__uint8_t i = 0; i < 4; i++){
 		win.draw(_partVtx[i]);
 	}
