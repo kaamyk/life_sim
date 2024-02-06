@@ -1,12 +1,53 @@
 #include "../includes/Population.hpp"
 
 Population::Population( void ){
-	return ;
+	for(unsigned int i = 0; i < s_data.nbCreature; i++){
+		_population.push_back(new Creature());
+	}
 }
 
 Population::~Population( void ){
-	return ;
+	for (std::vector<Creature *>::iterator i = _population.begin(); i < _population.end(); i++){
+		delete (*i);
+	}
+	_population.clear();
 }
+
+
+/********************************************************/
+/*						CHECKERS 						*/
+/********************************************************/
+
+void	Population::checkLifeTimes( void ){
+	if (_population.size() == 0)
+		return;
+	for(std::vector<Creature *>::iterator i = _population.begin();  !_population.empty() && i != _population.end(); ++i){
+		if ((*i)->checkTime(s_data.timeToDie)){
+			delete *i;
+			this->_population.erase(i);
+			i = _population.begin();
+		}
+	}
+}
+
+bool	Population::checkNbCreature( void ){
+	return (_population.size() != 0);
+}
+
+
+/********************************************************/
+/*						DRAWING 						*/
+/********************************************************/
+
+void	Population::drawPopulation( sf::RenderWindow& win ){
+	for (std::vector<Creature *>::iterator i = _population.begin(); i < _population.end(); i++){
+		(*i)->drawCreature(win);
+	}
+}
+
+/****************************************************/
+/*					NEW CREATURE					*/
+/****************************************************/
 
 void	Population::createNewCreature( void ){
 	try{
@@ -24,22 +65,10 @@ void	Population::createMutatedCreature( NeuralNetwork* brain ){
 	_population.push_back(n_creature);
 }
 
-bool	Population::checkNbCreature( void ){
-	return (_population.size() != 0);
-}
 
-void	Population::checkLifeTimes( void ){
-	if (_population.size() == 0)
-		return;
-	for(std::vector<Creature *>::iterator i = _population.begin();  !_population.empty() && i != _population.end(); ++i)
-	{
-		if ((*i)->checkTime(s_data.timeToDie)){
-			delete *i;
-			this->_population.erase(i);
-			i = _population.begin();
-		}
-	}
-}
+/********************************************************/
+/*						MOVEMENTS 						*/
+/********************************************************/
 
 bool	Population::creatureMove( Creature* Cr, __uint8_t i ){
 	// std::vector<float>	outputs = Cr->feedForward(Cr->getSensor()->getState());
@@ -105,22 +134,28 @@ bool	Population::creatureMove( Creature* Cr, __uint8_t i ){
 		}
 	}
 	Cr->updatePosition();
-	if (Cr->checkLastPositions())
-		return (1);
-	return (0);
+	return (Cr->checkLastPositions());
 }
 
-void	Population::updatePopulation( sf::RenderWindow& win, Food& food ){
+
+
+
+
+void	Population::updatePopulation( Food& food ){
 	for (std::vector<Creature *>::iterator i = _population.begin(); i < _population.end(); i++){
 		if( creatureMove(*i, std::distance(_population.begin(), i)) ){
 			std::cout << "Creature erased" << std::endl;
 			delete (*i);
 			_population.erase(i);
-			--i;
+			if (i != _population.begin()){
+				--i;
+			} 
 		}
 		else{
-			(*i)->eat(win, food);
-			(*i)->drawCreature(win);
+			Creature* nCr = (*i)->eat(food);
+			if (nCr){
+				_population.push_back(nCr);
+			}
 		}
 	}
 }

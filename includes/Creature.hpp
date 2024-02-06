@@ -55,7 +55,7 @@ class	Creature
 		std::vector<float> const&	feedForward( std::vector<float> sensorInputs ) const;
 		Creature*		giveBirth( NeuralNetwork* brain );
 		void			getVtxPos( std::array<sf::Vector2f, 4> *res );
-		Creature*		eat( sf::RenderWindow& win, Food& food );
+		Creature*		eat( Food& food );
 
 		void			buildCheckPoints( void );
 };

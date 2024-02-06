@@ -107,7 +107,7 @@ void	Creature::drawCreature( sf::RenderWindow& win ){
 	// const std::string&	path("./images/SquareCreature.png");
 
 	_sensor->drawRays(win);
-	win.draw( this->crSprite );
+	win.draw( crSprite );
 }
 
 bool	Creature::checkLastPositions( void ){
@@ -299,12 +299,12 @@ void	Creature::getVtxPos( std::array<sf::Vector2f, 4> *vtxPos ){
 	}
 }
 
-Creature*	Creature::eat( sf::RenderWindow& win, Food& food ){
-	// std::array<sf::Vector2f, 4> vtxPos = getVtxPos();
-	// bool *checkRes = food.checkPositionCr(crSprite.getSize(), vtxPos);
+Creature*	Creature::eat( Food& food ){
 	std::array<sf::Vector2f, 4>	vtxPos;
+	bool checkRes[2] = {0, 0};
+
 	getVtxPos(&vtxPos);
-	bool *checkRes = food.checkPositionCr(crSprite.getSize(), vtxPos);
+	food.checkPositionCr(crSprite.getSize(), vtxPos, &checkRes[0]);
 
 	if (checkRes[0]){
 		_timeLastEat = std::chrono::high_resolution_clock::now();

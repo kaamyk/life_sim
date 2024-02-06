@@ -30,10 +30,9 @@ class	Food
 		void			setPosition( sf::Vector2f const& np );
 
 		bool			checkPositionSe( float x, float y );
-		bool			checkPositionCr( std::array<sf::RectangleShape, 4> const& pt );
-		bool			checkPositionCr1( sf::Vector2f CrSize, std::array<sf::RectangleShape, 4>& CrVrt );
+		void			checkPositionCr( sf::Vector2f crSize, std::array<sf::Vector2f, 4>& crVrtPos, bool *res );
 		void			drawFood( sf::RenderWindow& win );
-		bool			getsEaten( std::vector<Particule *>::iterator& itFood );
+		bool			getsEaten( Particule *ptParticule );
 
 		bool*			checkPositionCr( sf::Vector2f crSize, std::array<sf::Vector2f, 4>& crVrt );
 		void			buildCheckPointsSe( float x, float y );

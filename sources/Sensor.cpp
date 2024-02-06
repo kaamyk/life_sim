@@ -8,9 +8,9 @@ Sensor::Sensor( void ): _rayCount(3), _rayLenght(100),
 	for (__uint8_t i = 0; i < _rayCount; i++){
 		_state.push_back(0);
 	}
-	// ptcheck = sf::RectangleShape(sf::Vector2f(5, 5));
-	// ptcheck.setFillColor(sf::Color::Green);
-	// ptcheck.setOrigin(2.5f, 2.5f);
+	_ptcheck = sf::RectangleShape(sf::Vector2f(5, 5));
+	_ptcheck.setFillColor(sf::Color::Green);
+	_ptcheck.setOrigin(2.5f, 2.5f);
 	return ;
 }
 
@@ -48,16 +48,17 @@ bool	Sensor::findIntersection( sf::RectangleShape* r, int rayRotation, Creature&
 }
 
 void	Sensor::drawRays( sf::RenderWindow& win ){
-	for (__uint8_t i = 0; i < 4; i++){
-		win.draw(_rays[i]);
+	for (__uint8_t i = 0; i < _rayCount; i++){
+		win.draw(_raySprite[i]);
 	}
+	win.draw(_ptcheck);
 }
 
 void	Sensor::buildRays( Creature& c, std::vector<Particule *>& particules ){
 	for (unsigned int i = 0; i < _rayCount; i++){
 		this->_raySprite[i].setRotation(c.getRotation() + _rayAngle);
-		_state[i] = findIntersection(&_rays[i], c.getRotation() - _rayAngle, c, particules);
-		_state[i] ? _rays[i].setFillColor( sf::Color::Red ) : _rays[2].setFillColor( sf::Color::White );
+		_state[i] = findIntersection(&_raySprite[i], c.getRotation() - _rayAngle, c, particules);
+		_state[i] ? _raySprite[i].setFillColor( sf::Color::Red ) : _raySprite[i].setFillColor( sf::Color::White );
 	}
 	
 	// std::string	path("./images/sensorRayON.png");
@@ -70,18 +71,18 @@ void	Sensor::buildRays( Creature& c, std::vector<Particule *>& particules ){
 	// 	switch(i){
 	// 		case 0:
 	// 			this->_raySprite[i].setRotation(c.getRotation() - _rayAngle);
-	// 			_state[i] = findIntersection(win, &_rays[0], c.getRotation() + _rayAngle, c,  particules);
-	// 			_state[i] ? _rays[0].setFillColor( sf::Color::Red ) : _rays[0].setFillColor( sf::Color::White );
+	// 			_state[i] = findIntersection(win, &_raySprite[0], c.getRotation() + _rayAngle, c,  particules);
+	// 			_state[i] ? _raySprite[0].setFillColor( sf::Color::Red ) : _raySprite[0].setFillColor( sf::Color::White );
 	// 			break ;
 	// 		case 1:
 	// 			this->_raySprite[i].setRotation(c.getRotation());
-	// 			_state[i] = findIntersection(win, &_rays[1], c.getRotation(), c, particules);
-	// 			_state[i] ? _rays[1].setFillColor( sf::Color::Red ) : _rays[1].setFillColor( sf::Color::White );
+	// 			_state[i] = findIntersection(win, &_raySprite[1], c.getRotation(), c, particules);
+	// 			_state[i] ? _raySprite[1].setFillColor( sf::Color::Red ) : _raySprite[1].setFillColor( sf::Color::White );
 	// 			break ;
 	// 		case 2:
 	// 			this->_raySprite[i].setRotation(c.getRotation() + _rayAngle);
-	// 			_state[i] = findIntersection(win, &_rays[2], c.getRotation() - _rayAngle, c, particules);
-	// 			_state[i] ? _rays[2].setFillColor( sf::Color::Red ) : _rays[2].setFillColor( sf::Color::White );
+	// 			_state[i] = findIntersection(win, &_raySprite[2], c.getRotation() - _rayAngle, c, particules);
+	// 			_state[i] ? _raySprite[2].setFillColor( sf::Color::Red ) : _raySprite[2].setFillColor( sf::Color::White );
 	// 			break ;
 	// 		default:
 	// 			break ;

@@ -19,8 +19,6 @@ Particule::Particule( void ):
     _sensorPt.setFillColor(sf::Color::Cyan);
 
     _checkPos.setFillColor(sf::Color::Green);
-    
-    return ;
 }
 
 Particule::~Particule( void ){
@@ -45,7 +43,7 @@ sf::Vector2f const&	Particule::getPosition( void ) const {
         /*  POSITION CHECKERS   */
         /************************/
 
-bool			Particule::checkPositionSe( float x, float y ){
+bool	Particule::checkPositionSe( float x, float y ){
         if (x >= _partVtx[0].getPosition().x && x <= _partVtx[2].getPosition().x
                 && y >= _partVtx[0].getPosition().y && y <= _partVtx[2].getPosition().y)
         {
@@ -55,7 +53,7 @@ bool			Particule::checkPositionSe( float x, float y ){
         return (0);
 }
 
-bool			Particule::checkPositionCr( sf::Vector2f crSize, std::array<sf::Vector2f, 4>& checkpointsPos ) {
+bool	Particule::checkPositionCr( sf::Vector2f crSize, std::array<sf::Vector2f, 4>& checkpointsPos ) {
 	return (bsp(crSize, checkpointsPos, _position));
 }
 

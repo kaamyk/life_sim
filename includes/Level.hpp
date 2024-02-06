@@ -19,6 +19,8 @@ private:
     std::vector<float>  _biases;
     std::vector< std::vector<float> >  _weights;
 
+	float	lerp( float A, float B, float t){ return (A + ((B - A) * t)); }
+
 public:
     Level( unsigned int nbInputs, unsigned int nbOutputs );
     Level( Level const& source);

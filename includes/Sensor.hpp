@@ -10,7 +10,7 @@ class	Sensor
 {
 	private:
 		// unsigned int***	_rays;
-		std::array<sf::RectangleShape, 3>	_rays;
+		// std::array<sf::RectangleShape, 3>	_rays;
 		std::array<sf::RectangleShape, 3>	_raySprite;
 		unsigned int	_rayCount;
 		unsigned int	_rayLenght;
@@ -18,7 +18,7 @@ class	Sensor
 		// sf::Texture		_rayTexutre;
 		std::vector<float>	_state;
 
-		// sf::RectangleShape _ptcheck;
+		sf::RectangleShape _ptcheck;
 
 	public:
 		Sensor( void );

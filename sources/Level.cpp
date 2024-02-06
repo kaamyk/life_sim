@@ -77,11 +77,11 @@ void   Level::feedForward( std::vector<float> inputs ){
 void    Level::mutate( float amount ){
     //std::cout<< "Biases :" << std::endl;
     for (std::vector<float>::iterator i = _biases.begin(); i != _biases.end(); i++){
-        *i = Simulation::lerp(*i, remainder( static_cast<float>(rand()) / static_cast<float>(rand()), (2.0f) ) - 1.0f, amount);
+        *i = lerp(*i, remainder( static_cast<float>(rand()) / static_cast<float>(rand()), (2.0f) ) - 1.0f, amount);
     }
     for (std::vector< std::vector<float> >::iterator i = _weights.begin(); i != _weights.end(); i++){
         for (std::vector<float>::iterator j = i->begin(); j != i->end(); ++j){
-            *j = Simulation::lerp(*j, remainder( static_cast<float>(rand()) / static_cast<float>(rand()), 2.0f) - 1.0f, amount);
+            *j = lerp(*j, remainder( static_cast<float>(rand()) / static_cast<float>(rand()), 2.0f) - 1.0f, amount);
         }
     }
 }

@@ -18,14 +18,16 @@ public:
     Population( void );
     ~Population( void );
 
+    bool	checkNbCreature( void );
+	void	checkLifeTimes( void );
+
+	void	drawPopulation( sf::RenderWindow& win );
+	
     bool	creatureMove( Creature* Cr, __uint8_t i );
 	void	createNewCreature( void );
 
-	void	updatePopulation( sf::RenderWindow& win, Food& food );
-    bool	checkNbCreature( void );
-	void	checkLifeTimes( void );
+	void	updatePopulation( Food& food );
 	void	createMutatedCreature( NeuralNetwork* brain );
-	static float	lerp( float A, float B, float t){ return (A + ((B - A) * t)); }
 
 
 };
