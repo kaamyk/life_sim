@@ -8,6 +8,11 @@ Sensor::Sensor( void ): _rayCount(3), _rayLenght(100),
 	for (__uint8_t i = 0; i < _rayCount; i++){
 		_state.push_back(0);
 	}
+
+	for (__uint8_t i = 0; i < _raySprite.size(); i++){
+		
+	}
+	
 	_ptcheck = sf::RectangleShape(sf::Vector2f(5, 5));
 	_ptcheck.setFillColor(sf::Color::Green);
 	_ptcheck.setOrigin(2.5f, 2.5f);
