@@ -6,6 +6,7 @@ Particule::Particule( void ):
         _sprite(sf::Vector2f(s_data.foodSize, s_data.foodSize)),
         _sensorPt(sf::RectangleShape(sf::Vector2f(5, 5)))
 {
+    _sprite.setOrigin(sf::Vector2f(s_data.foodSize / 2, s_data.foodSize / 2));
     _sprite.setPosition(_position);
     _sprite.setFillColor(sf::Color::White);
     for(__uint8_t i = 0; i < 4; i++){
@@ -54,7 +55,12 @@ bool	Particule::checkPositionSe( float x, float y ){
 }
 
 bool	Particule::checkPositionCr( sf::Vector2f crSize, std::array<sf::Vector2f, 4>& checkpointsPos ) {
-	return (bsp(crSize, checkpointsPos, _position));
+        for (__uint8_t i = 0; i < 4; i++){
+            if (checkpointsPos[i].x <= _position.x + (s_data.foodSize / 2) && checkpointsPos[i].x >= _position.x - (s_data.foodSize / 2)){
+                return (bsp(crSize, checkpointsPos, _position));
+            }
+        }
+        return (0);
 }
 
 // bool			Food::checkPositionCr( std::array<sf::RectangleShape, 4> const& crVrt ){

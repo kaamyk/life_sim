@@ -31,9 +31,11 @@ bool	bsp( sf::Vector2f CrSize, std::array<sf::Vector2f, 4>& vtx, sf::Vector2f co
 		if (partArea > squareArea){
 			return (0);
 		}
-		partArea = getArea(vtx[i - 1], vtx[i], P);
+		partArea += getArea(vtx[i - 1], vtx[i], P);
 	}
-	partArea = getArea(vtx[3], vtx[0], P);
+	partArea += getArea(vtx[3], vtx[0], P);
+
+	std::cout << "bsp: " << squareArea << " X " << partArea << std::endl;
 
 	return (squareArea == partArea);
 }

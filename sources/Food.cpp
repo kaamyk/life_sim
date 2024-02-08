@@ -13,25 +13,20 @@ Food::~Food( void ){
 	_particules.clear();
 }
 
+
+/********************************************************/
+/*						GETTERS 						*/
+/********************************************************/
+
 std::vector<Particule *>&	Food::getParticules( void ){
 	return (_particules);
 }
 
-void	Food::drawFood( sf::RenderWindow& win ){
-	for (std::vector<Particule *>::iterator i = _particules.begin(); i != _particules.end(); i++){
-		(*i)->drawParticule(win);
-	}
-}
 
-// Modify to delete particule eated and Create a new one
-bool	Food::getsEaten( Particule *ptParticule ){
-	const bool	sp = ptParticule->getIsSpecial();
 
-	delete (ptParticule);
-	if (ptParticule != NULL)
-		std::cerr << ">>> ERROR: particule delete failed ! <<<" << std::endl;
-	return (sp);
-}
+/********************************************************/
+/*						CHECKERS 						*/
+/********************************************************/
 
 bool			Food::checkPositionSe( float x, float y ){
 	for(std::vector<Particule *>::iterator i = _particules.begin(); i < _particules.end(); i++){
@@ -50,4 +45,26 @@ void			Food::checkPositionCr( sf::Vector2f crSize, std::array<sf::Vector2f, 4>& 
 			_particules.erase(i);
 		}
 	}
+}
+
+/********************************************************/
+/*						DRAWING 						*/
+/********************************************************/
+
+void	Food::drawFood( sf::RenderWindow& win ){
+	for (std::vector<Particule *>::iterator i = _particules.begin(); i != _particules.end(); i++){
+		(*i)->drawParticule(win);
+	}
+}
+
+
+
+// Modify to delete particule eated and Create a new one
+bool	Food::getsEaten( Particule *ptParticule ){
+	const bool	sp = ptParticule->getIsSpecial();
+
+	delete (ptParticule);
+	if (ptParticule != NULL)
+		std::cerr << ">>> ERROR: particule delete failed ! <<<" << std::endl;
+	return (sp);
 }
