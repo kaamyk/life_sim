@@ -134,6 +134,10 @@ void			Creature::buildCheckPoints( void ){
 	}
 }
 
+void	Creature::updateSensors( Food& food ){
+	_sensor->buildRays(*this, food);
+}
+
 
 
 /********************************************************/

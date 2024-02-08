@@ -13,6 +13,10 @@ Food::~Food( void ){
 	_particules.clear();
 }
 
+std::vector<Particule *>&	Food::getParticules( void ){
+	return (_particules);
+}
+
 void	Food::drawFood( sf::RenderWindow& win ){
 	for (std::vector<Particule *>::iterator i = _particules.begin(); i != _particules.end(); i++){
 		(*i)->drawParticule(win);

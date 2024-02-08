@@ -23,7 +23,7 @@ public:
 
 	void	drawPopulation( sf::RenderWindow& win );
 	
-    bool	creatureMove( Creature* Cr, __uint8_t i );
+    bool	creatureMove( Creature* Cr, __uint8_t i, Food& food );
 	void	createNewCreature( void );
 
 	void	updatePopulation( Food& food );

@@ -10,7 +10,8 @@ Sensor::Sensor( void ): _rayCount(3), _rayLenght(100),
 	}
 
 	for (__uint8_t i = 0; i < _raySprite.size(); i++){
-		
+		_raySprite[i].setSize(sf::Vector2f(1, _rayLenght));
+		_raySprite[i].setOrigin(0.5f, 0.0f);
 	}
 	
 	_ptcheck = sf::RectangleShape(sf::Vector2f(5, 5));
@@ -23,12 +24,23 @@ Sensor::~Sensor( void ){
 	return ;
 }
 
-bool	Sensor::findIntersection( sf::RectangleShape* r, int rayRotation, Creature& c, std::vector<Particule *>& particules ){
+
+/********************************************************/
+/*						DRAWING 						*/
+/********************************************************/
+
+void	Sensor::drawRays( sf::RenderWindow& win ){
+	for (__uint8_t i = 0; i < _rayCount; i++){
+		win.draw(_raySprite[i]);
+	}
+	win.draw(_ptcheck);
+}
+
+bool	Sensor::findIntersection( sf::RectangleShape& r, int rayRotation, Creature& c, std::vector<Particule *>& particules ){
 	double	pt[2];
 
-	r->setSize(sf::Vector2f(1, _rayLenght));
-	r->setRotation( rayRotation + 180 );
-	r->setPosition (c.getPosition().x, c.getPosition().y);
+	r.setRotation(rayRotation + 180);
+	r.setPosition (c.getPosition().x, c.getPosition().y);
 
 	if (rayRotation < 0)
 		rayRotation += 360;
@@ -44,6 +56,7 @@ bool	Sensor::findIntersection( sf::RectangleShape* r, int rayRotation, Creature&
 				pt[0] = pt[0] + sin(rayRotation * (3.14159265359f / 180.0f));
 				pt[1] = pt[1] - cos(rayRotation * (3.14159265359f / 180.0f));
 				if (particules[i]->checkPositionSe(pt[0], pt[1])){
+					_ptcheck.setPosition(sf::Vector2f(pt[0], pt[1]));
 					return (1);
 				}
 			}
@@ -52,18 +65,14 @@ bool	Sensor::findIntersection( sf::RectangleShape* r, int rayRotation, Creature&
 	return (0);
 }
 
-void	Sensor::drawRays( sf::RenderWindow& win ){
-	for (__uint8_t i = 0; i < _rayCount; i++){
-		win.draw(_raySprite[i]);
-	}
-	win.draw(_ptcheck);
-}
-
-void	Sensor::buildRays( Creature& c, std::vector<Particule *>& particules ){
-	for (unsigned int i = 0; i < _rayCount; i++){
+void	Sensor::buildRays( Creature& c, Food& food ){
+	unsigned int ang = c.getRotation() - _rayAngle;
+	for (unsigned int i = 0; i < _raySprite.size(); i++){
 		this->_raySprite[i].setRotation(c.getRotation() + _rayAngle);
-		_state[i] = findIntersection(&_raySprite[i], c.getRotation() - _rayAngle, c, particules);
+		_state[i] = findIntersection(_raySprite[i], ang, c, food.getParticules());
+		// _state[i] = findIntersection(_raySprite[i], c.getRotation() - _rayAngle, c, food.getParticules());
 		_state[i] ? _raySprite[i].setFillColor( sf::Color::Red ) : _raySprite[i].setFillColor( sf::Color::White );
+		ang += _rayAngle;
 	}
 	
 	// std::string	path("./images/sensorRayON.png");

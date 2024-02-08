@@ -45,6 +45,7 @@ class	Creature
 
 		bool		checkLastPositions( void );
 		void		updatePosition( void );
+		void		updateSensors( Food& food );
 
 		void		move( uint8_t r );
 		void		moveUp( void );

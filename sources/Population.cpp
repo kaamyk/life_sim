@@ -70,7 +70,7 @@ void	Population::createMutatedCreature( NeuralNetwork* brain ){
 /*						MOVEMENTS 						*/
 /********************************************************/
 
-bool	Population::creatureMove( Creature* Cr, __uint8_t i ){
+bool	Population::creatureMove( Creature* Cr, __uint8_t i, Food& food ){
 	// std::vector<float>	outputs = Cr->feedForward(Cr->getSensor()->getState());
 
 	std::vector<float>	outputs;
@@ -128,11 +128,13 @@ bool	Population::creatureMove( Creature* Cr, __uint8_t i ){
 			break;
 	}
 
+
 	for (__uint8_t j = 0; j < 4; ++j){
 		if (outputs[j]){
 			Cr->move(j);
 		}
 	}
+	Cr->updateSensors( food );
 	Cr->updatePosition();
 	return (Cr->checkLastPositions());
 }
@@ -143,7 +145,7 @@ bool	Population::creatureMove( Creature* Cr, __uint8_t i ){
 
 void	Population::updatePopulation( Food& food ){
 	for (std::vector<Creature *>::iterator i = _population.begin(); i < _population.end(); i++){
-		if( creatureMove(*i, std::distance(_population.begin(), i)) ){
+		if( creatureMove(*i, std::distance(_population.begin(), i), food ) ){
 			std::cout << "Creature erased" << std::endl;
 			delete (*i);
 			_population.erase(i);

@@ -9,7 +9,6 @@
 
 #include "s_data.hpp"
 
-// #include "Simulation.hpp"
 #include "Particule.hpp"
 
 
@@ -25,8 +24,10 @@ class	Food
 		Food( bool special );
 		~Food( void );
 
-		bool const &	getIsSpecial( void );
-		sf::Vector2f const&	 	getPosition( void );
+		// bool const &		getIsSpecial( void );
+		// sf::Vector2f const&	 	getPosition( void );
+		std::vector<Particule *>&	getParticules( void );
+		
 		void			setPosition( sf::Vector2f const& np );
 
 		bool			checkPositionSe( float x, float y );
