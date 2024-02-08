@@ -2,7 +2,7 @@
 
 Creature::Creature( void ): _gradientDescent(0),
 							_speed(5),
-							_size(50),
+							_size(s_data.creatureSize),
 							_birthTime(std::chrono::high_resolution_clock::now()),
 							_timeLastEat(std::chrono::high_resolution_clock::now())
 							// _size(rand() % 100),
@@ -35,6 +35,8 @@ Creature::Creature( void ): _gradientDescent(0),
 		crVtx[i].setSize(sf::Vector2f(10, 10));
 		crVtx[i].setOrigin(sf::Vector2f(5.0f, 5.0f));
 		crVtx[i].setRotation(0.0f);
+
+		bspChck[i] = sf::Vector2f(5, 5);
 	}
 
 	return ;
@@ -42,7 +44,7 @@ Creature::Creature( void ): _gradientDescent(0),
 
 Creature::Creature( NeuralNetwork* brain ):_gradientDescent(0),
 							_speed(5),
-							_size(50),
+							_size(s_data.creatureSize),
 							_birthTime(std::chrono::high_resolution_clock::now()),
 							_timeLastEat(std::chrono::high_resolution_clock::now())
 							// _size(rand() % 100),
@@ -108,6 +110,13 @@ void	Creature::drawCreature( sf::RenderWindow& win ){
 
 	_sensor->drawRays(win);
 	win.draw( crSprite );
+	for(__uint8_t i = 0; i < 4; i++){
+		sf::RectangleShape tmp(sf::Vector2f(5, 5));
+        tmp.setFillColor(sf::Color::Red);
+        tmp.setOrigin(2.5f, 2.5f);
+        tmp.setPosition(bspChck[i]);
+        win.draw(tmp);
+	}
 }
 
 bool	Creature::checkLastPositions( void ){
@@ -308,6 +317,7 @@ Creature*	Creature::eat( Food& food ){
 	bool checkRes[2] = {0, 0};
 
 	getVtxPos(&vtxPos);
+	bspChck = vtxPos;
 	food.checkPositionCr(crSprite.getSize(), vtxPos, &checkRes[0]);
 
 	if (checkRes[0]){

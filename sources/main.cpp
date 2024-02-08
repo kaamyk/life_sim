@@ -24,9 +24,10 @@ int	main( void )
 	Food		food;
 	Population	population;
 
-	win.setFramerateLimit(30);
+	win.setFramerateLimit(10);
 	while (win.isOpen() && population.checkNbCreature())
 	{
+		std::cout << "-----------------------------------" << std::endl;
 		sf::Event	event;
 
 		while(win.pollEvent(event))

@@ -28,6 +28,8 @@ class	Creature
 		sf::RectangleShape	crSprite;
 		std::array<sf::RectangleShape, 4> crVtx;
 
+		std::array<sf::Vector2f, 4> bspChck;
+
 	public :
 		Creature( void );
 		Creature( NeuralNetwork* brain );

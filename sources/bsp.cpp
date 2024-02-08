@@ -4,7 +4,6 @@ void	ft_abs( float &N )
 {
 	if (N < 0)
 		N = N * (-1);
-	return ;
 }
 
 float	getArea( sf::Vector2f P1, sf::Vector2f P2, sf::Vector2f P3 )

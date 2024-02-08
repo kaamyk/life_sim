@@ -17,7 +17,7 @@ class	Particule{
 	std::array<sf::RectangleShape, 4>	_partVtx;
 	sf::RectangleShape	_sensorPt;
 	sf::RectangleShape	_checkPos;
-
+	
 	public:
 		Particule( void );
 		~Particule( void );

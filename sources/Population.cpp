@@ -76,8 +76,8 @@ bool	Population::creatureMove( Creature* Cr, __uint8_t i, Food& food ){
 	std::vector<float>	outputs;
 	switch (i){
 		case 0:
-			outputs.push_back(1.0f);
 			outputs.push_back(0.0f);
+			outputs.push_back(1.0f);
 			outputs.push_back(0.0f);
 			outputs.push_back(0.0f);
 			break;
@@ -89,39 +89,39 @@ bool	Population::creatureMove( Creature* Cr, __uint8_t i, Food& food ){
 			break;
 		case 2:
 			outputs.push_back(0.0f);
-			outputs.push_back(0.0f);
 			outputs.push_back(1.0f);
+			outputs.push_back(0.0f);
 			outputs.push_back(0.0f);
 			break;
 		case 3:
 			outputs.push_back(0.0f);
-			outputs.push_back(0.0f);
-			outputs.push_back(0.0f);
 			outputs.push_back(1.0f);
+			outputs.push_back(0.0f);
+			outputs.push_back(0.0f);
 			break;
 		case 4:
-			outputs.push_back(1.0f);
 			outputs.push_back(0.0f);
 			outputs.push_back(1.0f);
+			outputs.push_back(0.0f);
 			outputs.push_back(0.0f);
 			break;
 		case 5:
+			outputs.push_back(0.0f);
 			outputs.push_back(1.0f);
 			outputs.push_back(0.0f);
 			outputs.push_back(0.0f);
-			outputs.push_back(1.0f);
 			break;
 		case 6:
 			outputs.push_back(0.0f);
 			outputs.push_back(1.0f);
-			outputs.push_back(1.0f);
+			outputs.push_back(0.0f);
 			outputs.push_back(0.0f);
 			break;
 		case 7:
 			outputs.push_back(0.0f);
 			outputs.push_back(1.0f);
 			outputs.push_back(0.0f);
-			outputs.push_back(1.0f);
+			outputs.push_back(0.0f);
 			break;
 		default:
 			outputs = Cr->feedForward(Cr->getSensor()->getState());
