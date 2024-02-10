@@ -41,8 +41,12 @@ void			Food::checkPositionCr( sf::Vector2f crSize, std::array<sf::Vector2f, 4>& 
 	for(std::vector<Particule *>::iterator i = _particules.begin(); i < _particules.end(); i++){
 		if ( (*i)->checkPositionCr(crSize, crVrtPos) ){
 			res[0] = 1;
-			res[1] = getsEaten(*i);
+			// res[1] = getsEaten(*i);
+			res[1] = (*i)->getIsSpecial();
+			delete(*i);
+			(*i) = NULL;
 			_particules.erase(i);
+			--i;
 		}
 	}
 }

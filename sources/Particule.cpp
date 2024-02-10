@@ -2,9 +2,8 @@
 
 Particule::Particule( void ):
         _position(sf::Vector2f(rand() % s_data.windowLength, rand() % s_data.windowHeight)),
-        _isSpecial((rand() % 100) == 1),
-        _sprite(sf::Vector2f(s_data.foodSize, s_data.foodSize)),
-        _sensorPt(sf::RectangleShape(sf::Vector2f(5, 5)))
+        _isSpecial((rand() % 50) == 1),
+        _sprite(sf::Vector2f(s_data.foodSize, s_data.foodSize))
 {
     _sprite.setOrigin(sf::Vector2f(s_data.foodSize / 2, s_data.foodSize / 2));
     _sprite.setPosition(_position);
@@ -17,7 +16,6 @@ Particule::Particule( void ):
         _partVtx[i].setFillColor( sf::Color::Red );
     }
 
-    _sensorPt.setFillColor(sf::Color::Cyan);
 
     _checkPos.setFillColor(sf::Color::Green);
 }
@@ -45,20 +43,22 @@ sf::Vector2f const&	Particule::getPosition( void ) const {
         /************************/
 
 bool	Particule::checkPositionSe( float x, float y ){
-        if (x >= _partVtx[0].getPosition().x && x <= _partVtx[2].getPosition().x
-                && y >= _partVtx[0].getPosition().y && y <= _partVtx[2].getPosition().y)
-        {
-                _sensorPt.setPosition(x, y);
-                return (1);
-        }
-        return (0);
+        return (x >= _partVtx[0].getPosition().x && x <= _partVtx[2].getPosition().x
+                && y >= _partVtx[0].getPosition().y && y <= _partVtx[2].getPosition().y);
+//         {
+//                 return (1);
+//         }
+//         return (0);
 }
 
 bool	Particule::checkPositionCr( sf::Vector2f crSize, std::array<sf::Vector2f, 4>& checkpointsPos ) {
         for (__uint8_t i = 0; i < 4; i++){
-            if (checkpointsPos[i].x <= _position.x + (s_data.foodSize / 2) && checkpointsPos[i].x >= _position.x - (s_data.foodSize / 2)){
-                return (bsp(crSize, checkpointsPos, _position));
-            }
+            if (checkpointsPos[i].x <= _position.x + (s_data.foodSize / 2) 
+                && checkpointsPos[i].x >= _position.x - (s_data.foodSize / 2)
+                && bsp(crSize, checkpointsPos, _position))
+                {
+                    return (1);
+                }
         }
         return (0);
 }
@@ -85,8 +85,7 @@ void    Particule::setColorParticule( void ){
 
 void    Particule::drawParticule( sf::RenderWindow& win ){
     win.draw(_sprite);
-    win.draw(_sensorPt);
-    for (__uint8_t i = 0; i < 4; i++){
-		win.draw(_partVtx[i]);
-	}
+    // for (__uint8_t i = 0; i < 4; i++){
+	// 	win.draw(_partVtx[i]);
+	// }
 }

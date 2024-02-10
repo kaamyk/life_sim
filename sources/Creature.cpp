@@ -93,6 +93,19 @@ bool	Creature::checkTime( std::chrono::seconds const _timeToDie ){
 	return (t - this->_timeLastEat >= _timeToDie);
 }
 
+bool	Creature::checkLastPositions( void ){
+	if (_lastPositions.size() < 100){
+		return (0);
+	}
+	for (unsigned int i = 1; i < _lastPositions.size(); i++){
+		if (_lastPositions[i].x != _lastPositions[i - 1].x || _lastPositions[i].y != _lastPositions[i - 1].y){
+			_lastPositions.clear();
+			return (0);
+		}
+	}
+	return (1);
+}
+
 
 
 /********************************************************/
@@ -110,34 +123,21 @@ void	Creature::drawCreature( sf::RenderWindow& win ){
 
 	_sensor->drawRays(win);
 	win.draw( crSprite );
-	for(__uint8_t i = 0; i < 4; i++){
-		sf::RectangleShape tmp(sf::Vector2f(5, 5));
-        tmp.setFillColor(sf::Color::Red);
-        tmp.setOrigin(2.5f, 2.5f);
-        tmp.setPosition(bspChck[i]);
-        win.draw(tmp);
-	}
-}
-
-bool	Creature::checkLastPositions( void ){
-	if (_lastPositions.size() < 100){
-		return (0);
-	}
-	for (unsigned int i = 1; i < _lastPositions.size(); i++){
-		if (_lastPositions[i].x != _lastPositions[i - 1].x || _lastPositions[i].y != _lastPositions[i - 1].y){
-			_lastPositions.clear();
-			return (0);
-		}
-	}
-	return (1);
+	// for(__uint8_t i = 0; i < 4; i++){
+	// 	sf::RectangleShape tmp(sf::Vector2f(5, 5));
+    //     tmp.setFillColor(sf::Color::Red);
+    //     tmp.setOrigin(2.5f, 2.5f);
+    //     tmp.setPosition(bspChck[i]);
+    //     win.draw(tmp);
+	// }
 }
 
 void	Creature::updatePosition( void ){
 	_lastPositions.push_back(crSprite.getPosition());
-	buildCheckPoints();
+	updateCheckPoints();
 }
 
-void			Creature::buildCheckPoints( void ){
+void			Creature::updateCheckPoints( void ){
 	for(__uint8_t i = 0; i < 4; i++){
 		crVtx[i].setPosition(crSprite.getTransform().transformPoint(crSprite.getPoint(i)));
 	}
@@ -321,6 +321,7 @@ Creature*	Creature::eat( Food& food ){
 	food.checkPositionCr(crSprite.getSize(), vtxPos, &checkRes[0]);
 
 	if (checkRes[0]){
+		std::cout << "Cr eat." << std::endl;
 		_timeLastEat = std::chrono::high_resolution_clock::now();
 		if (checkRes[1]){
 			return (giveBirth(_brain));

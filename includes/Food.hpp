@@ -36,7 +36,7 @@ class	Food
 		bool			getsEaten( Particule *ptParticule );
 
 		bool*			checkPositionCr( sf::Vector2f crSize, std::array<sf::Vector2f, 4>& crVrt );
-		void			buildCheckPointsSe( float x, float y );
+		void			updateCheckPointsSe( float x, float y );
 		void			drawCheckPoints( sf::RenderWindow& win );
 };
 

@@ -19,8 +19,8 @@ float	getArea( sf::Vector2f P1, sf::Vector2f P2, sf::Vector2f P3 )
 }
 
 bool	bsp( sf::Vector2f CrSize, std::array<sf::Vector2f, 4>& vtx, sf::Vector2f const P ){
-	float	squareArea = CrSize.x * CrSize.y;
-	float	partArea = 0.0f;
+	int	squareArea = (static_cast<int>(CrSize.x) * static_cast<int>(CrSize.y)) * 1000;
+	int	partArea = 0.0f;
 
 	// partArea = getArea(A, B, P);
 	// partArea = partArea + getArea(A, C, P);
@@ -30,11 +30,11 @@ bool	bsp( sf::Vector2f CrSize, std::array<sf::Vector2f, 4>& vtx, sf::Vector2f co
 		if (partArea > squareArea){
 			return (0);
 		}
-		partArea += getArea(vtx[i - 1], vtx[i], P);
+		partArea += getArea(vtx[i - 1], vtx[i], P) * 1000;
 	}
-	partArea += getArea(vtx[3], vtx[0], P);
+	partArea += getArea(vtx[3], vtx[0], P) * 1000;
 
-	std::cout << "bsp: " << squareArea << " X " << partArea << std::endl;
+	std::cout << "bsp: " << squareArea / 1000 << " X " << partArea / 1000 << std::endl;
 
-	return (squareArea == partArea);
+	return (squareArea / 1000 == partArea / 1000);
 }

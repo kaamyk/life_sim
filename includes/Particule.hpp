@@ -15,7 +15,7 @@ class	Particule{
 	bool				_isSpecial;
 	sf::RectangleShape	_sprite;
 	std::array<sf::RectangleShape, 4>	_partVtx;
-	sf::RectangleShape	_sensorPt;
+	// sf::RectangleShape	_sensorPt;
 	sf::RectangleShape	_checkPos;
 	
 	public:

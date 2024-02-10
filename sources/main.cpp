@@ -24,7 +24,7 @@ int	main( void )
 	Food		food;
 	Population	population;
 
-	win.setFramerateLimit(10);
+	win.setFramerateLimit(30);
 	while (win.isOpen() && population.checkNbCreature())
 	{
 		std::cout << "-----------------------------------" << std::endl;

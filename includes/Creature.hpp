@@ -60,7 +60,7 @@ class	Creature
 		void			getVtxPos( std::array<sf::Vector2f, 4> *res );
 		Creature*		eat( Food& food );
 
-		void			buildCheckPoints( void );
+		void			updateCheckPoints( void );
 };
 
 #endif
